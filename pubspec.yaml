@@ -37,6 +37,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^22.2.11
   # 애니메이션 위젯
   lottie: ^2.3.2
+  #cloud_firestore: ^4.13.6
 
 
 flutter_icons:
