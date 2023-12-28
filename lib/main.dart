@@ -1,5 +1,7 @@
-import 'package:coner_client/screens/splash_screen.dart';
+import 'package:coner_client/theme/themes.dart';
 import 'package:flutter/material.dart';
+
+import 'configs/router/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +13,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const SplashScreen(),
+    return MaterialApp.router(
+      theme: mainTheme(),
+      routerConfig: AppRouter.router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

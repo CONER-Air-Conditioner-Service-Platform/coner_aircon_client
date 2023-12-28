@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData mainTheme() {
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    fontFamily: "pretendard",
+    fontFamily: "mainFont",
     appBarTheme: appBarTheme(),
     inputDecorationTheme: inputDecorationTheme(),
     textTheme: TextTheme(),
