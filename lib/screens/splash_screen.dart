@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:coner_client/configs/router/route_names.dart';
-import 'package:coner_client/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../configs/router/route_names.dart';
+import '../theme/decorations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

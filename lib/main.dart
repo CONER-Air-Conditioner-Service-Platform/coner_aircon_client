@@ -1,5 +1,6 @@
 import 'package:coner_client/theme/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'configs/router/app_router.dart';
 
@@ -16,6 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       theme: mainTheme(),
       routerConfig: AppRouter.router,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ko', '')],
       debugShowCheckedModeBanner: false,
     );
   }

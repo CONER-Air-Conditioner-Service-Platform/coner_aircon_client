@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-mixin CameraController {
-  Future<File?> getImage(List<File?> images) async {
+class CameraPakage {
+  static Future<File?> getImage(List<File?> images) async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     File? img = File(image!.path);
     img = await cropImage(img);
@@ -14,7 +14,7 @@ mixin CameraController {
     }
   }
 
-  Future<List<File>> getImages(List<File?> images) async {
+  static Future<List<File>> getImages(List<File?> images) async {
     final images = await ImagePicker().pickMultiImage();
     List<File> imgs = [];
     for (XFile image in images) {
@@ -24,7 +24,7 @@ mixin CameraController {
     return imgs;
   }
 
-  Future cropImage(File imageFile) async {
+  static Future cropImage(File imageFile) async {
     CroppedFile? croppedImage = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 3),
@@ -33,7 +33,7 @@ mixin CameraController {
     return File(croppedImage.path);
   }
 
-  Future cropImages(List<File?> images) async {
+  static Future cropImages(List<File?> images) async {
     List<File> croppedImages = [];
     for (File? image in images) {
       CroppedFile? croppedImage = await ImageCropper().cropImage(
@@ -46,7 +46,7 @@ mixin CameraController {
     return croppedImages;
   }
 
-  Widget imageHelper(url) {
+  static Widget imageHelper(url) {
     return Container(
       height: 150,
       width: 200,

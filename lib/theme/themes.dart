@@ -1,3 +1,4 @@
+import 'package:coner_client/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 ThemeData mainTheme() {
@@ -17,26 +18,23 @@ AppBarTheme appBarTheme() {
     color: Colors.white,
     elevation: 0,
     iconTheme: IconThemeData(color: Colors.black),
-    toolbarTextStyle: const TextTheme(
-      titleLarge: TextStyle(color: Color(0XFF8B8B8B), fontSize: 18),
-    ).bodyMedium,
-    titleTextStyle: const TextTheme(
-      titleLarge: TextStyle(color: Color(0XFF8B8B8B), fontSize: 18),
-    ).titleLarge,
   );
 }
 
 InputDecorationTheme inputDecorationTheme() {
   OutlineInputBorder outlineInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
-    borderSide: BorderSide(color: Color(0xFFA0A0A0)),
-    gapPadding: 10,
+    borderSide: const BorderSide(color: Color(0xFFA0A0A0)),
+  );
+  OutlineInputBorder fucusedInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+    borderSide: BorderSide(color: conerColor2),
   );
   return InputDecorationTheme(
     floatingLabelBehavior: FloatingLabelBehavior.always,
-    contentPadding: EdgeInsets.symmetric(horizontal: 46, vertical: 20),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
     enabledBorder: outlineInputBorder,
-    focusedBorder: outlineInputBorder,
+    focusedBorder: fucusedInputBorder,
     border: outlineInputBorder,
   );
 }

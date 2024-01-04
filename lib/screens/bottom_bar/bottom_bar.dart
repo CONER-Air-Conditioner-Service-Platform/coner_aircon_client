@@ -1,4 +1,5 @@
-import 'package:coner_client/screens/bottom_bar/screens/home/home_screen.dart';
+import 'package:coner_client/screens/bottom_bar/pages/home/home_page.dart';
+import 'package:coner_client/screens/bottom_bar/pages/request/request_page.dart';
 import 'package:coner_client/screens/bottom_bar/widget/bottom_bar_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +14,8 @@ class BottomBar extends StatelessWidget {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            HomeScreen(),
-            Center(child: Text("페이지2")),
+            HomePage(),
+            RequestPage(),
             Center(child: Text("페이지3")),
           ],
         ),

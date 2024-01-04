@@ -11,19 +11,15 @@ class PrograssWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding:
+          EdgeInsets.only(top: getStatusBarHeight(context) + 20, bottom: 20, left: 20, right: 20),
       decoration: itemBottomRadiusDecoration,
       alignment: Alignment.topLeft,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: getStatusBarHeight(context), bottom: 28),
-              child: Image.asset("assets/images/logo_color.png", width: 116, fit: BoxFit.contain),
-            ),
-            matchingCompletedHelper()
-          ],
-        ),
+      child: Column(
+        children: [
+          Image.asset("assets/images/logo_color.png", width: 116, fit: BoxFit.contain),
+          matchingCompletedHelper()
+        ],
       ),
     );
   }
@@ -32,10 +28,7 @@ class PrograssWidget extends StatelessWidget {
     return Column(
       children: [
         Row(
-          children: [
-            Text('방문자 님', style: title1Bold),
-            Text('의 서비스 진행도', style: title1),
-          ],
+          children: [Text('방문자 님', style: title1Bold), Text('의 서비스 진행도', style: title1)],
         ),
         const SizedBox(height: 16),
         Image.asset("assets/images/prograss_bar1.png", width: 416, fit: BoxFit.contain),
@@ -88,7 +81,7 @@ class PrograssWidget extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Image.asset("assets/images/prograss_bar2.png", width: 416, fit: BoxFit.contain),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
         Row(
           children: [
             Text('접수가 완료', style: body1Bold),
@@ -96,7 +89,7 @@ class PrograssWidget extends StatelessWidget {
           ],
         ),
         Text('며칠 내로 근처에 있는 기사님이 배치될 예정이에요!', style: body1),
-        const SizedBox(height: 60),
+        const SizedBox(height: 57),
         Row(
           children: [
             Image.asset("assets/images/tag_ceiling.png", fit: BoxFit.contain),
@@ -125,7 +118,7 @@ class PrograssWidget extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Image.asset("assets/images/prograss_bar3.png", width: 416, fit: BoxFit.contain),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
         Row(
           children: [
             profileImageWidget(48, null),
@@ -144,7 +137,7 @@ class PrograssWidget extends StatelessWidget {
             )
           ],
         ),
-        const SizedBox(height: 57),
+        const SizedBox(height: 54),
         Row(
           children: [
             Image.asset("assets/images/tag_ceiling.png", fit: BoxFit.contain),
@@ -173,7 +166,7 @@ class PrograssWidget extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Image.asset("assets/images/prograss_bar4.png", width: 416, fit: BoxFit.contain),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
         Row(
           children: [
             profileImageWidget(48, null),
@@ -186,7 +179,7 @@ class PrograssWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 60),
+        const SizedBox(height: 57),
         Row(
           children: [
             Image.asset("assets/images/tag_ceiling.png", fit: BoxFit.contain),
@@ -215,7 +208,7 @@ class PrograssWidget extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Image.asset("assets/images/prograss_bar5.png", width: 416, fit: BoxFit.contain),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
         Row(
           children: [
             Text('결제 대기중', style: body1Bold),
@@ -223,7 +216,7 @@ class PrograssWidget extends StatelessWidget {
           ],
         ),
         Text('결제를 완료하여 주세요!', style: body1),
-        const SizedBox(height: 60),
+        const SizedBox(height: 57),
         Row(
           children: [
             Image.asset("assets/images/tag_ceiling.png", fit: BoxFit.contain),
