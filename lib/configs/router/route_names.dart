@@ -4,4 +4,5 @@ class RouteNames {
   static const main = 'main';
   static const addRequest = 'addRequest';
   static const signIn = 'signIn';
+  static const signUp = 'signUp';
 }

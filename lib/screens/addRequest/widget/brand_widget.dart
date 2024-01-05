@@ -27,14 +27,14 @@ class BrandWidget extends StatelessWidget {
           child: DropdownButton<String>(
             dropdownColor: Colors.white,
             focusColor: Colors.white,
-            value: displayRequest.brandName,
+            value: displayRequest.airconBrand,
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 24,
             elevation: 16,
             isExpanded: true,
             style: body1,
             underline: SizedBox(),
-            onChanged: (String? newValue) => request.setBrandName(newValue!),
+            onChanged: (String? newValue) => request.setAirconBrand(newValue!),
             items: brandList.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(value: value, child: Text(value));
             }).toList(),

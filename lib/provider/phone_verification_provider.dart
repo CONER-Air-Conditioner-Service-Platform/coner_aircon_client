@@ -11,7 +11,15 @@ class PhoneVerificationProvider with ChangeNotifier {
   }
 
   void checkCode() {
+    isVerification = true;
+    notifyListeners();
+  }
+
+  void clear() {
+    phoneNumber = '';
+    verificationCode = '';
     isSend = false;
+    isVerification = false;
     notifyListeners();
   }
 }

@@ -1,7 +1,9 @@
 import 'package:coner_client/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../configs/router/route_names.dart';
 import '../../../provider/phone_verification_provider.dart';
 import '../../../theme/decorations.dart';
 import '../../../theme/font_styles.dart';
@@ -31,10 +33,10 @@ class _SignInFormState extends State<SignInForm> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _phoneNumberHelper(),
+          _phoneNumberHelper(phoneVerification),
           SizedBox(height: 16),
           if (phoneVerification.isSend) ...[
-            _verificationCodeHelper(),
+            _verificationCodeHelper(phoneVerification),
             SizedBox(height: 24),
           ],
           Container(
@@ -53,13 +55,23 @@ class _SignInFormState extends State<SignInForm> {
               child: Text(!phoneVerification.isSend ? '인증번호 보내기' : '인증하기', style: title2BoldWhite),
             ),
           ),
+          SizedBox(height: 16),
+          TextButton(
+            onPressed: () {
+              phoneVerification.clear();
+              context.pushNamed(RouteNames.signUp);
+            },
+            child: Text('회원가입 하러가기', style: body1Button),
+          )
         ],
       ),
     );
   }
 
-  Widget _phoneNumberHelper() {
+  Widget _phoneNumberHelper(phoneVerification) {
     return TextFormField(
+      enabled: !phoneVerification.isSend,
+      keyboardType: TextInputType.phone,
       autofocus: false,
       validator: (value) {
         if (value.toString().isEmpty || value.toString().length != 11) {
@@ -75,8 +87,10 @@ class _SignInFormState extends State<SignInForm> {
     );
   }
 
-  Widget _verificationCodeHelper() {
+  Widget _verificationCodeHelper(phoneVerification) {
     return TextFormField(
+      enabled: !phoneVerification.isVerification,
+      keyboardType: TextInputType.number,
       autofocus: false,
       validator: (value) {
         if (value.toString().isEmpty || value.toString().length != 6) {

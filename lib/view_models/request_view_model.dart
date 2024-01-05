@@ -4,43 +4,56 @@ import '../models/request.dart';
 
 class RequestViewModel with ChangeNotifier {
   Request request = Request(
-    airconServiceRequestId: '',
+    requestId: '',
+    service: '청소',
+    aircon: '벽걸이형',
+    airconNum: 1,
+    airconBrand: '삼성전자',
+    detailInfo: '',
+    hopeDate: '',
+    hopeTime: '',
+    phone: '',
+    address: '',
+    detailAddress: '',
+    state: '',
+    applicationDate: '',
+    acceptDate: '',
+    completeDate: '',
+    memo: '',
+    review: '',
     clientId: '',
-    serviceType: '청소',
-    airconType: '벽걸이형',
-    brandName: '삼성전자',
-    serviceDetails: '',
-    desiredServiceDate: '',
-    addressKey: '',
-    requestSubmissionDate: '',
-    clientPhoneNumber: '',
-    streetAddress: '',
-    detailedAddress: '',
+    engineerId: '',
   );
 
-  String get serviceType => request.serviceType;
-  String get airconType => request.airconType;
-  String get brandName => request.brandName;
-  String get serviceDetails => request.serviceDetails;
-  String get desiredServiceDate => request.desiredServiceDate;
+  String get service => request.service;
+  String get aircon => request.aircon;
+  int get airconNum => request.airconNum;
+  String get airconBrand => request.airconBrand;
+  String get detailInfo => request.detailInfo;
+  String get hopeDate => request.hopeDate;
 
-  void setDesiredServiceDate(String desiredServiceDate) {
-    request.desiredServiceDate = desiredServiceDate;
+  void setHopeDate(String hopeDate) {
+    request.hopeDate = hopeDate;
     notifyListeners();
   }
 
-  void setAirconType(String newValue) {
-    request.airconType = newValue;
+  void setAircon(String newValue) {
+    request.aircon = newValue;
     notifyListeners();
   }
 
-  void setServiceType(String newValue) {
-    request.serviceType = newValue;
+  void setAirconNum(int newValue) {
+    request.airconNum = newValue;
     notifyListeners();
   }
 
-  void setBrandName(String newValue) {
-    request.brandName = newValue;
+  void setService(String newValue) {
+    request.service = newValue;
+    notifyListeners();
+  }
+
+  void setAirconBrand(String newValue) {
+    request.airconBrand = newValue;
     notifyListeners();
   }
 }

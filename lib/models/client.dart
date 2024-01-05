@@ -4,17 +4,17 @@ class Client {
   String clientId; // 고객의 고유 식별자
   String clientPhoneNumber; // 고객의 전화번호
   String clientName; // 고객의 이름
-  String streetAddress; // 고객의 기본 주소
-  String detailedAddress; // 고객의 상세 주소
-  String registrationDate; // 고객 등록 날짜
+  String clientAddress; // 고객의 기본 주소
+  String clientDetailAddress; // 고객의 상세 주소
+  String clientSignUpDate; // 고객 등록 날짜
 
   Client({
     required this.clientId,
     required this.clientPhoneNumber,
     required this.clientName,
-    required this.streetAddress,
-    required this.detailedAddress,
-    required this.registrationDate,
+    required this.clientAddress,
+    required this.clientDetailAddress,
+    required this.clientSignUpDate,
   });
 
   // 파이어베이스에 저장하기 위해 Map타입으로 변경
@@ -23,9 +23,9 @@ class Client {
       "clientId": clientId,
       "clientPhoneNumber": clientPhoneNumber,
       "clientName": clientName,
-      "streetAddress": streetAddress,
-      "detailedAddress": detailedAddress,
-      "registrationDate": registrationDate,
+      "clientAddress": clientAddress,
+      "clientDetailAddress": clientDetailAddress,
+      "clientSignUpDate": clientSignUpDate,
     };
   }
 
@@ -35,9 +35,9 @@ class Client {
       clientId: map['clientId'],
       clientPhoneNumber: map['clientPhoneNumber'],
       clientName: map['clientName'],
-      streetAddress: map['streetAddress'],
-      detailedAddress: map['detailedAddress'],
-      registrationDate: map['registrationDate'],
+      clientAddress: map['clientAddress'],
+      clientDetailAddress: map['clientDetailAddress'],
+      clientSignUpDate: map['clientSignUpDate'],
     );
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../theme/decorations.dart';
+import 'aircon_widget.dart';
 import 'brand_widget.dart';
 import 'calender_widget.dart';
 import 'my_info_widget.dart';
@@ -29,7 +30,6 @@ class _AddRequestFormState extends State<AddRequestForm> {
     '서울 중랑구',
     '서울 노원구',
     '서울 성북구',
-    '경기 시흥시'
   ];
 
   TextEditingController serviceDetailsController = TextEditingController();
@@ -51,6 +51,7 @@ class _AddRequestFormState extends State<AddRequestForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CalenderWidget(),
+              AirconWidget(),
               ServiceWidget(),
               const BrandWidget(),
               const MyInfoWidget(),

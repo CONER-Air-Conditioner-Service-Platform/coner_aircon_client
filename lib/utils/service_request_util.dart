@@ -59,3 +59,15 @@ final List<String> brandList = [
   'SK매직',
   '기타(추천 또는 모름)',
 ];
+final List<String> airconNumList = [
+  '1 대',
+  '2 대',
+  '3 대',
+  '4 대',
+  '5 대',
+  '6 대',
+  '7 대',
+  '8 대',
+  '9 대',
+  '10 대',
+];

@@ -31,11 +31,10 @@ class CalenderWidget extends StatelessWidget {
               autofocus: false,
               minLines: 1,
               maxLines: 2,
-              enabled: true,
+              enabled: false,
               decoration: InputDecoration(
-                hintText: displayRequest.desiredServiceDate == ''
-                    ? '클릭하여 날짜를 선택해주세요.'
-                    : displayRequest.desiredServiceDate,
+                hintText:
+                    displayRequest.hopeDate == '' ? '클릭하여 날짜를 선택해주세요.' : displayRequest.hopeDate,
                 hintStyle: body1,
                 suffixIcon: const Icon(Icons.calendar_month),
               ),
@@ -52,8 +51,13 @@ class CalenderWidget extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
-        return Center(
-          child: SizedBox(
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
             width: ratioOfVertical(context, 0.8),
             height: ratioOfHorizontal(context, 0.4),
             child: SfDateRangePicker(
@@ -70,7 +74,7 @@ class CalenderWidget extends StatelessWidget {
               view: DateRangePickerView.month,
               showNavigationArrow: true,
               allowViewNavigation: false,
-              backgroundColor: ThemeData.light().scaffoldBackgroundColor,
+              backgroundColor: Colors.white,
               initialSelectedDate: DateTime.now().add(const Duration(days: 1)),
               minDate: DateTime.now().add(const Duration(days: 1)), //오늘 날짜 +1부터 시작일로 선택 가능
               maxDate: DateTime.now().add(const Duration(days: 30)),
@@ -96,7 +100,7 @@ class CalenderWidget extends StatelessWidget {
     final DateFormat serverFormater = DateFormat('yyyy-MM-dd');
     final DateTime displayDate = displayFormater.parse(date);
     Provider.of<RequestViewModel>(context, listen: false)
-        .setDesiredServiceDate(serverFormater.format(displayDate));
+        .setHopeDate(serverFormater.format(displayDate));
     Navigator.of(context).pop();
   }
 }

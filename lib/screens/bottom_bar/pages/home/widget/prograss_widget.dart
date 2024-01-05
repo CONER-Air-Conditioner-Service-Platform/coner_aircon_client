@@ -41,7 +41,7 @@ class PrograssWidget extends StatelessWidget {
             Text('코너를 이용하시려면 로그인이 필요해요!', style: body2),
             const SizedBox(height: 12),
             TextButton(
-              onPressed: () => context.goNamed(RouteNames.signIn),
+              onPressed: () => context.pushNamed(RouteNames.signIn),
               child: Text('로그인 하러가기', style: body1Button),
             ),
           ],

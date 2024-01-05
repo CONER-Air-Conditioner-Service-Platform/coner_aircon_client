@@ -7,15 +7,15 @@ class ClientViewModel with ChangeNotifier {
     clientId: '',
     clientPhoneNumber: '',
     clientName: '',
-    streetAddress: '',
-    detailedAddress: '',
-    registrationDate: '',
+    clientAddress: '',
+    clientDetailAddress: '',
+    clientSignUpDate: '',
   );
 
   String get clientId => client.clientId;
   String get clientPhoneNumber => client.clientPhoneNumber;
   String get clientName => client.clientName;
-  String get streetAddress => client.streetAddress;
-  String get detailedAddress => client.detailedAddress;
-  String get registrationDate => client.registrationDate;
+  String get clientAddress => client.clientAddress;
+  String get clientDetailAddress => client.clientDetailAddress;
+  String get clientSignUpDate => client.clientSignUpDate;
 }

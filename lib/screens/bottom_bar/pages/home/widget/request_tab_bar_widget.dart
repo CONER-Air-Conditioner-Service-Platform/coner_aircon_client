@@ -100,9 +100,9 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
     return GestureDetector(
       onTap: () {
         if (serviceList.contains(value)) {
-          Provider.of<RequestViewModel>(context, listen: false).setServiceType(value);
+          Provider.of<RequestViewModel>(context, listen: false).setService(value);
         } else {
-          Provider.of<RequestViewModel>(context, listen: false).setAirconType(value);
+          Provider.of<RequestViewModel>(context, listen: false).setAircon(value);
         }
         context.pushNamed(RouteNames.addRequest);
       },

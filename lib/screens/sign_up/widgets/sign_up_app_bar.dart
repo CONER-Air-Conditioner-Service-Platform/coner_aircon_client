@@ -8,8 +8,8 @@ import '../../../theme/decorations.dart';
 import '../../../theme/font_styles.dart';
 import '../../../theme/widget_size.dart';
 
-class SignInAppBar extends StatelessWidget {
-  const SignInAppBar({super.key});
+class SignUpAppBar extends StatelessWidget {
+  const SignUpAppBar({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +31,7 @@ class SignInAppBar extends StatelessWidget {
             flex: 1,
             child: Container(
               alignment: Alignment.center,
-              child: Text('로그인', style: title1Bold),
+              child: Text('회원가입', style: title1Bold),
             ),
           ),
           const SizedBox(width: 32),

@@ -24,9 +24,9 @@ class MyInfoWidget extends StatelessWidget {
           maxLines: 2,
           enabled: false,
           decoration: InputDecoration(
-            hintText: displayClient.streetAddress == ''
+            hintText: displayClient.clientAddress == ''
                 ? '서울시 중랑구 중랑천로 43 신성아파트'
-                : displayClient.streetAddress,
+                : displayClient.clientAddress,
             hintStyle: body1Grey,
           ),
         ),
@@ -37,8 +37,9 @@ class MyInfoWidget extends StatelessWidget {
           maxLines: 2,
           enabled: false,
           decoration: InputDecoration(
-            hintText:
-                displayClient.detailedAddress == '' ? '102동 901호' : displayClient.detailedAddress,
+            hintText: displayClient.clientDetailAddress == ''
+                ? '102동 901호'
+                : displayClient.clientDetailAddress,
             hintStyle: body1Grey,
           ),
         ),
