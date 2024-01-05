@@ -1,4 +1,6 @@
+import 'package:coner_client/configs/router/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../theme/decorations.dart';
 import '../../../../../theme/font_styles.dart';
@@ -18,13 +20,14 @@ class PrograssWidget extends StatelessWidget {
       child: Column(
         children: [
           Image.asset("assets/images/logo_color.png", width: 116, fit: BoxFit.contain),
-          matchingCompletedHelper()
+          SizedBox(height: 20),
+          guestHelper(context)
         ],
       ),
     );
   }
 
-  Widget guestHelper() {
+  Widget guestHelper(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -37,7 +40,10 @@ class PrograssWidget extends StatelessWidget {
           children: [
             Text('코너를 이용하시려면 로그인이 필요해요!', style: body2),
             const SizedBox(height: 12),
-            TextButton(onPressed: () {}, child: Text('로그인 하러가기', style: body1Button)),
+            TextButton(
+              onPressed: () => context.goNamed(RouteNames.signIn),
+              child: Text('로그인 하러가기', style: body1Button),
+            ),
           ],
         ),
         const SizedBox(height: 44),

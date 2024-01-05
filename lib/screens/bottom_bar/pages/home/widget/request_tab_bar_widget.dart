@@ -1,8 +1,12 @@
 import 'package:coner_client/configs/router/route_names.dart';
 import 'package:coner_client/theme/colors.dart';
 import 'package:coner_client/theme/font_styles.dart';
+import 'package:coner_client/view_models/request_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../utils/service_request_util.dart';
 
 class RequestTabBarWidget extends StatefulWidget {
   const RequestTabBarWidget({super.key});
@@ -13,26 +17,6 @@ class RequestTabBarWidget extends StatefulWidget {
 
 class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
   int selectedIndex = 0;
-  List<String> serviceNameList = ['청소', '설치', '수리', '점검', '이전', '철거'];
-  List<String> serviceImageList = [
-    'assets/images/service_cleaning.png',
-    'assets/images/service_build.png',
-    'assets/images/service_repair.png',
-    'assets/images/service_inspection.png',
-    'assets/images/service_deliverytruck.png',
-    'assets/images/service_broken.png',
-  ];
-  List<String> airconNameList = ['벽걸이형', '스탠드형', '천장형', '창문형', '냉난방기', '항온항습기', '2 in 1'];
-  List<String> airconImageList = [
-    'assets/images/aircon_wall.png',
-    'assets/images/aircon_stand.png',
-    'assets/images/aircon_ceiling.png',
-    'assets/images/aircon_ceiling.png',
-    'assets/images/aircon_conditioner.png',
-    'assets/images/aircon_thermostat.png',
-    'assets/images/aircon_thermostat.png',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,15 +80,15 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
         child: Row(
           children: [
             if (selectedIndex == 0) ...[
-              for (int i = 0; i < serviceNameList.length; i++) ...[
+              for (int i = 0; i < serviceList.length; i++) ...[
                 if (i == 0) ...[const SizedBox(width: 20)],
-                itemCard(serviceImageList[i], serviceNameList[i]),
+                itemCard(serviceImageList[i], serviceList[i]),
                 const SizedBox(width: 12),
               ]
             ] else ...[
-              for (int i = 0; i < airconNameList.length; i++) ...[
+              for (int i = 0; i < airconList.length; i++) ...[
                 if (i == 0) ...[const SizedBox(width: 20)],
-                itemCard(airconImageList[i], airconNameList[i]),
+                itemCard(airconImageList[i], airconList[i]),
                 const SizedBox(width: 12),
               ]
             ]
@@ -112,9 +96,16 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
         ),
       );
 
-  Widget itemCard(String image, String name) {
+  Widget itemCard(String image, String value) {
     return GestureDetector(
-      onTap: () => context.pushNamed(RouteNames.addRequest),
+      onTap: () {
+        if (serviceList.contains(value)) {
+          Provider.of<RequestViewModel>(context, listen: false).setServiceType(value);
+        } else {
+          Provider.of<RequestViewModel>(context, listen: false).setAirconType(value);
+        }
+        context.pushNamed(RouteNames.addRequest);
+      },
       child: Container(
         decoration: BoxDecoration(
           color: conerColor2,
@@ -126,7 +117,7 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(flex: 13, child: Image.asset(image, width: 90, fit: BoxFit.contain)),
-            Expanded(flex: 3, child: Text(name, style: body2BoldWhite))
+            Expanded(flex: 3, child: Text(value, style: body2BoldWhite))
           ],
         ),
       ),

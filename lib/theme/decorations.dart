@@ -39,8 +39,9 @@ BoxDecoration profileDecoration = BoxDecoration(
     end: Alignment.bottomRight,
   ),
   borderRadius: BorderRadius.circular(100),
-  image: const DecorationImage(
-    image: AssetImage("assets/images/icon_white.png"),
-    fit: BoxFit.contain,
-  ),
+);
+
+BoxDecoration whiteBorderDecoration = BoxDecoration(
+  color: Colors.white,
+  borderRadius: BorderRadius.circular(10),
 );

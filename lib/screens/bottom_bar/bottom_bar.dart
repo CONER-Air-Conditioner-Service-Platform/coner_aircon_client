@@ -1,4 +1,5 @@
 import 'package:coner_client/screens/bottom_bar/pages/home/home_page.dart';
+import 'package:coner_client/screens/bottom_bar/pages/my_page/my_page.dart';
 import 'package:coner_client/screens/bottom_bar/pages/request/request_page.dart';
 import 'package:coner_client/screens/bottom_bar/widget/bottom_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class BottomBar extends StatelessWidget {
           children: [
             HomePage(),
             RequestPage(),
-            Center(child: Text("페이지3")),
+            MyPage(),
           ],
         ),
         bottomNavigationBar: BottomBarWidget(),

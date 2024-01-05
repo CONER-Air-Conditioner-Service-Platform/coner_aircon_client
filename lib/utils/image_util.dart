@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../theme/colors.dart';
-
 Widget profileImageWidget(double size, url) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(100),
@@ -9,15 +7,9 @@ Widget profileImageWidget(double size, url) {
       width: size,
       height: size,
       child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [conerColor1, conerColor2, conerColor3],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(100),
-          image: const DecorationImage(
-            image: AssetImage("assets/images/icon_white.png"),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/icon_color.png'),
             fit: BoxFit.contain,
           ),
         ),

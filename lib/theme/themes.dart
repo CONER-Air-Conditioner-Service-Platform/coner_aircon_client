@@ -30,6 +30,7 @@ InputDecorationTheme inputDecorationTheme() {
     borderRadius: BorderRadius.circular(10),
     borderSide: BorderSide(color: conerColor2),
   );
+
   return InputDecorationTheme(
     floatingLabelBehavior: FloatingLabelBehavior.always,
     contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),

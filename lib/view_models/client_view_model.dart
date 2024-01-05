@@ -1,7 +1,16 @@
+import 'package:flutter/cupertino.dart';
+
 import '../models/client.dart';
 
-class ClientViewModel {
-  late Client client;
+class ClientViewModel with ChangeNotifier {
+  Client client = Client(
+    clientId: '',
+    clientPhoneNumber: '',
+    clientName: '',
+    streetAddress: '',
+    detailedAddress: '',
+    registrationDate: '',
+  );
 
   String get clientId => client.clientId;
   String get clientPhoneNumber => client.clientPhoneNumber;

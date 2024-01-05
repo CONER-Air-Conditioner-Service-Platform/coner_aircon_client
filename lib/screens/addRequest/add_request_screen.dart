@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../addRequest/widget/add_reqeust_appbar_widget.dart';
 
 class AddRequestScreen extends StatelessWidget {
-  const AddRequestScreen({super.key});
+  AddRequestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

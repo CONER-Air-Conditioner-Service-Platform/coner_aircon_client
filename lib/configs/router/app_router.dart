@@ -1,6 +1,7 @@
 import 'package:coner_client/configs/router/page_transition.dart';
 import 'package:coner_client/configs/router/route_names.dart';
 import 'package:coner_client/screens/bottom_bar/bottom_bar.dart';
+import 'package:coner_client/screens/sign_in/sign_in_screen.dart';
 import 'package:coner_client/screens/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,13 +19,18 @@ class AppRouter {
       ),
       GoRoute(
         name: RouteNames.main,
-        path: '/' + RouteNames.main,
+        path: '/${RouteNames.main}',
         pageBuilder: (context, state) => PageTrainsition.fadeTransition(state, const BottomBar()),
         routes: [
           GoRoute(
             name: RouteNames.addRequest,
             path: RouteNames.addRequest,
-            builder: (context, state) => const AddRequestScreen(),
+            builder: (context, state) => AddRequestScreen(),
+          ),
+          GoRoute(
+            name: RouteNames.signIn,
+            path: RouteNames.signIn,
+            builder: (context, state) => const SignInScreen(),
           ),
         ],
       ),

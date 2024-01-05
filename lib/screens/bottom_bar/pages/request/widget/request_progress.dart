@@ -25,17 +25,4 @@ class RequestProgress extends StatelessWidget {
       ),
     );
   }
-
-  Widget submissionCompletedProgressHelper() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 32, left: 20, right: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("아직 진행중인 의뢰가 없습니다!", style: body2),
-        ],
-      ),
-    );
-  }
 }

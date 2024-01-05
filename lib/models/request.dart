@@ -1,9 +1,11 @@
 import '../utils/service_request_util.dart';
 
-class AirconServiceRequest {
+class Request {
   String airconServiceRequestId; // 프로젝트 식별자
   String clientId; // 사용자 식별자
-  String? engineerId = ''; // 엔지니어 식별자
+  String clientPhoneNumber; // 고객의 전화번호
+  String streetAddress; // 고객의 기본 주소
+  String detailedAddress; // 고객의 상세 주소
   String serviceType; // 서비스 유형
   String airconType; // 에어컨 유형
   String brandName; // 브랜드 이름
@@ -11,15 +13,19 @@ class AirconServiceRequest {
   String desiredServiceDate; // 서비스 희망 날짜
   String addressKey; // 주소 키
   String requestSubmissionDate; // 의뢰서 제출 날짜
+  String? engineerId = ''; // 엔지니어 식별자
   String? acceptanceDate = ''; // 기사님이 수락한 날짜
   String? serviceCompletionDate = ''; // 서비스를 완료한 날짜
   String? currentProgress = ''; // 현재 진행 상태
   String? servicePrice = ''; // 기사님이 적는 가격
   String? engineerMemo = ''; // 기사님이 적는 특이사항
 
-  AirconServiceRequest({
+  Request({
     required this.airconServiceRequestId,
     required this.clientId,
+    required this.clientPhoneNumber,
+    required this.streetAddress,
+    required this.detailedAddress,
     this.engineerId,
     required this.serviceType,
     required this.airconType,
@@ -57,10 +63,13 @@ class AirconServiceRequest {
   }
 
   // 파이어베이스에서 가져온 Map타입을 변경
-  factory AirconServiceRequest.fromMap(Map<String, dynamic> map) {
-    return AirconServiceRequest(
+  factory Request.fromMap(Map<String, dynamic> map) {
+    return Request(
       airconServiceRequestId: map['airconServiceRequestId'],
       clientId: map['clientId'],
+      clientPhoneNumber: map['clientPhoneNumber'],
+      streetAddress: map['streetAddress'],
+      detailedAddress: map['detailedAddress'],
       engineerId: map['engineerId'],
       serviceType: map['serviceType'],
       airconType: map['airconType'],
