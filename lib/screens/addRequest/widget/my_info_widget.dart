@@ -1,21 +1,36 @@
-import 'package:coner_client/view_models/client_view_model.dart';
+import 'package:coner_client/configs/router/route_names.dart';
+import 'package:coner_client/provider/client_provider.dart';
+import 'package:coner_client/utils/dialog_util.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../theme/font_styles.dart';
+import '../../../theme/app_text_styles.dart';
 
 class MyInfoWidget extends StatelessWidget {
   const MyInfoWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final displayClient = Provider.of<ClientViewModel>(context);
+    final clientProvider = Provider.of<ClientProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("주소", style: title2Bold), Text("수정하기", style: body1BoldGrey)],
+          children: [
+            Text("주소", style: AppTextStyles.s1Bold),
+            GestureDetector(
+              onTap: () {
+                if (clientProvider.clientId == '') {
+                  DialogUtil.logInDialog(context);
+                } else {
+                  context.pushNamed(RouteNames.profileUpdate);
+                }
+              },
+              child: Text("수정하기", style: AppTextStyles.b2BoldGrey),
+            ),
+          ],
         ),
         const SizedBox(height: 8),
         TextFormField(
@@ -24,10 +39,8 @@ class MyInfoWidget extends StatelessWidget {
           maxLines: 2,
           enabled: false,
           decoration: InputDecoration(
-            hintText: displayClient.clientAddress == ''
-                ? '서울시 중랑구 중랑천로 43 신성아파트'
-                : displayClient.clientAddress,
-            hintStyle: body1Grey,
+            hintText: clientProvider.clientAddress,
+            hintStyle: AppTextStyles.b1Grey,
           ),
         ),
         const SizedBox(height: 8),
@@ -37,16 +50,26 @@ class MyInfoWidget extends StatelessWidget {
           maxLines: 2,
           enabled: false,
           decoration: InputDecoration(
-            hintText: displayClient.clientDetailAddress == ''
-                ? '102동 901호'
-                : displayClient.clientDetailAddress,
-            hintStyle: body1Grey,
+            hintText: clientProvider.clientDetailAddress,
+            hintStyle: AppTextStyles.b1Grey,
           ),
         ),
         const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("연락처", style: title2Bold), Text("수정하기", style: body1BoldGrey)],
+          children: [
+            Text("연락처", style: AppTextStyles.s1Bold),
+            GestureDetector(
+              onTap: () {
+                if (clientProvider.clientId == '') {
+                  DialogUtil.logInDialog(context);
+                } else {
+                  context.pushNamed(RouteNames.profileUpdate);
+                }
+              },
+              child: Text("수정하기", style: AppTextStyles.b2BoldGrey),
+            ),
+          ],
         ),
         const SizedBox(height: 8),
         TextFormField(
@@ -55,10 +78,8 @@ class MyInfoWidget extends StatelessWidget {
           maxLines: 2,
           enabled: false,
           decoration: InputDecoration(
-            hintText: displayClient.clientPhoneNumber == ''
-                ? '01055430636'
-                : displayClient.clientPhoneNumber,
-            hintStyle: body1Grey,
+            hintText: clientProvider.clientPhoneNumber,
+            hintStyle: AppTextStyles.b1Grey,
           ),
         ),
         const SizedBox(height: 12),

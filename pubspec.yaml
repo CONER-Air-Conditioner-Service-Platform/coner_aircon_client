@@ -41,7 +41,13 @@ dependencies:
   # 애니메이션 위젯
   lottie: ^2.3.2
   animated_custom_dropdown: ^3.0.0
-  #cloud_firestore: ^4.13.6
+  firebase_analytics: ^10.8.8
+  firebase_auth: ^4.17.7
+  cloud_firestore: ^4.15.7
+  firebase_storage: ^11.6.8
+  firebase_core: ^2.26.0
+  shared_preferences: ^2.2.2
+  fluttertoast: ^8.2.4
 
 
 flutter_icons:

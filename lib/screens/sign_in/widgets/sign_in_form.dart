@@ -1,108 +1,91 @@
-import 'package:coner_client/theme/colors.dart';
+import 'package:coner_client/provider/client_provider.dart';
+import 'package:coner_client/screens/widgets/app_buttons.dart';
+import 'package:coner_client/screens/widgets/app_text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../configs/router/route_names.dart';
+import '../../../database/firebase/client_firebase.dart';
 import '../../../provider/phone_verification_provider.dart';
-import '../../../theme/decorations.dart';
-import '../../../theme/font_styles.dart';
+import '../../../theme/app_text_styles.dart';
+import '../../../utils/toast_util.dart';
+import '../../widgets/app_loading_widget.dart';
 
 class SignInForm extends StatefulWidget {
-  SignInForm({super.key});
+  const SignInForm({super.key});
 
   @override
   State<SignInForm> createState() => _SignInFormState();
 }
 
 class _SignInFormState extends State<SignInForm> {
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController verificationCodeController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final controllerPhoneNumber = TextEditingController();
+  final controllerVerificationCode = TextEditingController();
+
   @override
   void dispose() {
-    // TODO: implement dispose
+    controllerPhoneNumber.dispose();
+    controllerVerificationCode.dispose();
     super.dispose();
-    phoneNumberController.dispose();
-    verificationCodeController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final phoneVerification = Provider.of<PhoneVerificationProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          _phoneNumberHelper(phoneVerification),
-          SizedBox(height: 16),
-          if (phoneVerification.isSend) ...[
-            _verificationCodeHelper(phoneVerification),
-            SizedBox(height: 24),
-          ],
-          Container(
-            height: 54,
-            width: double.infinity,
-            decoration: buttonDecoration,
-            child: MaterialButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              onPressed: () {
-                if (phoneVerification.isSend) {
-                  phoneVerification.checkCode();
+    final phoneVerificationProvider = Provider.of<PhoneVerificationProvider>(context);
+    final clientProvider = Provider.of<ClientProvider>(context);
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            AppTextFields.phoneNumber(controllerPhoneNumber, phoneVerificationProvider),
+            const SizedBox(height: 16),
+            if (phoneVerificationProvider.isSend) ...[
+              AppTextFields.verificationCode(controllerVerificationCode, phoneVerificationProvider),
+              const SizedBox(height: 24),
+            ],
+            AppButtons.verification(
+              phoneVerificationProvider,
+              () async {
+                if (_formKey.currentState?.validate() != true) return;
+                if (!phoneVerificationProvider.isSend) {
+                  bool isExist =
+                      await ClientFirebase.checkUserExistWithPhone(controllerPhoneNumber.text);
+                  if (!isExist) {
+                    ToastUtil.basic("해당 전화번호로 계정이 존재하지 않습니다.");
+                    return;
+                  }
+                  phoneVerificationProvider.phoneNumber = controllerPhoneNumber.text;
+                  phoneVerificationProvider.sendCode();
                 } else {
-                  phoneVerification.sendCode();
+                  AppLoadingWidget.loadingClient(context, "로그인중입니다.");
+                  phoneVerificationProvider.verificationCode = controllerVerificationCode.text;
+                  bool isSuccess = await phoneVerificationProvider.checkCode();
+                  if (isSuccess) {
+                    clientProvider.login(controllerPhoneNumber.text);
+                    phoneVerificationProvider.clear();
+                    Navigator.pop(context);
+                    context.goNamed(RouteNames.splash);
+                  } else {
+                    Navigator.pop(context);
+                  }
                 }
               },
-              child: Text(!phoneVerification.isSend ? '인증번호 보내기' : '인증하기', style: title2BoldWhite),
             ),
-          ),
-          SizedBox(height: 16),
-          TextButton(
-            onPressed: () {
-              phoneVerification.clear();
-              context.pushNamed(RouteNames.signUp);
-            },
-            child: Text('회원가입 하러가기', style: body1Button),
-          )
-        ],
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                phoneVerificationProvider.clear();
+                context.pushNamed(RouteNames.signUp);
+              },
+              child: Text('회원가입 하러가기', style: AppTextStyles.b2BoldUnderline),
+            )
+          ],
+        ),
       ),
-    );
-  }
-
-  Widget _phoneNumberHelper(phoneVerification) {
-    return TextFormField(
-      enabled: !phoneVerification.isSend,
-      keyboardType: TextInputType.phone,
-      autofocus: false,
-      validator: (value) {
-        if (value.toString().isEmpty || value.toString().length != 11) {
-          return '전화번호를 입력하여 주세요.';
-        } else {
-          return null;
-        }
-      },
-      minLines: 1,
-      maxLines: 1,
-      controller: phoneNumberController,
-      decoration: InputDecoration(hintText: '전화번호', hintStyle: TextStyle(color: conerGrey)),
-    );
-  }
-
-  Widget _verificationCodeHelper(phoneVerification) {
-    return TextFormField(
-      enabled: !phoneVerification.isVerification,
-      keyboardType: TextInputType.number,
-      autofocus: false,
-      validator: (value) {
-        if (value.toString().isEmpty || value.toString().length != 6) {
-          return '인증번호 6자리를 입력하여 주세요.';
-        } else {
-          return null;
-        }
-      },
-      minLines: 1,
-      maxLines: 1,
-      controller: verificationCodeController,
-      decoration: InputDecoration(hintText: '인증번호 6자리', hintStyle: TextStyle(color: conerGrey)),
     );
   }
 }

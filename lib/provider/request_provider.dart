@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../models/request.dart';
 
-class RequestViewModel with ChangeNotifier {
+class RequestProvider with ChangeNotifier {
   Request request = Request(
     requestId: '',
     service: '청소',
@@ -23,6 +23,7 @@ class RequestViewModel with ChangeNotifier {
     review: '',
     clientId: '',
     engineerId: '',
+    companyId: '',
   );
 
   String get service => request.service;
@@ -54,6 +55,11 @@ class RequestViewModel with ChangeNotifier {
 
   void setAirconBrand(String newValue) {
     request.airconBrand = newValue;
+    notifyListeners();
+  }
+
+  void setDetailInfo(String detailInfo) {
+    request.detailInfo = detailInfo;
     notifyListeners();
   }
 }

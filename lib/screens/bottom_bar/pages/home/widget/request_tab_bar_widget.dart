@@ -1,7 +1,7 @@
 import 'package:coner_client/configs/router/route_names.dart';
-import 'package:coner_client/theme/colors.dart';
-import 'package:coner_client/theme/font_styles.dart';
-import 'package:coner_client/view_models/request_view_model.dart';
+import 'package:coner_client/provider/request_provider.dart';
+import 'package:coner_client/theme/app_colors.dart';
+import 'package:coner_client/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -38,9 +38,9 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
           if (selectedIndex == 0) ...[
             Container(
               decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: conerColor2, width: 4)),
+                border: Border(bottom: BorderSide(color: AppColors.coner2, width: 4)),
               ),
-              child: Text("서비스 별", style: title2BoldMainColor),
+              child: Text("서비스 별", style: AppTextStyles.s1BoldMain),
             ),
             SizedBox(width: 20),
             InkWell(
@@ -49,7 +49,7 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
                 decoration: const BoxDecoration(
                   border: Border(bottom: BorderSide(color: Colors.transparent, width: 4)),
                 ),
-                child: Text("에어컨 별", style: title2),
+                child: Text("에어컨 별", style: AppTextStyles.s1),
               ),
             )
           ] else ...[
@@ -59,15 +59,15 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
                 decoration: const BoxDecoration(
                   border: Border(bottom: BorderSide(color: Colors.transparent, width: 4)),
                 ),
-                child: Text("서비스 별", style: title2),
+                child: Text("서비스 별", style: AppTextStyles.s1),
               ),
             ),
             const SizedBox(width: 20),
             Container(
               decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: conerColor2, width: 4)),
+                border: Border(bottom: BorderSide(color: AppColors.coner2, width: 4)),
               ),
-              child: Text("에어컨 별", style: title2BoldMainColor),
+              child: Text("에어컨 별", style: AppTextStyles.s1BoldMain),
             ),
           ]
         ],
@@ -100,24 +100,24 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
     return GestureDetector(
       onTap: () {
         if (serviceList.contains(value)) {
-          Provider.of<RequestViewModel>(context, listen: false).setService(value);
+          Provider.of<RequestProvider>(context, listen: false).setService(value);
         } else {
-          Provider.of<RequestViewModel>(context, listen: false).setAircon(value);
+          Provider.of<RequestProvider>(context, listen: false).setAircon(value);
         }
         context.pushNamed(RouteNames.addRequest);
       },
       child: Container(
         decoration: BoxDecoration(
-          color: conerColor2,
+          color: AppColors.coner2,
           borderRadius: BorderRadius.circular(10),
         ),
-        width: 120,
-        height: 160,
+        width: 109,
+        height: 136,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(flex: 13, child: Image.asset(image, width: 90, fit: BoxFit.contain)),
-            Expanded(flex: 3, child: Text(value, style: body2BoldWhite))
+            Expanded(flex: 12, child: Image.asset(image, width: 62, fit: BoxFit.contain)),
+            Expanded(flex: 4, child: Text(value, style: AppTextStyles.b2BoldWhite))
           ],
         ),
       ),

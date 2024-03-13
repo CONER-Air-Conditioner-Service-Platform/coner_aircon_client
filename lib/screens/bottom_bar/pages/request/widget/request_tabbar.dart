@@ -1,5 +1,5 @@
 import 'package:coner_client/screens/bottom_bar/pages/request/widget/request_progress.dart';
-import 'package:coner_client/theme/font_styles.dart';
+import 'package:coner_client/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'complete_request_list.dart';
@@ -52,8 +52,8 @@ class _RequestTabbarState extends State<RequestTabbar> with SingleTickerProvider
         controller: tabController,
         tabs: const [Tab(text: "진행중인"), Tab(text: "완료된")],
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-        labelStyle: body1BoldMainColor,
-        unselectedLabelStyle: body1,
+        labelStyle: AppTextStyles.b1BoldMain,
+        unselectedLabelStyle: AppTextStyles.b1,
         indicatorColor: const Color(0xFF00E5FD),
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorPadding: const EdgeInsets.only(left: 20, right: 20),

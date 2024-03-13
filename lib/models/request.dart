@@ -18,6 +18,7 @@ class Request {
   String? review = ''; // 기사님이 적는 특이사항
   String clientId; // 사용자 식별자
   String? engineerId = '';
+  String? companyId = '';
 
   Request({
     required this.requestId,
@@ -39,6 +40,7 @@ class Request {
     this.review,
     required this.clientId,
     this.engineerId,
+    this.companyId,
   }); // 엔지니어 식별자
 
   // 파이어베이스에 저장하기 위해 Map타입으로 변경
@@ -63,6 +65,7 @@ class Request {
       "review": review,
       "clientId": clientId,
       "engineerId": engineerId,
+      "companyId": companyId,
     };
   }
 
@@ -88,6 +91,7 @@ class Request {
       review: map['review'],
       clientId: map['clientId'],
       engineerId: map['engineerId'],
+      companyId: map['companyId'],
     );
   }
 

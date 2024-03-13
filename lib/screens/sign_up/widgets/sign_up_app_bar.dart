@@ -1,20 +1,20 @@
+import 'package:coner_client/theme/app_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../provider/phone_verification_provider.dart';
-import '../../../theme/decorations.dart';
-import '../../../theme/font_styles.dart';
-import '../../../theme/widget_size.dart';
+import '../../../theme/app_decorations.dart';
+import '../../../theme/app_text_styles.dart';
 
 class SignUpAppBar extends StatelessWidget {
   const SignUpAppBar({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: getStatusBarHeight(context) + 12, left: 12, right: 20),
-      decoration: itemBottomRadiusDecoration,
+      padding: EdgeInsets.only(top: AppSize.getStatusBarHeight(context) + 12, left: 12, right: 20),
+      decoration: AppDecorations.bottomRadiusDecoration,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -31,7 +31,7 @@ class SignUpAppBar extends StatelessWidget {
             flex: 1,
             child: Container(
               alignment: Alignment.center,
-              child: Text('회원가입', style: title1Bold),
+              child: Text('회원가입', style: AppTextStyles.b1Bold),
             ),
           ),
           const SizedBox(width: 32),

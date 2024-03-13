@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../theme/font_styles.dart';
+import '../../../../../theme/app_text_styles.dart';
 
 class CompleteRequestList extends StatelessWidget {
   const CompleteRequestList({super.key});
@@ -48,20 +48,20 @@ class CompleteRequestList extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('2023.12.29', style: body1Grey),
+                Text('2023.11.21', style: AppTextStyles.b1Grey),
                 const SizedBox(width: 12),
-                Text('홍길동 기사님', style: body1Grey),
+                Text('홍길동 기사님', style: AppTextStyles.b1Grey),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                Image.asset("assets/images/tag_ceiling.png", fit: BoxFit.contain),
+                Image.asset("assets/images/tag_ceiling.png", height: 22, fit: BoxFit.contain),
                 const SizedBox(width: 4),
-                Image.asset("assets/images/tag_repair.png", fit: BoxFit.contain),
+                Image.asset("assets/images/tag_repair.png", height: 22, fit: BoxFit.contain),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Text('서울시 성북구 안암로 145', style: body1),
+                  child: Text('서울시 성북구 안암로 145', style: AppTextStyles.b1),
                 ),
               ],
             ),

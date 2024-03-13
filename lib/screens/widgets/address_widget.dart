@@ -1,4 +1,4 @@
-import 'package:coner_client/theme/colors.dart';
+import 'package:coner_client/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:kpostal/kpostal.dart';
 
@@ -28,7 +28,7 @@ Widget findAddressHelper(BuildContext context, TextEditingController controller)
       enabled: false,
       decoration: InputDecoration(
         hintText: '주소 검색하기',
-        hintStyle: TextStyle(color: conerGrey),
+        hintStyle: TextStyle(color: AppColors.grey2),
       ),
       controller: controller,
     ),

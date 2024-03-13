@@ -1,10 +1,15 @@
-import 'dart:async';
-
+import 'package:coner_client/provider/client_provider.dart';
+import 'package:coner_client/utils/toast_util.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 import '../configs/router/route_names.dart';
-import '../theme/decorations.dart';
+import '../database/shared_preferences/my_shared_preferences.dart';
+import '../pakages/app_version_check_package.dart';
+import '../theme/app_decorations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,16 +23,35 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(const Duration(seconds: 2), () {
-      context.goNamed(RouteNames.main);
-    });
+    appCheck();
+  }
+
+  void appCheck() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.none) {
+      ToastUtil.basic("인터넷을 연결해주세요.");
+      return;
+    }
+
+    bool isCurrentVersion = await AppVersionCheckPackage.checkAppVersion();
+    if (!isCurrentVersion) {
+      return;
+    }
+    String cid = await MySharedPreferences.getData();
+    Logger().i(cid);
+    if (cid != '') {
+      ClientProvider clientProvider = Provider.of<ClientProvider>(context, listen: false);
+      await clientProvider.getData(cid);
+    }
+    context.goNamed(RouteNames.main);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: conerColorDecoration,
+        decoration: AppDecorations.gradientDecoration,
         alignment: Alignment.center,
         child: Image.asset(
           'assets/images/logo_white.png',

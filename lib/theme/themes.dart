@@ -1,4 +1,4 @@
-import 'package:coner_client/theme/colors.dart';
+import 'package:coner_client/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 ThemeData mainTheme() {
@@ -28,7 +28,7 @@ InputDecorationTheme inputDecorationTheme() {
   );
   OutlineInputBorder fucusedInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
-    borderSide: BorderSide(color: conerColor2),
+    borderSide: BorderSide(color: AppColors.coner2),
   );
 
   return InputDecorationTheme(

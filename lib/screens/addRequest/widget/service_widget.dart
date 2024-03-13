@@ -1,9 +1,10 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:coner_client/provider/request_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../theme/font_styles.dart';
+import '../../../theme/app_text_styles.dart';
 import '../../../utils/service_request_util.dart';
-import '../../../view_models/request_view_model.dart';
 
 class ServiceWidget extends StatefulWidget {
   ServiceWidget({super.key});
@@ -15,36 +16,33 @@ class ServiceWidget extends StatefulWidget {
 class _ServiceWidgetState extends State<ServiceWidget> {
   @override
   Widget build(BuildContext context) {
-    final request = Provider.of<RequestViewModel>(context);
+    final requestProvider = Provider.of<RequestProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("원하는 서비스", style: title2Bold),
+        Text("원하는 서비스", style: AppTextStyles.s1Bold),
         const SizedBox(height: 8),
         Row(
           children: [
             Expanded(
-              child: Container(
-                height: 50,
-                padding: const EdgeInsets.only(top: 10, left: 24, right: 10, bottom: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: const Color(0xffA0A0A0)),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: DropdownButton<String>(
-                  dropdownColor: Colors.white,
-                  focusColor: Colors.white,
-                  value: request.service,
-                  icon: const Icon(Icons.arrow_drop_down),
-                  iconSize: 24,
-                  elevation: 16,
-                  isExpanded: true,
-                  style: body1,
-                  underline: SizedBox(),
-                  onChanged: (String? newValue) => request.setService(newValue!),
-                  items: serviceList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(value: value, child: Text(value));
-                  }).toList(),
+              child: SizedBox(
+                height: 48,
+                child: CustomDropdown(
+                  decoration: CustomDropdownDecoration(
+                    closedBorder: const Border(
+                      right: BorderSide(width: 1, color: Color(0xffA0A0A0)),
+                      left: BorderSide(width: 1, color: Color(0xffA0A0A0)),
+                      top: BorderSide(width: 1, color: Color(0xffA0A0A0)),
+                    ),
+                    expandedBorder: Border.all(width: 1, color: const Color(0xffA0A0A0)),
+                    closedBorderRadius: BorderRadius.circular(10),
+                    expandedBorderRadius: BorderRadius.circular(10),
+                    listItemStyle: AppTextStyles.b1,
+                  ),
+                  initialItem: requestProvider.service,
+                  closedHeaderPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  items: serviceList,
+                  onChanged: (value) => requestProvider.setService(value),
                 ),
               ),
             ),

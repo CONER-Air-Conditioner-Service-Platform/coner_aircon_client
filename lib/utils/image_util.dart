@@ -9,7 +9,7 @@ Widget profileImageWidget(double size, url) {
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/icon_color.png'),
+            image: AssetImage('assets/images/test_image.png'),
             fit: BoxFit.contain,
           ),
         ),

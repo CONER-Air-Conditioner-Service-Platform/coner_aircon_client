@@ -1,7 +1,7 @@
 import 'package:coner_client/screens/bottom_bar/pages/home/widget/request_tab_bar_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../theme/font_styles.dart';
+import '../../../../../theme/app_text_styles.dart';
 
 class RequestWidget extends StatelessWidget {
   const RequestWidget({super.key});
@@ -12,8 +12,8 @@ class RequestWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text('의뢰하기', style: title1Bold),
+          padding: const EdgeInsets.only(left: 20, bottom: 15, top: 4),
+          child: Text('의뢰하기', style: AppTextStyles.h2Bold),
         ),
         const RequestTabBarWidget(),
         SizedBox(height: 8),
