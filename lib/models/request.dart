@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Request {
   String requestId; // 프로젝트 식별자
   String service; // 서비스 유형
@@ -6,7 +8,6 @@ class Request {
   String airconBrand; // 브랜드 이름
   String detailInfo; // 서비스 상세 내용
   String hopeDate; // 서비스 희망 날짜
-  String hopeTime; // 서비스 희망 시간
   String phone; // 고객의 전화번호
   String address; // 고객의 기본 주소
   String detailAddress; // 고객의 상세 주소
@@ -28,7 +29,6 @@ class Request {
     required this.airconBrand,
     required this.detailInfo,
     required this.hopeDate,
-    required this.hopeTime,
     required this.phone,
     required this.address,
     required this.detailAddress,
@@ -53,7 +53,6 @@ class Request {
       "airconBrand": airconBrand,
       "detailInfo": detailInfo,
       "hopeDate": hopeDate,
-      "hopeTime": hopeTime,
       "phone": phone,
       "address": address,
       "detailAddress": detailAddress,
@@ -79,7 +78,6 @@ class Request {
       airconBrand: map['airconBrand'],
       detailInfo: map['detailInfo'],
       hopeDate: map['hopeDate'],
-      hopeTime: map['hopeTime'],
       phone: map['phone'],
       address: map['address'],
       detailAddress: map['detailAddress'],
@@ -95,24 +93,28 @@ class Request {
     );
   }
 
-  // // 파이어베이스에서 가져온 documentSnapshot을 변경
-  // factory AirconServiceRequest.fromSnapshot(DocumentSnapshot documentSnapshot) {
-  //   return AirconServiceRequest(
-  //     airconServiceRequestId: documentSnapshot['airconServiceRequestId'],
-  //     clientId: documentSnapshot['clientId'],
-  //     engineerId: documentSnapshot['engineerId'],
-  //     serviceType: documentSnapshot['serviceType'],
-  //     airconType: documentSnapshot['airconType'],
-  //     brandName: documentSnapshot['brandName'],
-  //     serviceDetails: documentSnapshot['serviceDetails'],
-  //     desiredServiceDate: documentSnapshot['desiredServiceDate'],
-  //     addressKey: documentSnapshot['addressKey'],
-  //     requestSubmissionDate: documentSnapshot['requestSubmissionDate'],
-  //     acceptanceDate: documentSnapshot['acceptanceDate'],
-  //     serviceCompletionDate: documentSnapshot['serviceCompletionDate'],
-  //     currentProgress: documentSnapshot['currentProgress'],
-  //     servicePrice: documentSnapshot['servicePrice'],
-  //     engineerMemo: documentSnapshot['engineerMemo'],
-  //   );
-  // }
+  // 파이어베이스에서 가져온 documentSnapshot을 변경
+  factory Request.fromSnapshot(DocumentSnapshot documentSnapshot) {
+    return Request(
+      requestId: documentSnapshot['requestId'],
+      service: documentSnapshot['service'],
+      aircon: documentSnapshot['aircon'],
+      airconNum: documentSnapshot['airconNum'],
+      airconBrand: documentSnapshot['airconBrand'],
+      detailInfo: documentSnapshot['detailInfo'],
+      hopeDate: documentSnapshot['hopeDate'],
+      phone: documentSnapshot['phone'],
+      address: documentSnapshot['address'],
+      detailAddress: documentSnapshot['detailAddress'],
+      state: documentSnapshot['state'],
+      applicationDate: documentSnapshot['applicationDate'],
+      acceptDate: documentSnapshot['acceptDate'],
+      completeDate: documentSnapshot['completeDate'],
+      memo: documentSnapshot['memo'],
+      review: documentSnapshot['review'],
+      clientId: documentSnapshot['clientId'],
+      engineerId: documentSnapshot['engineerId'],
+      companyId: documentSnapshot['companyId'],
+    );
+  }
 }

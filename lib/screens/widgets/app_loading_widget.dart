@@ -39,6 +39,41 @@ class AppLoadingWidget {
     );
   }
 
+  static void loadingRequest(BuildContext context, String text) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 220,
+                height: 220,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(7),
+                ),
+                child: Column(
+                  children: [
+                    Lottie.asset(
+                      'assets/animations/loading_post.json',
+                      width: 160,
+                      fit: BoxFit.contain,
+                    ),
+                    Text(text, style: AppTextStyles.b2),
+                    Text("잠시만 기다려주세요.", style: AppTextStyles.b2),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   static void verificationOTP(BuildContext context) {
     showDialog(
       context: context,
