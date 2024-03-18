@@ -1,6 +1,7 @@
 import 'package:coner_client/configs/router/page_transition.dart';
 import 'package:coner_client/configs/router/route_names.dart';
 import 'package:coner_client/screens/bottom_bar/bottom_bar.dart';
+import 'package:coner_client/screens/bottom_bar/pages/home/my_request_detail/my_request_detail_screen.dart';
 import 'package:coner_client/screens/sign_in/sign_in_screen.dart';
 import 'package:coner_client/screens/sign_up/sign_up_screen.dart';
 import 'package:coner_client/screens/sign_up/sign_up_success_screen.dart';
@@ -30,6 +31,11 @@ class AppRouter {
             name: RouteNames.addRequest,
             path: RouteNames.addRequest,
             builder: (context, state) => AddRequestScreen(),
+          ),
+          GoRoute(
+            name: RouteNames.myRequestDetail,
+            path: RouteNames.myRequestDetail,
+            builder: (context, state) => MyRequestDetailScreen(),
           ),
           GoRoute(
               name: RouteNames.profileUpdate,

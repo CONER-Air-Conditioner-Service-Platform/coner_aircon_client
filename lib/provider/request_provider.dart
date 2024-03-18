@@ -1,10 +1,13 @@
 import 'package:coner_client/database/firebase/request_firebase.dart';
 import 'package:coner_client/utils/service_request_util.dart';
+import 'package:coner_client/utils/toast_util.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import '../models/request.dart';
 
 class RequestProvider with ChangeNotifier {
+  bool watchData = false;
   Request request = Request(
     requestId: '',
     service: '청소',
@@ -26,7 +29,7 @@ class RequestProvider with ChangeNotifier {
     engineerId: '',
     companyId: '',
   );
-
+  String get requestId => request.requestId;
   String get service => request.service;
   String get aircon => request.aircon;
   int get airconNum => request.airconNum;
@@ -36,6 +39,7 @@ class RequestProvider with ChangeNotifier {
 
   void setHopeDate(String hopeDate) {
     request.hopeDate = hopeDate;
+    Logger().i(hopeDate);
     notifyListeners();
   }
 
@@ -71,6 +75,10 @@ class RequestProvider with ChangeNotifier {
     String detailInfo,
     String clientId,
   ) async {
+    if (hopeDate == '') {
+      ToastUtil.basic("희망 날짜를 선택해주세요.");
+      return false;
+    }
     request.phone = phone;
     request.address = address;
     request.detailAddress = detailAddress;
@@ -105,5 +113,28 @@ class RequestProvider with ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  Future getDataStream(String clientId) async {
+    watchData = true;
+    while (watchData) {
+      request = await RequestFirebase.getCurrentRequest(clientId);
+      notifyListeners();
+    }
+  }
+
+  void offDataStream() {
+    watchData = false;
+    notifyListeners();
+  }
+
+  Future getData(String clientId) async {
+    request = await RequestFirebase.getCurrentRequest(clientId);
+    notifyListeners();
+  }
+
+  void updateData(Request request) {
+    request = request;
+    notifyListeners(); // 데이터가 변경되었음을 알림
   }
 }

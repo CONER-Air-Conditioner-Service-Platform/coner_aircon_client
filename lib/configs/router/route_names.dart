@@ -8,4 +8,5 @@ class RouteNames {
   static const signUpSuccess = 'signUpSuccess';
   static const profileUpdate = "profileUpdate";
   static const profileUpdatePhone = "profileUpdatePhone";
+  static const myRequestDetail = "myRequestDetail";
 }

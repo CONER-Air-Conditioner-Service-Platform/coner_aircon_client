@@ -21,21 +21,45 @@ class RequestFirebase {
   }
 
   /* 데이터 가져오기 */
-  static Future getCurrentRequest(String cid) async {
+  static Future<Request> getCurrentRequest(String cid) async {
+    Request request = Request(
+      requestId: '',
+      service: '청소',
+      aircon: '벽걸이형',
+      airconNum: 1,
+      airconBrand: '삼성전자',
+      detailInfo: '',
+      hopeDate: '',
+      phone: '',
+      address: '',
+      detailAddress: '',
+      state: '서비스 대기중',
+      applicationDate: '',
+      acceptDate: '',
+      completeDate: '',
+      memo: '',
+      review: '',
+      clientId: '',
+      engineerId: '',
+      companyId: '',
+    );
     try {
-      return await collectionReference.where("state", isEqualTo: ["서비스 대기중", "서비스 진행중"]).get().then(
+      request = await collectionReference
+          .where("clientId", isEqualTo: cid)
+          .where("state", whereIn: ["서비스 진행중", "서비스 대기중"])
+          .get()
+          .then(
             (querySnapshot) {
-              if (querySnapshot.docs.isNotEmpty) {
-                for (var docSnapshot in querySnapshot.docs) {
-                  Request request = Request.fromSnapshot(docSnapshot);
-                  return request;
-                }
+              for (var docSnapshot in querySnapshot.docs) {
+                request = Request.fromSnapshot(docSnapshot);
               }
+              return request;
             },
           );
     } catch (e) {
       Logger().e(e);
     }
+    return request;
   }
 
   /* 데이터 삭제 */

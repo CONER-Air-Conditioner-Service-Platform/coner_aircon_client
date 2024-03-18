@@ -2,6 +2,7 @@ import 'package:coner_client/configs/router/route_names.dart';
 import 'package:coner_client/provider/request_provider.dart';
 import 'package:coner_client/theme/app_colors.dart';
 import 'package:coner_client/theme/app_text_styles.dart';
+import 'package:coner_client/utils/dialog_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -97,8 +98,13 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
       );
 
   Widget itemCard(String image, String value) {
+    final requestProvider = Provider.of<RequestProvider>(context, listen: false);
     return GestureDetector(
       onTap: () {
+        if (requestProvider.requestId != '') {
+          DialogUtil.basicDialog(context, "현재 진행중인 의뢰가 있습니다.\n의뢰는 최대 1개까지 진행 가능합니다.");
+          return;
+        }
         if (serviceList.contains(value)) {
           Provider.of<RequestProvider>(context, listen: false).setService(value);
         } else {

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../theme/app_decorations.dart';
 import '../../../../../theme/app_text_styles.dart';
+import '../../../provider/request_provider.dart';
 import '../../../theme/app_size.dart';
 
 class AddRequestAppbarWidget extends StatelessWidget {
@@ -23,7 +24,11 @@ class AddRequestAppbarWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 4),
             child: IconButton(
-              onPressed: () => context.pop(),
+              onPressed: () {
+                Provider.of<RequestProvider>(context, listen: false)
+                    .getDataStream(clientProvider.clientId);
+                context.pop();
+              },
               icon: const Icon(CupertinoIcons.back, size: 24),
             ),
           ),

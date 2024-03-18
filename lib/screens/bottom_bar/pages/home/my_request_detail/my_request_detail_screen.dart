@@ -1,44 +1,39 @@
-import 'package:coner_client/theme/app_colors.dart';
-import 'package:coner_client/theme/app_size.dart';
-import 'package:coner_client/theme/app_text_styles.dart';
+import 'package:coner_client/screens/bottom_bar/pages/home/my_request_detail/widgets/my_request_detail_appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../configs/router/route_names.dart';
 import '../../../../../provider/client_provider.dart';
 import '../../../../../provider/request_provider.dart';
 import '../../../../../theme/app_assets.dart';
+import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_decorations.dart';
+import '../../../../../theme/app_size.dart';
+import '../../../../../theme/app_text_styles.dart';
 
-class RequestProgress extends StatelessWidget {
-  RequestProgress({super.key});
+class MyRequestDetailScreen extends StatefulWidget {
+  const MyRequestDetailScreen({super.key});
 
+  @override
+  State<MyRequestDetailScreen> createState() => _MyRequestDetailScreenState();
+}
+
+class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final clientProvider = Provider.of<ClientProvider>(context);
-    final requestProvider = Provider.of<RequestProvider>(context);
-    requestProvider.getData(clientProvider.clientId);
-    return requestProvider.requestId == ''
-        ? noProgress(context)
-        : requestHelper(context, requestProvider);
-  }
-
-  Widget noProgress(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Scaffold(
+      body: Column(
         children: [
-          Text("아직 진행중인 의뢰가 없습니다!", style: AppTextStyles.b2),
-          TextButton(
-              onPressed: () => context.pushNamed(RouteNames.addRequest),
-              child: Text("의뢰 하러가기", style: AppTextStyles.b1BoldUnderline)),
+          MyRequestDetailAppbarWidget(),
+          Expanded(child: _requestHelper()),
         ],
       ),
     );
   }
 
-  Widget requestHelper(BuildContext context, RequestProvider requestProvider) {
+  Widget _requestHelper() {
+    final requestProvider = Provider.of<RequestProvider>(context);
     String servicePrograss = '';
     switch (requestProvider.request.state) {
       case "서비스 대기중":
@@ -234,3 +229,4 @@ class RequestProgress extends StatelessWidget {
     );
   }
 }
+//버퍼 오버플로우, 안전한 코딩 규칙, 정보시스템 구축 운영 지침

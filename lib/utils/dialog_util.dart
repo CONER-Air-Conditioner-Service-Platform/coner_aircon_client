@@ -235,4 +235,55 @@ class DialogUtil {
       }),
     );
   }
+
+  static void basicDialog(BuildContext context, String content) {
+    showDialog(
+      context: context,
+      barrierDismissible: true, //바깥 영역 터치시 닫을지 여부 결정
+      builder: ((context) {
+        return Dialog(
+          child: Container(
+            width: 300,
+            height: 148,
+            padding: const EdgeInsets.only(top: 20),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text(content, style: AppTextStyles.b2),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.coner2,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text('닫기', style: AppTextStyles.b2BoldWhite),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }),
+    );
+  }
 }

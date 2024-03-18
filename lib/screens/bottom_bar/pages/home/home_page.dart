@@ -16,18 +16,24 @@ class HomePage extends StatelessWidget {
     final clientProvider = Provider.of<ClientProvider>(context);
     return Scaffold(
       backgroundColor: AppColors.grey1,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const HomeAppbarWidget(),
-            const ServicePrograssWidget(),
-            const RequestWidget(),
-            if (clientProvider.clientId != '') ...[
-              const MyRequestsWidget(),
-            ],
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const HomeAppbarWidget(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const ServicePrograssWidget(),
+                  const RequestWidget(),
+                  if (clientProvider.clientId != '') ...[
+                    const MyRequestsWidget(),
+                  ],
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

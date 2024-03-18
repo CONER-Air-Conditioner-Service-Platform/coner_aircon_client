@@ -1,25 +1,32 @@
-import 'package:coner_client/theme/app_assets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../provider/client_provider.dart';
-import '../../../../../theme/app_decorations.dart';
-import '../../../../../theme/app_size.dart';
-import '../../../../../theme/app_text_styles.dart';
+import '../../../../../../provider/client_provider.dart';
+import '../../../../../../theme/app_decorations.dart';
+import '../../../../../../theme/app_size.dart';
+import '../../../../../../theme/app_text_styles.dart';
 
-class RequestAppbarWidget extends StatelessWidget {
-  const RequestAppbarWidget({super.key});
+class MyRequestDetailAppbarWidget extends StatelessWidget {
+  const MyRequestDetailAppbarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     final clientProvider = Provider.of<ClientProvider>(context);
     return Container(
       padding: EdgeInsets.only(
-          top: AppSize.getStatusBarHeight(context) + 20, bottom: 10, left: 20, right: 20),
+          top: AppSize.getStatusBarHeight(context), bottom: 10, left: 20, right: 20),
       decoration: AppDecorations.bottomRadiusDecoration,
       child: Row(
         children: [
-          Image.asset(AppAssets.iconColor, width: 32, fit: BoxFit.contain),
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: IconButton(
+              onPressed: () => context.pop(),
+              icon: const Icon(CupertinoIcons.back, size: 24),
+            ),
+          ),
           Expanded(
             flex: 1,
             child: Row(

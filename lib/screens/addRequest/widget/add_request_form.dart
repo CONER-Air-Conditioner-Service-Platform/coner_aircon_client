@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../configs/router/route_names.dart';
 import '../../../provider/client_provider.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_decorations.dart';
@@ -17,7 +16,6 @@ import '../../../utils/toast_util.dart';
 import 'aircon_widget.dart';
 import 'brand_widget.dart';
 import 'calender_widget.dart';
-import 'detailed_widget.dart';
 import 'my_info_widget.dart';
 
 class AddRequestForm extends StatefulWidget {
@@ -43,6 +41,14 @@ class _AddRequestFormState extends State<AddRequestForm> {
     '서울 성북구',
   ];
   TextEditingController serviceDetailsController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      Provider.of<RequestProvider>(context, listen: false).offDataStream();
+    });
+  }
 
   @override
   void dispose() {
@@ -64,7 +70,7 @@ class _AddRequestFormState extends State<AddRequestForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CalenderWidget(),
+                CalenderWidget(),
                 AirconWidget(),
                 ServiceWidget(),
                 const BrandWidget(),
@@ -147,6 +153,7 @@ class _AddRequestFormState extends State<AddRequestForm> {
                             );
                             Navigator.pop(context);
                             if (isSuccess) {
+                              requestProvider.getDataStream(clientProvider.clientId);
                               context.pop();
                             } else {
                               ToastUtil.basic("의뢰서 등록을 실패하였습니다. 나중에 다시 시도해주세요.");

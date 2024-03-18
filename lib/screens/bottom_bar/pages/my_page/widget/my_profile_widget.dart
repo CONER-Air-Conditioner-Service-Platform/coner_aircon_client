@@ -1,4 +1,5 @@
 import 'package:coner_client/configs/router/route_names.dart';
+import 'package:coner_client/theme/app_assets.dart';
 import 'package:coner_client/theme/app_decorations.dart';
 import 'package:coner_client/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class MyProfileWidget extends StatelessWidget {
           decoration: AppDecorations.profileDecoration,
           width: 156,
           height: 156,
-          child: Image.asset("assets/images/icon_white.png"),
+          child: Image.asset(AppAssets.iconWhite),
         ),
         const SizedBox(height: 16),
         Row(

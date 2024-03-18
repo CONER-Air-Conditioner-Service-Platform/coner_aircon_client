@@ -28,17 +28,13 @@ List<String> airconList = [
   '스탠드형',
   '천장형',
   '창문형',
-  '냉난방기',
   '항온항습기',
-  '2 in 1',
 ];
 List<String> airconImageList = [
   'assets/images/aircon_wall.png',
   'assets/images/aircon_stand.png',
   'assets/images/aircon_ceiling.png',
-  'assets/images/aircon_ceiling.png',
   'assets/images/aircon_conditioner.png',
-  'assets/images/aircon_thermostat.png',
   'assets/images/aircon_thermostat.png',
 ];
 final List<String> brandList = [
@@ -71,6 +67,7 @@ final List<String> airconNumList = [
   '9 대',
   '10 대',
 ];
+
 final List<String> failureSymptoms = [
   "에어컨이 작동하지 않아요.",
   "에어컨에서 이상한 소리가 나요.",
