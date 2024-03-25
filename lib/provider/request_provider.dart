@@ -2,7 +2,6 @@ import 'package:coner_client/database/firebase/request_firebase.dart';
 import 'package:coner_client/utils/service_request_util.dart';
 import 'package:coner_client/utils/toast_util.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 import '../models/request.dart';
 
@@ -29,6 +28,7 @@ class RequestProvider with ChangeNotifier {
     engineerId: '',
     companyId: '',
   );
+  List<Request> requestHistoryList = [];
   String get requestId => request.requestId;
   String get service => request.service;
   String get aircon => request.aircon;
@@ -39,7 +39,6 @@ class RequestProvider with ChangeNotifier {
 
   void setHopeDate(String hopeDate) {
     request.hopeDate = hopeDate;
-    Logger().i(hopeDate);
     notifyListeners();
   }
 
@@ -119,8 +118,14 @@ class RequestProvider with ChangeNotifier {
     watchData = true;
     while (watchData) {
       request = await RequestFirebase.getCurrentRequest(clientId);
+      requestHistoryList = await RequestFirebase.getRequestHistory(clientId);
       notifyListeners();
     }
+  }
+
+  Future getRequestHistory(String clientId) async {
+    requestHistoryList = await RequestFirebase.getRequestHistory(clientId);
+    notifyListeners();
   }
 
   void offDataStream() {

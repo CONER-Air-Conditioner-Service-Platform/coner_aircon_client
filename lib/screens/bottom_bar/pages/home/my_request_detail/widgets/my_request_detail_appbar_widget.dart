@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -16,16 +15,13 @@ class MyRequestDetailAppbarWidget extends StatelessWidget {
     final clientProvider = Provider.of<ClientProvider>(context);
     return Container(
       padding: EdgeInsets.only(
-          top: AppSize.getStatusBarHeight(context), bottom: 10, left: 20, right: 20),
+          top: AppSize.getStatusBarHeight(context) + 28, bottom: 12, left: 20, right: 20),
       decoration: AppDecorations.bottomRadiusDecoration,
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: IconButton(
-              onPressed: () => context.pop(),
-              icon: const Icon(CupertinoIcons.back, size: 24),
-            ),
+          GestureDetector(
+            onTap: () => context.pop(),
+            child: const Icon(CupertinoIcons.back, size: 24),
           ),
           Expanded(
             flex: 1,

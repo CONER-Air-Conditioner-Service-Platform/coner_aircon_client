@@ -10,6 +10,7 @@ import '../../../../../provider/client_provider.dart';
 import '../../../../../provider/request_provider.dart';
 import '../../../../../theme/app_assets.dart';
 import '../../../../../theme/app_decorations.dart';
+import '../../../../../utils/service_request_util.dart';
 
 class RequestProgress extends StatelessWidget {
   RequestProgress({super.key});
@@ -45,7 +46,11 @@ class RequestProgress extends StatelessWidget {
         servicePrograss = AppAssets.serviceProgass1;
         break;
       case "서비스 진행중":
-        servicePrograss = AppAssets.serviceProgass2;
+        if (requestProvider.request.hopeDate == getToday()) {
+          servicePrograss = AppAssets.serviceProgass3;
+        } else {
+          servicePrograss = AppAssets.serviceProgass2;
+        }
         break;
     }
     return Container(

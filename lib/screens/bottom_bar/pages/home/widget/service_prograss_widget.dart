@@ -8,6 +8,7 @@ import '../../../../../provider/client_provider.dart';
 import '../../../../../provider/request_provider.dart';
 import '../../../../../theme/app_assets.dart';
 import '../../../../../theme/app_text_styles.dart';
+import '../../../../../utils/service_request_util.dart';
 
 class ServicePrograssWidget extends StatefulWidget {
   const ServicePrograssWidget({super.key});
@@ -74,7 +75,11 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
         servicePrograss = AppAssets.serviceProgass1;
         break;
       case "서비스 진행중":
-        servicePrograss = AppAssets.serviceProgass2;
+        if (requestProvider.request.hopeDate == getToday()) {
+          servicePrograss = AppAssets.serviceProgass3;
+        } else {
+          servicePrograss = AppAssets.serviceProgass2;
+        }
         break;
     }
     return Padding(

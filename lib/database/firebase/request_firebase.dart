@@ -62,6 +62,32 @@ class RequestFirebase {
     return request;
   }
 
+  static Future<List<Request>> getRequestHistory(String cid) async {
+    List<Request> requestList = [];
+    try {
+      await collectionReference
+          .where("clientId", isEqualTo: cid)
+          .where("state", isEqualTo: "서비스 완료")
+          .orderBy("completeDate", descending: true)
+          .get()
+          .then(
+        (querySnapshot) {
+          for (var docSnapshot in querySnapshot.docs) {
+            if (docSnapshot.data() == null) {
+              return requestList;
+            }
+            final data = docSnapshot.data();
+            requestList.add(Request.fromMap(data));
+          }
+        },
+        onError: (e) => Logger().e("Error completing: $e"),
+      );
+    } catch (e) {
+      Logger().e(e);
+    }
+    return requestList;
+  }
+
   /* 데이터 삭제 */
   static Future delete(String requestId) async {
     bool isSuccess = false;

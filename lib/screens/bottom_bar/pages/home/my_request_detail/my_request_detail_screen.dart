@@ -1,4 +1,5 @@
 import 'package:coner_client/screens/bottom_bar/pages/home/my_request_detail/widgets/my_request_detail_appbar_widget.dart';
+import 'package:coner_client/utils/service_request_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
     return Scaffold(
       body: Column(
         children: [
-          MyRequestDetailAppbarWidget(),
+          const MyRequestDetailAppbarWidget(),
           Expanded(child: _requestHelper()),
         ],
       ),
@@ -40,7 +41,11 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
         servicePrograss = AppAssets.serviceProgass1;
         break;
       case "서비스 진행중":
-        servicePrograss = AppAssets.serviceProgass2;
+        if (requestProvider.request.hopeDate == getToday()) {
+          servicePrograss = AppAssets.serviceProgass3;
+        } else {
+          servicePrograss = AppAssets.serviceProgass2;
+        }
         break;
     }
     return Container(
