@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1406397932",
+    "project_id": "coner-2f144",
+    "storage_bucket": "coner-2f144.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1406397932:android:1f7bbfc0b5b813658264c9",
+        "android_client_info": {
+          "package_name": "com.coner.aircon.client.coner_client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNdbUxYdA2Q8pwLkXOPYqfn-8FczU8uNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

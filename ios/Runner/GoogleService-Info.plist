@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyA5Uaz57w7kggnaZf9M2YRF6M2Ryv-B4FE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1406397932</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.coner.aircon.client</string>
+	<key>PROJECT_ID</key>
+	<string>coner-2f144</string>
+	<key>STORAGE_BUCKET</key>
+	<string>coner-2f144.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1406397932:ios:ee2e1663bf1c602a8264c9</string>
+</dict>
+</plist>
