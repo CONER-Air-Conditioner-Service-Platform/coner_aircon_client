@@ -1,6 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:coner_client/provider/request_provider.dart';
-import 'package:coner_client/screens/addRequest/widget/service_widget.dart';
+import 'package:coner_client/screens/add_request/widget/service_widget.dart';
 import 'package:coner_client/screens/widgets/app_loading_widget.dart';
 import 'package:coner_client/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -8,25 +8,25 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../provider/client_provider.dart';
-import '../../../theme/app_colors.dart';
 import '../../../theme/app_decorations.dart';
 import '../../../utils/dialog_util.dart';
 import '../../../utils/service_request_util.dart';
-import '../../../utils/toast_util.dart';
 import 'aircon_widget.dart';
 import 'brand_widget.dart';
 import 'calender_widget.dart';
 import 'my_info_widget.dart';
+import 'update_request_image_list_widget.dart';
 
-class AddRequestForm extends StatefulWidget {
-  AddRequestForm({super.key});
+class UpdateRequestForm extends StatefulWidget {
+  UpdateRequestForm({super.key});
 
   @override
-  State<AddRequestForm> createState() => _AddRequestFormState();
+  State<UpdateRequestForm> createState() => _UpdateRequestFormState();
 }
 
-class _AddRequestFormState extends State<AddRequestForm> {
+class _UpdateRequestFormState extends State<UpdateRequestForm> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController serviceDetailsController = TextEditingController();
 
   List<String> scopeOfServiceLocation = [
     '서울 도봉구',
@@ -40,13 +40,15 @@ class _AddRequestFormState extends State<AddRequestForm> {
     '서울 노원구',
     '서울 성북구',
   ];
-  TextEditingController serviceDetailsController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      Provider.of<RequestProvider>(context, listen: false).offDataStream();
+      final requestProvider = Provider.of<RequestProvider>(context, listen: false);
+      requestProvider.offDataStream();
+      serviceDetailsController = TextEditingController(text: requestProvider.detailInfo);
     });
   }
 
@@ -70,7 +72,7 @@ class _AddRequestFormState extends State<AddRequestForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CalenderWidget(),
+                const CalenderWidget(),
                 AirconWidget(),
                 ServiceWidget(),
                 const BrandWidget(),
@@ -82,11 +84,7 @@ class _AddRequestFormState extends State<AddRequestForm> {
                     height: 48,
                     child: CustomDropdown(
                       decoration: CustomDropdownDecoration(
-                        closedBorder: const Border(
-                          right: BorderSide(width: 1, color: Color(0xffA0A0A0)),
-                          left: BorderSide(width: 1, color: Color(0xffA0A0A0)),
-                          top: BorderSide(width: 1, color: Color(0xffA0A0A0)),
-                        ),
+                        closedBorder: Border.all(width: 1, color: const Color(0xffA0A0A0)),
                         expandedBorder: Border.all(width: 1, color: const Color(0xffA0A0A0)),
                         closedBorderRadius: BorderRadius.circular(10),
                         expandedBorderRadius: BorderRadius.circular(10),
@@ -96,14 +94,16 @@ class _AddRequestFormState extends State<AddRequestForm> {
                       hintText: "고장 증상 선택",
                       closedHeaderPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       items: failureSymptoms,
-                      onChanged: (value) => requestProvider.setDetailInfo("$value\n"),
+                      onChanged: (value) => requestProvider.setRepairMessage("$value\n"),
                     ),
                   ),
-                  const SizedBox(height: 16),
                 ],
+                const SizedBox(height: 16),
                 Text("추가적인 정보와 요청사항", style: AppTextStyles.s1Bold),
                 const SizedBox(height: 8),
                 _serviceDetailedHelper(),
+                const SizedBox(height: 16),
+                const UpdateRequestImageListWidget(),
                 const SizedBox(height: 40),
                 Container(
                   alignment: Alignment.center,
@@ -144,7 +144,7 @@ class _AddRequestFormState extends State<AddRequestForm> {
                               DialogUtil.logInDialog(context);
                             }
                             AppLoadingWidget.loadingRequest(context, "의뢰서 등록중입니다.");
-                            bool isSuccess = await requestProvider.add(
+                            bool isSuccess = await requestProvider.update(
                               clientProvider.clientPhoneNumber,
                               clientProvider.clientAddress,
                               clientProvider.clientDetailAddress,
@@ -155,8 +155,6 @@ class _AddRequestFormState extends State<AddRequestForm> {
                             if (isSuccess) {
                               requestProvider.getDataStream(clientProvider.clientId);
                               context.pop();
-                            } else {
-                              ToastUtil.basic("의뢰서 등록을 실패하였습니다. 나중에 다시 시도해주세요.");
                             }
                           },
                           child: Text('의뢰하기', style: AppTextStyles.s1BoldWhite),
@@ -184,10 +182,9 @@ class _AddRequestFormState extends State<AddRequestForm> {
           return null;
         }
       },
-      minLines: 5,
-      maxLines: 5,
+      minLines: 6,
+      maxLines: 6,
       controller: serviceDetailsController,
-      decoration: InputDecoration(hintStyle: TextStyle(color: AppColors.grey2)),
     );
   }
 }

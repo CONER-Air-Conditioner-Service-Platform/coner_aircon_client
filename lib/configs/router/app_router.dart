@@ -5,10 +5,12 @@ import 'package:coner_client/screens/bottom_bar/pages/home/my_request_detail/my_
 import 'package:coner_client/screens/sign_in/sign_in_screen.dart';
 import 'package:coner_client/screens/sign_up/sign_up_screen.dart';
 import 'package:coner_client/screens/sign_up/sign_up_success_screen.dart';
-import 'package:coner_client/screens/splash_screen.dart';
+import 'package:coner_client/screens/splash/splash_screen.dart';
+import 'package:coner_client/screens/update_request/update_request_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../screens/addRequest/add_request_screen.dart';
+import '../../screens/add_request/add_request_screen.dart';
+import '../../screens/add_request/request_image_example/request_example_image_screen.dart';
 import '../../screens/profile_update/profile_update_phone/profile_update_phone_screen.dart';
 import '../../screens/profile_update/profile_update_screen.dart';
 
@@ -31,23 +33,36 @@ class AppRouter {
             name: RouteNames.addRequest,
             path: RouteNames.addRequest,
             builder: (context, state) => AddRequestScreen(),
+            routes: [
+              GoRoute(
+                name: RouteNames.requestExampleImage,
+                path: RouteNames.requestExampleImage,
+                builder: (context, state) => const RequestExampleImageScreen(),
+              ),
+            ],
+          ),
+          GoRoute(
+            name: RouteNames.updateRequest,
+            path: RouteNames.updateRequest,
+            builder: (context, state) => UpdateRequestScreen(),
           ),
           GoRoute(
             name: RouteNames.myRequestDetail,
             path: RouteNames.myRequestDetail,
-            builder: (context, state) => MyRequestDetailScreen(),
+            builder: (context, state) => const MyRequestDetailScreen(),
           ),
           GoRoute(
-              name: RouteNames.profileUpdate,
-              path: RouteNames.profileUpdate,
-              builder: (context, state) => const ProfileUpdateScreen(),
-              routes: [
-                GoRoute(
-                  name: RouteNames.profileUpdatePhone,
-                  path: RouteNames.profileUpdatePhone,
-                  builder: (context, state) => const ProfileUpdatePhoneScreen(),
-                ),
-              ]),
+            name: RouteNames.profileUpdate,
+            path: RouteNames.profileUpdate,
+            builder: (context, state) => const ProfileUpdateScreen(),
+            routes: [
+              GoRoute(
+                name: RouteNames.profileUpdatePhone,
+                path: RouteNames.profileUpdatePhone,
+                builder: (context, state) => const ProfileUpdatePhoneScreen(),
+              ),
+            ],
+          ),
           GoRoute(
             name: RouteNames.signIn,
             path: RouteNames.signIn,

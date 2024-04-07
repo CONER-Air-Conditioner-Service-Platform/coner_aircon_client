@@ -11,7 +11,7 @@ class Request {
   String phone; // 고객의 전화번호
   String address; // 고객의 기본 주소
   String detailAddress; // 고객의 상세 주소
-  String state = '서비스 대기중'; // 현재 진행 상태
+  String state; // 현재 진행 상태
   String applicationDate; // 의뢰서 제출 일시
   String? acceptDate = ''; // 기사님이 수락한 날짜
   String? completeDate = ''; // 서비스를 완료한 날짜
@@ -20,6 +20,7 @@ class Request {
   String clientId; // 사용자 식별자
   String? engineerId = '';
   String? companyId = '';
+  List<String> requestImageList = [];
 
   Request({
     required this.requestId,
@@ -41,6 +42,7 @@ class Request {
     required this.clientId,
     this.engineerId,
     this.companyId,
+    required this.requestImageList,
   }); // 엔지니어 식별자
 
   // 파이어베이스에 저장하기 위해 Map타입으로 변경
@@ -65,6 +67,7 @@ class Request {
       "clientId": clientId,
       "engineerId": engineerId,
       "companyId": companyId,
+      "requestImageList": requestImageList,
     };
   }
 
@@ -90,6 +93,7 @@ class Request {
       clientId: map['clientId'],
       engineerId: map['engineerId'],
       companyId: map['companyId'],
+      requestImageList: List<String>.from(map['requestImageList']),
     );
   }
 
@@ -115,6 +119,7 @@ class Request {
       clientId: documentSnapshot['clientId'],
       engineerId: documentSnapshot['engineerId'],
       companyId: documentSnapshot['companyId'],
+      requestImageList: List<String>.from(documentSnapshot['requestImageList']),
     );
   }
 }

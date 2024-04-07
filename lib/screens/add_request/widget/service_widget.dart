@@ -29,11 +29,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 height: 48,
                 child: CustomDropdown(
                   decoration: CustomDropdownDecoration(
-                    closedBorder: const Border(
-                      right: BorderSide(width: 1, color: Color(0xffA0A0A0)),
-                      left: BorderSide(width: 1, color: Color(0xffA0A0A0)),
-                      top: BorderSide(width: 1, color: Color(0xffA0A0A0)),
-                    ),
+                    closedBorder: Border.all(width: 1, color: const Color(0xffA0A0A0)),
                     expandedBorder: Border.all(width: 1, color: const Color(0xffA0A0A0)),
                     closedBorderRadius: BorderRadius.circular(10),
                     expandedBorderRadius: BorderRadius.circular(10),

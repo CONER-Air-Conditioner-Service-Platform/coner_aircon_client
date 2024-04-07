@@ -1,10 +1,11 @@
 import 'package:coner_client/screens/bottom_bar/pages/home/my_request_detail/widgets/my_request_detail_appbar_widget.dart';
+import 'package:coner_client/utils/dialog_util.dart';
 import 'package:coner_client/utils/service_request_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../provider/client_provider.dart';
+import '../../../../../configs/router/route_names.dart';
 import '../../../../../provider/request_provider.dart';
 import '../../../../../theme/app_assets.dart';
 import '../../../../../theme/app_colors.dart';
@@ -22,7 +23,6 @@ class MyRequestDetailScreen extends StatefulWidget {
 class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final clientProvider = Provider.of<ClientProvider>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -64,7 +64,6 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
               if (requestProvider.request.state == '서비스 진행중') ...[
                 _engineerInfoHelper(context),
               ],
-              SizedBox(height: 40),
               Text("방문 희망 예정일", style: AppTextStyles.s1Bold),
               const SizedBox(height: 8),
               _infoHelper(requestProvider.hopeDate),
@@ -78,6 +77,10 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
                   Expanded(child: _infoHelper("${requestProvider.airconNum} 대")),
                 ],
               ),
+              const SizedBox(height: 16),
+              Text("원하는 서비스", style: AppTextStyles.s1Bold),
+              const SizedBox(height: 8),
+              _infoHelper(requestProvider.service),
               const SizedBox(height: 16),
               Text("브랜드", style: AppTextStyles.s1Bold),
               const SizedBox(height: 8),
@@ -105,24 +108,60 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
                 ),
                 child: Text(requestProvider.detailInfo, style: AppTextStyles.b1),
               ),
+              const SizedBox(height: 16),
+              if (requestProvider.request.requestImageList.length > 0) ...[
+                Text("추가 관련 사진", style: AppTextStyles.s1Bold),
+                const SizedBox(height: 8),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (String requestImage in requestProvider.request.requestImageList) ...[
+                        Image.network(requestImage, height: 120, fit: BoxFit.fitHeight),
+                        const SizedBox(width: 8),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
               const SizedBox(height: 20),
               Container(
                 alignment: Alignment.center,
                 child: Text("의뢰서 수정은 기사님 배정 전까지만 가능합니다.", style: AppTextStyles.b2),
               ),
               const SizedBox(height: 20),
-              Center(
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 52,
-                  width: 230,
-                  decoration: AppDecorations.buttonDecoration(const Color(0xffD9D9D9)),
-                  child: MaterialButton(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onPressed: () => context.pop(),
-                    child: Text('수정하기', style: AppTextStyles.s1BoldWhite),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: AppDecorations.buttonDecoration(Colors.redAccent),
+                      child: MaterialButton(
+                        height: 52,
+                        minWidth: double.infinity,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onPressed: () => DialogUtil.requestDeleteDialog(context, true),
+                        child: Text('의뢰 삭제', style: AppTextStyles.b1BoldWhite),
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    flex: 7,
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: AppDecorations.buttonDecoration(const Color(0xffD9D9D9)),
+                      child: MaterialButton(
+                        height: 52,
+                        minWidth: double.infinity,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onPressed: () => context.pushNamed(RouteNames.updateRequest),
+                        child: Text('수정하기', style: AppTextStyles.s1BoldWhite),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
             ],

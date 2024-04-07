@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/client_provider.dart';
+import '../provider/request_provider.dart';
 import '../screens/widgets/app_loading_widget.dart';
 
 class DialogUtil {
@@ -221,6 +222,87 @@ class DialogUtil {
                               ),
                               alignment: Alignment.center,
                               child: Text('회원탈퇴', style: AppTextStyles.b2BoldWhite),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+  static void requestDeleteDialog(BuildContext context1, bool isPop) {
+    showDialog(
+      context: context1,
+      barrierDismissible: true, //바깥 영역 터치시 닫을지 여부 결정
+      builder: ((context) {
+        return Dialog(
+          child: Container(
+            width: 300,
+            height: 148,
+            padding: const EdgeInsets.only(top: 20),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text('정말로 의뢰서를 삭제하시겠습니까?', style: AppTextStyles.b2),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.grey2,
+                                borderRadius:
+                                    const BorderRadius.only(bottomLeft: Radius.circular(10)),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text('취소', style: AppTextStyles.b2White),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () async {
+                              final clientProvider =
+                                  Provider.of<ClientProvider>(context, listen: false);
+                              final requestProvider =
+                                  Provider.of<RequestProvider>(context, listen: false);
+                              Navigator.pop(context);
+                              AppLoadingWidget.loadingRequest(context1, "의뢰서 삭제중입니다.");
+                              await requestProvider.delete();
+                              Navigator.pop(context1);
+                              if (isPop) {
+                                Navigator.pop(context1);
+                                requestProvider.getData(clientProvider.clientId);
+                                requestProvider.getDataStream(clientProvider.clientId);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius:
+                                    const BorderRadius.only(bottomRight: Radius.circular(10)),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text('의뢰서 삭제', style: AppTextStyles.b2BoldWhite),
                             ),
                           ),
                         ),

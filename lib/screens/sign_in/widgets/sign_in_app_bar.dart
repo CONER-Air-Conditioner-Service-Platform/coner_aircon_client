@@ -13,7 +13,7 @@ class SignInAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: AppSize.getStatusBarHeight(context) + 12, left: 12, right: 20),
+      padding: EdgeInsets.only(top: 12, left: 12, right: 20),
       decoration: AppDecorations.bottomRadiusDecoration,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

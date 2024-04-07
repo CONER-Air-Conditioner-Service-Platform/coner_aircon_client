@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-import '../configs/router/route_names.dart';
-import '../database/shared_preferences/my_shared_preferences.dart';
-import '../pakages/app_version_check_package.dart';
-import '../theme/app_decorations.dart';
+import '../../configs/router/route_names.dart';
+import '../../database/shared_preferences/my_shared_preferences.dart';
+import '../../pakages/app_version_check_package.dart';
+import '../../theme/app_decorations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

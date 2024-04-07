@@ -19,16 +19,6 @@ class ServicePrograssWidget extends StatefulWidget {
 
 class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final clientProvider = Provider.of<ClientProvider>(context, listen: false);
-      Provider.of<RequestProvider>(context, listen: false).getDataStream(clientProvider.clientId);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final clientProvider = Provider.of<ClientProvider>(context);
     final requestProvider = Provider.of<RequestProvider>(context);
@@ -52,7 +42,7 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
     }
     switch (requestProvider.service) {
       case "청소":
-        serviceTag = AppAssets.tagInstallation;
+        serviceTag = AppAssets.tagClean;
         break;
       case "설치":
         serviceTag = AppAssets.tagInstallation;

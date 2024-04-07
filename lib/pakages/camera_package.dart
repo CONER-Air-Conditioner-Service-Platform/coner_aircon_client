@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CameraPakage {
+class CameraPackage {
   static Future<File?> getImage(List<File?> images) async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     File? img = File(image!.path);
@@ -15,6 +15,15 @@ class CameraPakage {
   }
 
   static Future<List<File>> getImages(List<File?> images) async {
+    final images = await ImagePicker().pickMultiImage();
+    List<File> imgs = [];
+    for (XFile image in images) {
+      imgs.add(File(image.path));
+    }
+    return imgs;
+  }
+
+  static Future<List<File>> getImagesWithCrop(List<File?> images) async {
     final images = await ImagePicker().pickMultiImage();
     List<File> imgs = [];
     for (XFile image in images) {

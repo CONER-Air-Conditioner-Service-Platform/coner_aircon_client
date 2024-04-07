@@ -1,3 +1,4 @@
+import 'package:coner_client/provider/request_provider.dart';
 import 'package:coner_client/screens/bottom_bar/pages/home/widget/home_app_bar_widget.dart';
 import 'package:coner_client/screens/bottom_bar/pages/home/widget/my_requests_widget.dart';
 import 'package:coner_client/screens/bottom_bar/pages/home/widget/request_widget.dart';
@@ -14,6 +15,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final clientProvider = Provider.of<ClientProvider>(context);
+    final requestProvider = Provider.of<RequestProvider>(context);
     return Scaffold(
       backgroundColor: AppColors.grey1,
       body: Column(
@@ -26,7 +28,8 @@ class HomePage extends StatelessWidget {
                 children: [
                   const ServicePrograssWidget(),
                   const RequestWidget(),
-                  if (clientProvider.clientId != '') ...[
+                  if (clientProvider.clientId != '' &&
+                      requestProvider.requestHistoryList.length > 0) ...[
                     const MyRequestsWidget(),
                   ],
                 ],

@@ -13,7 +13,6 @@ class MyRequestsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final clientProvider = Provider.of<ClientProvider>(context);
     final requestProvider = Provider.of<RequestProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -32,7 +31,7 @@ class MyRequestsWidget extends StatelessWidget {
               requestItem(requestProvider.requestHistoryList[i]),
               const SizedBox(height: 8),
             ],
-          ]
+          ],
         ],
       ),
     );

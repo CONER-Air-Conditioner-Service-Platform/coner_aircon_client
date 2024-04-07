@@ -18,10 +18,16 @@ class AppAssets {
   static const tagThermostat = "assets/images/tag_thermostat.png"; // 항온항습기
 
   /* 서비스 종류 태그 */
+  static const tagClean = "assets/images/tag_clean.png"; // 설치
   static const tagInstallation = "assets/images/tag_installation.png"; // 설치
   static const tagRepair = "assets/images/tag_repair.png"; // 수리
   static const tagRelocation = "assets/images/tag_relocation.png"; // 이전
   static const tagRemoval = "assets/images/tag_removal.png"; // 철거
   static const tagInspection = "assets/images/tag_inspection.png"; // 점검
   static const tagGasRefilling = "assets/images/tag_gas_refilling.png"; // 가스보충
+
+  /* 의뢰서 예시 사진 */
+  static const requestExampleImage1 = "assets/images/request_example_image1.jpeg";
+  static const requestExampleImage2 = "assets/images/request_example_image2.jpeg";
+  static const requestExampleImage3 = "assets/images/request_example_image3.jpeg";
 }

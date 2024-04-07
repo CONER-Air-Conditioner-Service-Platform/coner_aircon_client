@@ -1,4 +1,4 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Client {
   String clientId; // 고객의 고유 식별자
@@ -41,15 +41,15 @@ class Client {
     );
   }
 
-  // 파이어베이스에서 가져온 documentSnapshot을 변경
-  // factory Client.fromSnapshot(DocumentSnapshot documentSnapshot) {
-  //   return Client(
-  //     clientId: documentSnapshot['clientId'],
-  //     clientPhoneNumber: documentSnapshot['clientPhoneNumber'],
-  //     clientName: documentSnapshot['clientName'],
-  //     streetAddress: documentSnapshot['streetAddress'],
-  //     detailedAddress: documentSnapshot['detailedAddress'],
-  //     registrationDate: documentSnapshot['registrationDate'],
-  //   );
-  // }
+  //파이어베이스에서 가져온 documentSnapshot을 변경
+  factory Client.fromSnapshot(DocumentSnapshot documentSnapshot) {
+    return Client(
+      clientId: documentSnapshot['clientId'],
+      clientPhoneNumber: documentSnapshot['clientPhoneNumber'],
+      clientName: documentSnapshot['clientName'],
+      clientAddress: documentSnapshot['clientAddress'],
+      clientDetailAddress: documentSnapshot['clientDetailAddress'],
+      clientSignUpDate: documentSnapshot['clientSignUpDate'],
+    );
+  }
 }
