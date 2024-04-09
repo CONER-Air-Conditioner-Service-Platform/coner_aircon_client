@@ -42,7 +42,13 @@ class RequestProvider with ChangeNotifier {
     review: '',
     clientId: '',
     engineerId: '',
+    engineerName: '',
+    engineerPhone: '',
+    engineerProfileImage: '',
     companyId: '',
+    companyName: '',
+    companyAddress: '',
+    companyDetailAddress: '',
     requestImageList: [],
   );
   List<Request> requestHistoryList = [];
@@ -54,6 +60,19 @@ class RequestProvider with ChangeNotifier {
   String get airconBrand => request.airconBrand;
   String get detailInfo => request.detailInfo;
   String get hopeDate => request.hopeDate;
+  String get clientPhone => request.phone;
+  String get clientAddress => request.address;
+  String get clientDetailAddress => request.detailAddress;
+  String get clientState => request.state;
+  String get clientApplicationDate => request.applicationDate;
+  String get clientAcceptDate => request.acceptDate ?? '';
+  String get clientCompleteDate => request.completeDate ?? '';
+  String get engineerName => request.engineerName ?? '';
+  String get engineerPhone => request.engineerPhone ?? '';
+  String get engineerProfileImage => request.engineerProfileImage ?? '';
+  String get companyName => request.companyName ?? '';
+  String get companyAddress => request.companyAddress ?? '';
+  String get companyDetailAddress => request.companyDetailAddress ?? '';
 
   void setRepairMessage(String repairMessage) {
     repairMessage = repairMessage;
@@ -245,7 +264,13 @@ class RequestProvider with ChangeNotifier {
       review: '',
       clientId: '',
       engineerId: '',
+      engineerName: '',
+      engineerPhone: '',
+      engineerProfileImage: '',
       companyId: '',
+      companyName: '',
+      companyAddress: '',
+      companyDetailAddress: '',
       requestImageList: [],
     );
     notifyListeners();

@@ -57,6 +57,28 @@ class _AddRequestFormState extends State<AddRequestForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: const Color(0xffA0A0A0)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      Text("서비스 제공 지역 안내", style: AppTextStyles.s1Bold),
+                      SizedBox(height: 4),
+                      Text("현재 코너 기사님은 아래 지역에서만 활동하고 있습니다.", style: AppTextStyles.b2),
+                      SizedBox(height: 8),
+                      Text("다른 지역은 의뢰 수락이 제한되거나 늦어질 수 있는 점 양해 부탁드립니다.", style: AppTextStyles.b2),
+                      SizedBox(height: 12),
+                      Text("서울 강북지역", style: AppTextStyles.b1BoldUnderline),
+                      Text("도봉구, 동대문구, 은평구, 강북구, 관악구, 광진구, 종로구, 중랑구, 노원구, 성북구",
+                          style: AppTextStyles.b2),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16),
                 const CalenderWidget(),
                 AirconWidget(),
                 ServiceWidget(),

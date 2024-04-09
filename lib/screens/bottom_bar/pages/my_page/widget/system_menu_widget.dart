@@ -19,7 +19,7 @@ class SystemMenuWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextButton(
-              onPressed: () => context.pushNamed(RouteNames.signIn),
+              onPressed: () => context.pushNamed(RouteNames.privacyPolicy),
               child: Text('개인정보처리방침', style: AppTextStyles.b1)),
         ],
       ),

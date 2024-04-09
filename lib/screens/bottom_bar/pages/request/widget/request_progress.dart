@@ -4,8 +4,10 @@ import 'package:coner_client/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../configs/router/route_names.dart';
+import '../../../../../models/request.dart';
 import '../../../../../provider/request_provider.dart';
 import '../../../../../theme/app_assets.dart';
 import '../../../../../theme/app_decorations.dart';
@@ -52,7 +54,6 @@ class RequestProgress extends StatelessWidget {
         break;
     }
     return Container(
-      color: AppColors.grey1,
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 10),
@@ -65,8 +66,9 @@ class RequestProgress extends StatelessWidget {
                 child: Image.asset(servicePrograss),
               ),
               if (requestProvider.request.state == '서비스 진행중') ...[
-                _engineerInfoHelper(context),
+                _engineerInfoHelper(context, requestProvider.request),
               ],
+              const SizedBox(height: 8),
               Text("방문 희망 예정일", style: AppTextStyles.s1Bold),
               const SizedBox(height: 8),
               _infoHelper(requestProvider.hopeDate),
@@ -187,7 +189,7 @@ class RequestProgress extends StatelessWidget {
     );
   }
 
-  Widget _engineerInfoHelper(BuildContext context) {
+  Widget _engineerInfoHelper(BuildContext context, Request request) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -207,13 +209,32 @@ class RequestProgress extends StatelessWidget {
               color: AppColors.coner2,
               borderRadius: BorderRadius.circular(100),
             ),
-            child: Image.asset(AppAssets.iconWhite),
+            child: request.engineerProfileImage == null
+                ? Image.asset(AppAssets.iconWhite)
+                : CircleAvatar(
+                    backgroundColor: AppColors.coner2,
+                    radius: 100,
+                    child: ClipOval(
+                      child: Image.network(
+                        request.engineerProfileImage!,
+                        height: 128,
+                        fit: BoxFit.fitHeight,
+                        loadingBuilder:
+                            (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(child: Image.asset(AppAssets.iconWhite));
+                        },
+                      ),
+                    ),
+                  ),
           ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("서진형 ", style: AppTextStyles.h2Bold),
+              Text("${request.engineerName} ", style: AppTextStyles.h2Bold),
               Text("기사님", style: AppTextStyles.h2),
             ],
           ),
@@ -226,15 +247,20 @@ class RequestProgress extends StatelessWidget {
               children: [
                 Icon(Icons.phone_android_rounded, color: AppColors.grey2),
                 const SizedBox(width: 8),
-                Container(width: 120, child: Text("01012341234", style: AppTextStyles.b2Bold)),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xffD9D9D9),
-                    borderRadius: BorderRadius.circular(10),
+                    width: 120,
+                    child: Text("${request.engineerPhone}", style: AppTextStyles.b2Bold)),
+                GestureDetector(
+                  onTap: () => launch("tel://${request.engineerPhone}"),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffD9D9D9),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text("전화 연결", style: AppTextStyles.c1BoldWhite),
                   ),
-                  child: Text("전화 연결", style: AppTextStyles.c1BoldWhite),
-                )
+                ),
               ],
             ),
           ),
@@ -247,11 +273,12 @@ class RequestProgress extends StatelessWidget {
               children: [
                 Icon(Icons.business_center_rounded, color: AppColors.grey2),
                 const SizedBox(width: 8),
-                Container(width: 160, child: Text("코너-에어컨 서비스 플랫폼", style: AppTextStyles.b2)),
+                Text("${request.companyName}", style: AppTextStyles.b2),
               ],
             ),
           ),
-          Text("경기 시흥시 정왕동 1571-7 201호", style: AppTextStyles.c1Grey),
+          Text("${request.companyAddress} ${request.companyDetailAddress}",
+              style: AppTextStyles.c1Grey),
           const SizedBox(height: 28),
           Container(
               padding: const EdgeInsets.all(16),
@@ -267,8 +294,8 @@ class RequestProgress extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("의뢰서 수락 날짜", style: AppTextStyles.c1White),
-                  Text("2024-3-15", style: AppTextStyles.b1BoldWhite),
+                  Text("의뢰서 수락 날짜", style: AppTextStyles.c1BoldWhite),
+                  Text("${request.acceptDate}", style: AppTextStyles.b1BoldWhite),
                 ],
               ))
         ],

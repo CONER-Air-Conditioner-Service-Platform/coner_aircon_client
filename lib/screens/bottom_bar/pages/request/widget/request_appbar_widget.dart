@@ -26,8 +26,8 @@ class RequestAppbarWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('${clientProvider.clientName == '' ? "방문자 님" : clientProvider.clientName} 님',
-                    style: AppTextStyles.b2Bold),
-                Text('의 의뢰서', style: AppTextStyles.b2),
+                    style: AppTextStyles.s1Bold),
+                Text('의 의뢰서', style: AppTextStyles.s1),
               ],
             ),
           ),

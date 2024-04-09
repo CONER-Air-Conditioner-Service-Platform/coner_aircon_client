@@ -19,7 +19,13 @@ class Request {
   String? review = ''; // 기사님이 적는 특이사항
   String clientId; // 사용자 식별자
   String? engineerId = '';
+  String? engineerName = '';
+  String? engineerPhone = '';
+  String? engineerProfileImage = '';
   String? companyId = '';
+  String? companyName = '';
+  String? companyAddress = '';
+  String? companyDetailAddress = '';
   List<String> requestImageList = [];
 
   Request({
@@ -41,7 +47,13 @@ class Request {
     this.review,
     required this.clientId,
     this.engineerId,
+    this.engineerName,
+    this.engineerPhone,
+    this.engineerProfileImage,
     this.companyId,
+    this.companyName,
+    this.companyAddress,
+    this.companyDetailAddress,
     required this.requestImageList,
   }); // 엔지니어 식별자
 
@@ -66,7 +78,13 @@ class Request {
       "review": review,
       "clientId": clientId,
       "engineerId": engineerId,
+      "engineerName": engineerName,
+      "engineerPhone": engineerPhone,
+      "engineerProfileImage": engineerProfileImage,
       "companyId": companyId,
+      "companyName": companyName,
+      "companyAddress": companyAddress,
+      "companyDetailAddress": companyDetailAddress,
       "requestImageList": requestImageList,
     };
   }
@@ -92,7 +110,13 @@ class Request {
       review: map['review'],
       clientId: map['clientId'],
       engineerId: map['engineerId'],
+      engineerName: map['engineerName'],
+      engineerPhone: map['engineerPhone'],
+      engineerProfileImage: map['engineerProfileImage'],
       companyId: map['companyId'],
+      companyName: map['companyName'],
+      companyAddress: map['companyAddress'],
+      companyDetailAddress: map['companyDetailAddress'],
       requestImageList: List<String>.from(map['requestImageList']),
     );
   }
@@ -118,7 +142,13 @@ class Request {
       review: documentSnapshot['review'],
       clientId: documentSnapshot['clientId'],
       engineerId: documentSnapshot['engineerId'],
+      engineerName: documentSnapshot['engineerName'],
+      engineerPhone: documentSnapshot['engineerPhone'],
+      engineerProfileImage: documentSnapshot['engineerProfileImage'],
       companyId: documentSnapshot['companyId'],
+      companyName: documentSnapshot['companyName'],
+      companyAddress: documentSnapshot['companyAddress'],
+      companyDetailAddress: documentSnapshot['companyDetailAddress'],
       requestImageList: List<String>.from(documentSnapshot['requestImageList']),
     );
   }

@@ -11,4 +11,7 @@ class RouteNames {
   static const profileUpdatePhone = "profileUpdatePhone";
   static const myRequestDetail = "myRequestDetail";
   static const requestExampleImage = "requestExampleImage";
+  static const inquiry = "inquiry";
+  static const notice = "notice";
+  static const privacyPolicy = "privacyPolicy";
 }

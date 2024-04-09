@@ -1,5 +1,7 @@
+import 'package:coner_client/configs/router/route_names.dart';
 import 'package:coner_client/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../theme/app_decorations.dart';
 
@@ -16,8 +18,13 @@ class ClientMenuWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextButton(onPressed: () {}, child: Text('공지사항', style: AppTextStyles.b1)),
-          TextButton(onPressed: () {}, child: Text('문의하기', style: AppTextStyles.b1)),
+          TextButton(
+              onPressed: () => context.pushNamed(RouteNames.notice),
+              child: Text('공지사항', style: AppTextStyles.b1)),
+          TextButton(
+            onPressed: () => context.pushNamed(RouteNames.inquiry),
+            child: Text('문의하기', style: AppTextStyles.b1),
+          ),
         ],
       ),
     );

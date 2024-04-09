@@ -4,8 +4,10 @@ import 'package:coner_client/utils/service_request_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../configs/router/route_names.dart';
+import '../../../../../models/request.dart';
 import '../../../../../provider/request_provider.dart';
 import '../../../../../theme/app_assets.dart';
 import '../../../../../theme/app_colors.dart';
@@ -62,7 +64,7 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
                 child: Image.asset(servicePrograss),
               ),
               if (requestProvider.request.state == '서비스 진행중') ...[
-                _engineerInfoHelper(context),
+                _engineerInfoHelper(context, requestProvider.request),
               ],
               Text("방문 희망 예정일", style: AppTextStyles.s1Bold),
               const SizedBox(height: 8),
@@ -184,7 +186,7 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
     );
   }
 
-  Widget _engineerInfoHelper(BuildContext context) {
+  Widget _engineerInfoHelper(BuildContext context, Request request) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -194,9 +196,9 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text("배정된 기사님 정보", style: AppTextStyles.b1Bold),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             width: 128,
             height: 128,
@@ -204,17 +206,36 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
               color: AppColors.coner2,
               borderRadius: BorderRadius.circular(100),
             ),
-            child: Image.asset(AppAssets.iconWhite),
+            child: request.engineerProfileImage == null
+                ? Image.asset(AppAssets.iconWhite)
+                : CircleAvatar(
+                    backgroundColor: AppColors.coner2,
+                    radius: 100,
+                    child: ClipOval(
+                      child: Image.network(
+                        request.engineerProfileImage!,
+                        height: 128,
+                        fit: BoxFit.fitHeight,
+                        loadingBuilder:
+                            (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(child: Image.asset(AppAssets.iconWhite));
+                        },
+                      ),
+                    ),
+                  ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("서진형 ", style: AppTextStyles.h2Bold),
+              Text("${request.engineerName} ", style: AppTextStyles.h2Bold),
               Text("기사님", style: AppTextStyles.h2),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppSize.ratioOfHorizontal(context, 0.079)),
             child: Row(
@@ -222,20 +243,25 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.phone_android_rounded, color: AppColors.grey2),
-                SizedBox(width: 8),
-                Container(width: 120, child: Text("01012341234", style: AppTextStyles.b2Bold)),
+                const SizedBox(width: 8),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: Color(0xffD9D9D9),
-                    borderRadius: BorderRadius.circular(10),
+                    width: 120,
+                    child: Text("${request.engineerPhone}", style: AppTextStyles.b2Bold)),
+                GestureDetector(
+                  onTap: () => launch("tel://${request.engineerPhone}"),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffD9D9D9),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text("전화 연결", style: AppTextStyles.c1BoldWhite),
                   ),
-                  child: Text("전화 연결", style: AppTextStyles.c1BoldWhite),
-                )
+                ),
               ],
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppSize.ratioOfHorizontal(context, 0.079)),
             child: Row(
@@ -243,15 +269,16 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.business_center_rounded, color: AppColors.grey2),
-                SizedBox(width: 8),
-                Container(width: 160, child: Text("코너-에어컨 서비스 플랫폼", style: AppTextStyles.b2)),
+                const SizedBox(width: 8),
+                Text("${request.companyName}", style: AppTextStyles.b2),
               ],
             ),
           ),
-          Text("경기 시흥시 정왕동 1571-7 201호", style: AppTextStyles.c1Grey),
-          SizedBox(height: 28),
+          Text("${request.companyAddress} ${request.companyDetailAddress}",
+              style: AppTextStyles.c1Grey),
+          const SizedBox(height: 28),
           Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               width: double.infinity,
               height: 76,
               decoration: BoxDecoration(
@@ -264,8 +291,8 @@ class _MyRequestDetailScreenState extends State<MyRequestDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("의뢰서 수락 날짜", style: AppTextStyles.c1White),
-                  Text("2024-3-15", style: AppTextStyles.b1BoldWhite),
+                  Text("의뢰서 수락 날짜", style: AppTextStyles.c1BoldWhite),
+                  Text("${request.acceptDate}", style: AppTextStyles.b1BoldWhite),
                 ],
               ))
         ],

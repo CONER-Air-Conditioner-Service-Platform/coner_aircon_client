@@ -1,5 +1,4 @@
 import 'package:coner_client/models/request.dart';
-import 'package:coner_client/provider/client_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -89,9 +88,9 @@ class MyRequestsWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('2023.11.21', style: AppTextStyles.b2Grey),
+              Text('${request.completeDate}', style: AppTextStyles.b2Grey),
               const SizedBox(width: 12),
-              Text('홍길동 기사님', style: AppTextStyles.b2Grey),
+              Text('${request.engineerName} 기사님', style: AppTextStyles.b2Grey),
             ],
           ),
           const SizedBox(height: 12),
