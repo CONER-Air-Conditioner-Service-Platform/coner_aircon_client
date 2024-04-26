@@ -7,14 +7,19 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SignUpAppBar(),
-          SizedBox(height: 24),
-          Expanded(child: SignUpForm()),
-        ],
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SignUpAppBar(),
+            SizedBox(height: 24),
+            Expanded(
+              child: SignUpForm(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:coner_client/database/firebase/request_firebase.dart';
+import 'package:coner_client/utils/dialog_util.dart';
 import 'package:coner_client/utils/service_request_util.dart';
-import 'package:coner_client/utils/toast_util.dart';
 import 'package:flutter/material.dart';
 
 import '../models/request.dart';
 import '../pakages/camera_package.dart';
+import '../screens/widgets/app_loading_widget.dart';
 
 class RequestProvider with ChangeNotifier {
   List<String> scopeOfServiceLocation = [
@@ -25,16 +26,16 @@ class RequestProvider with ChangeNotifier {
   String repairMessage = '';
   Request request = Request(
     requestId: '',
-    service: '청소',
+    service: '설치',
     aircon: '벽걸이형',
-    airconNum: 1,
+    airconNum: 0,
     airconBrand: '삼성전자',
     detailInfo: '',
     hopeDate: '',
     phone: '',
     address: '',
     detailAddress: '',
-    state: '서비스 대기중',
+    state: '',
     applicationDate: '',
     acceptDate: '',
     completeDate: '',
@@ -73,9 +74,13 @@ class RequestProvider with ChangeNotifier {
   String get companyName => request.companyName ?? '';
   String get companyAddress => request.companyAddress ?? '';
   String get companyDetailAddress => request.companyDetailAddress ?? '';
+  String get state => request.state ?? '';
+  void setRequest(Request request) {
+    this.request = request;
+  }
 
   void setRepairMessage(String repairMessage) {
-    repairMessage = repairMessage;
+    this.repairMessage = repairMessage;
     notifyListeners();
   }
 
@@ -125,6 +130,7 @@ class RequestProvider with ChangeNotifier {
   }
 
   Future<bool> add(
+    BuildContext context,
     String phone,
     String address,
     String detailAddress,
@@ -132,11 +138,15 @@ class RequestProvider with ChangeNotifier {
     String clientId,
   ) async {
     if (hopeDate == '') {
-      ToastUtil.basic("희망 날짜를 선택해주세요.");
+      DialogUtil.basicDialog(context, "희망 날짜를 선택해주세요.");
       return false;
     }
     if (detailInfo == '') {
-      ToastUtil.basic("요청사항을 작성해주세요.");
+      DialogUtil.basicDialog(context, "요청사항을 작성해주세요.");
+      return false;
+    }
+    if (request.airconNum == 0) {
+      DialogUtil.basicDialog(context, "에어컨 수를 선택해주세요..");
       return false;
     }
     bool isAvailable = false;
@@ -146,16 +156,21 @@ class RequestProvider with ChangeNotifier {
       }
     }
     if (!isAvailable) {
-      ToastUtil.basic("서비스 가능 지역이 아닙니다.");
+      DialogUtil.basicDialog(context, "서비스 가능 지역이 아닙니다.");
       return false;
     }
+
+    AppLoadingWidget.loadingRequest(context);
+
     request.phone = phone;
+    request.state = "서비스 대기중";
     request.address = address;
     request.detailAddress = detailAddress;
-    request.detailInfo = request.detailInfo + detailInfo;
+    request.detailInfo = service == '수리' ? repairMessage + detailInfo : detailInfo;
     request.applicationDate = getToday();
     request.clientId = clientId;
     bool isSuccess = await RequestFirebase.add(request, requestImageFileList);
+    Navigator.pop(context);
     if (isSuccess) {
       getData(clientId);
       requestImageFileList = [];
@@ -167,6 +182,7 @@ class RequestProvider with ChangeNotifier {
   }
 
   Future<bool> update(
+    BuildContext context,
     String phone,
     String address,
     String detailAddress,
@@ -174,13 +190,20 @@ class RequestProvider with ChangeNotifier {
     String clientId,
   ) async {
     if (hopeDate == '') {
-      ToastUtil.basic("희망 날짜를 선택해주세요.");
+      DialogUtil.basicDialog(context, "희망 날짜를 선택해주세요.");
       return false;
     }
+
     if (detailInfo == '') {
-      ToastUtil.basic("요청사항을 작성해주세요.");
+      DialogUtil.basicDialog(context, "요청사항을 작성해주세요.");
       return false;
     }
+
+    if (request.airconNum == 0) {
+      DialogUtil.basicDialog(context, "에어컨 수를 선택해주세요..");
+      return false;
+    }
+
     bool isAvailable = false;
     for (String location in scopeOfServiceLocation) {
       if (address.contains(location)) {
@@ -188,10 +211,11 @@ class RequestProvider with ChangeNotifier {
       }
     }
     if (!isAvailable) {
-      ToastUtil.basic("서비스 가능 지역이 아닙니다.");
+      DialogUtil.basicDialog(context, "서비스 가능 지역이 아닙니다.");
       return false;
     }
     request.phone = phone;
+    request.state = "서비스 대기중";
     request.address = address;
     request.detailAddress = detailAddress;
     request.detailInfo = service == '수리' ? repairMessage + detailInfo : detailInfo;
@@ -208,32 +232,19 @@ class RequestProvider with ChangeNotifier {
     }
   }
 
-  Future getDataStream(String clientId) async {
-    watchData = true;
-    while (watchData) {
-      Request newRequest = await RequestFirebase.getCurrentRequest(clientId);
-      List<Request> newRequestHistoryList = await RequestFirebase.getRequestHistory(clientId);
-      if (request.state != newRequest.state ||
-          requestHistoryList.length != newRequestHistoryList.length) {
-        request = newRequest;
-        requestHistoryList = newRequestHistoryList;
-        notifyListeners();
-      }
-    }
-  }
-
   Future getRequestHistory(String clientId) async {
     requestHistoryList = await RequestFirebase.getRequestHistory(clientId);
     notifyListeners();
   }
 
-  void offDataStream() {
-    watchData = false;
-    notifyListeners();
-  }
-
   Future getData(String clientId) async {
-    request = await RequestFirebase.getCurrentRequest(clientId);
+    Request? newRequest = await RequestFirebase.getCurrentRequest(clientId);
+    if (newRequest != null) {
+      if (newRequest!.state != '') {
+        request = newRequest!;
+      }
+    }
+
     notifyListeners();
   }
 
@@ -256,7 +267,7 @@ class RequestProvider with ChangeNotifier {
       phone: '',
       address: '',
       detailAddress: '',
-      state: '서비스 대기중',
+      state: '',
       applicationDate: '',
       acceptDate: '',
       completeDate: '',

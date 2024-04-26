@@ -19,10 +19,19 @@ class CompleteRequestList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (Request request in requestProvider.requestHistoryList) ...[
-              requestItem(request),
-              const SizedBox(height: 8),
-            ],
+            if (requestProvider.requestHistoryList.length != 0) ...[
+              for (Request request in requestProvider.requestHistoryList) ...[
+                requestItem(request),
+                const SizedBox(height: 8),
+              ],
+            ] else ...[
+              Center(
+                child: Text(
+                  "아직 완료된 의뢰가 없어요!",
+                  style: AppTextStyles.s1,
+                ),
+              )
+            ]
           ],
         ),
       ),

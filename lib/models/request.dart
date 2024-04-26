@@ -27,7 +27,6 @@ class Request {
   String? companyAddress = '';
   String? companyDetailAddress = '';
   List<String> requestImageList = [];
-
   Request({
     required this.requestId,
     required this.service,

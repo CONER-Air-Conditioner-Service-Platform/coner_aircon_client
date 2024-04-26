@@ -1,6 +1,7 @@
 import 'package:coner_client/provider/client_provider.dart';
 import 'package:coner_client/screens/widgets/app_buttons.dart';
 import 'package:coner_client/screens/widgets/app_text_fields.dart';
+import 'package:coner_client/utils/dialog_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,6 @@ import '../../../configs/router/route_names.dart';
 import '../../../database/firebase/client_firebase.dart';
 import '../../../provider/phone_verification_provider.dart';
 import '../../../theme/app_text_styles.dart';
-import '../../../utils/toast_util.dart';
 import '../../widgets/app_loading_widget.dart';
 
 class SignInForm extends StatefulWidget {
@@ -50,27 +50,27 @@ class _SignInFormState extends State<SignInForm> {
             AppButtons.verification(
               phoneVerificationProvider,
               () async {
+                FocusScope.of(context).unfocus();
                 if (_formKey.currentState?.validate() != true) return;
+                AppLoadingWidget.loadingClient(context);
                 if (!phoneVerificationProvider.isSend) {
                   bool isExist =
                       await ClientFirebase.checkUserExistWithPhone(controllerPhoneNumber.text);
                   if (!isExist) {
-                    ToastUtil.basic("해당 전화번호로 계정이 존재하지 않습니다.");
+                    Navigator.pop(context);
+                    DialogUtil.basicDialog(context, "해당 전화번호로 계정이 존재하지 않습니다.");
                     return;
                   }
                   phoneVerificationProvider.phoneNumber = controllerPhoneNumber.text;
-                  phoneVerificationProvider.sendCode();
+                  await phoneVerificationProvider.sendCode(context);
                 } else {
-                  AppLoadingWidget.loadingClient(context, "로그인중입니다.");
                   phoneVerificationProvider.verificationCode = controllerVerificationCode.text;
-                  bool isSuccess = await phoneVerificationProvider.checkCode();
+                  bool isSuccess = await phoneVerificationProvider.checkCode(context);
                   if (isSuccess) {
-                    clientProvider.login(controllerPhoneNumber.text);
+                    clientProvider.login(context, controllerPhoneNumber.text);
                     phoneVerificationProvider.clear();
                     Navigator.pop(context);
                     context.goNamed(RouteNames.splash);
-                  } else {
-                    Navigator.pop(context);
                   }
                 }
               },

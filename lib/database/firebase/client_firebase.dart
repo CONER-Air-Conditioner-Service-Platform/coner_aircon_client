@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coner_client/database/shared_preferences/my_shared_preferences.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/client.dart';
+import '../../provider/client_provider.dart';
 
 class ClientFirebase {
   ClientFirebase._();
@@ -25,18 +28,27 @@ class ClientFirebase {
 
   /* 데이터 가져오기 */
   static Future getData(String cid) async {
+    Client client = Client(
+      clientId: '',
+      clientPhoneNumber: '',
+      clientName: '',
+      clientAddress: '',
+      clientDetailAddress: '',
+      clientSignUpDate: '',
+    );
     try {
       DocumentReference docRef = collectionReference.doc(cid);
-      return await docRef.get().then((DocumentSnapshot doc) {
+      client = await docRef.get().then((DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
-        Client client = Client.fromMap(data);
+        Client newClient = Client.fromMap(data);
         // 파이어스토어에서 가져오기 완료 시, SharedPreferences에 저장
-        MySharedPreferences.setData(client.clientId);
-        return client;
+        MySharedPreferences.setData(newClient.clientId);
+        return newClient;
       });
     } catch (e) {
       Logger().e(e);
     }
+    return client;
   }
 
   /* 데이터 삭제 */
@@ -89,7 +101,7 @@ class ClientFirebase {
   }
 
   /* 유저 관리 */
-  static Future login(String phone) async {
+  static Future login(BuildContext context, String phone) async {
     try {
       String cid = '';
       await collectionReference.where("clientPhoneNumber", isEqualTo: phone).get().then(
@@ -101,6 +113,7 @@ class ClientFirebase {
           }
         },
       );
+      Provider.of<ClientProvider>(context, listen: false).setCId(cid);
       return getData(cid);
     } catch (e) {
       Logger().e(e);
@@ -109,12 +122,14 @@ class ClientFirebase {
 
   /* 데이터 체크 */
   // 전화번호가 데이터베이스에 등록되어 있는지 확인
-  static Future checkUserExistWithPhone(String phone) async {
+  static Future<bool> checkUserExistWithPhone(String phone) async {
     try {
       return await collectionReference.where("clientPhoneNumber", isEqualTo: phone).get().then(
         (querySnapshot) {
           if (querySnapshot.docs.isNotEmpty) {
             return true;
+          } else {
+            return false;
           }
         },
       );

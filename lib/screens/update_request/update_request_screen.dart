@@ -8,12 +8,15 @@ class UpdateRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const UpdateRequestAppbarWidget(),
-          UpdateRequestForm(),
-        ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const UpdateRequestAppbarWidget(),
+            UpdateRequestForm(),
+          ],
+        ),
       ),
     );
   }

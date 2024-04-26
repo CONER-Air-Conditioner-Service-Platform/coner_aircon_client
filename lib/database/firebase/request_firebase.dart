@@ -39,12 +39,12 @@ class RequestFirebase {
     try {
       DocumentReference docRef = collectionReference.doc(request.requestId);
 
+      request.requestImageList.clear();
       //Storage에 사진 저장
       for (int i = 0; i < requestImageList.length; i++) {
         await _uploadImageFile(request.requestId, 'requestImageList$i', requestImageList[i]!)
             .then((value) {
           if (value != null) {
-            request.requestImageList.clear();
             request.requestImageList.add(value);
           }
         });
@@ -58,19 +58,19 @@ class RequestFirebase {
   }
 
   /* 데이터 가져오기 */
-  static Future<Request> getCurrentRequest(String cid) async {
+  static Future<Request?> getCurrentRequest(String cid) async {
     Request request = Request(
       requestId: '',
-      service: '청소',
+      service: '설치',
       aircon: '벽걸이형',
-      airconNum: 1,
+      airconNum: 0,
       airconBrand: '삼성전자',
       detailInfo: '',
       hopeDate: '',
       phone: '',
       address: '',
       detailAddress: '',
-      state: '서비스 대기중',
+      state: '',
       applicationDate: '',
       acceptDate: '',
       completeDate: '',
@@ -78,7 +78,13 @@ class RequestFirebase {
       review: '',
       clientId: '',
       engineerId: '',
+      engineerName: '',
+      engineerPhone: '',
+      engineerProfileImage: '',
       companyId: '',
+      companyName: '',
+      companyAddress: '',
+      companyDetailAddress: '',
       requestImageList: [],
     );
     try {
@@ -96,6 +102,9 @@ class RequestFirebase {
           );
     } catch (e) {
       Logger().e(e);
+    }
+    if (request.clientId == '') {
+      return null;
     }
     return request;
   }

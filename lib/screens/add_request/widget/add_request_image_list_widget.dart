@@ -21,7 +21,7 @@ class AddRequestImageListWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("추가 관련 사진", style: AppTextStyles.s1Bold),
+            Text("추가 관련 사진(선택)", style: AppTextStyles.s1Bold),
             GestureDetector(
               onTap: () => context.pushNamed(RouteNames.requestExampleImage),
               child: Text("예시 보기", style: AppTextStyles.b1BoldUnderline),

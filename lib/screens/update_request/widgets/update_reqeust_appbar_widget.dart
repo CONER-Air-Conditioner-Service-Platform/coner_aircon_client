@@ -26,7 +26,6 @@ class UpdateRequestAppbarWidget extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 final requestProvider = Provider.of<RequestProvider>(context, listen: false);
-                requestProvider.getDataStream(clientProvider.clientId);
                 requestProvider.clearRequestImage();
                 context.pop();
               },

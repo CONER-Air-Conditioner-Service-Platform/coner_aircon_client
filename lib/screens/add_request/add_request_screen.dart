@@ -8,12 +8,15 @@ class AddRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const AddRequestAppbarWidget(),
           AddRequestForm(),
         ],
+      ),
       ),
     );
   }

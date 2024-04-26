@@ -59,16 +59,16 @@ flutter_icons:
   image_path: "assets/images/icon_color.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
-    generate: true
+    generate: false
     image_path: "assets/images/icon_color.png"
     background_color: "#ffffff"
     theme_color: "#ffffff"
   windows:
-    generate: true
+    generate: false
     image_path: "assets/images/icon_color.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
-    generate: true
+    generate: false
     image_path: "assets/images/icon_color.png"
 
   cupertino_icons: ^1.0.2

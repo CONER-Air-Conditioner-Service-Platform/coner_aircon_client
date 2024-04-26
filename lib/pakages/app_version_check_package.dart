@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:package_info/package_info.dart';
 
 class AppVersionCheckPackage {
-  static Future checkAppVersion() async {
+  static Future<bool> checkAppVersion() async {
+    bool isPossible = false;
     DocumentReference docRef =
         FirebaseFirestore.instance.collection("version").doc("release_version");
     String str_minAppVersion = "", str_latestAppVersion = "";
@@ -28,10 +29,9 @@ class AppVersionCheckPackage {
       // 허용된 낮은 버전과 제일 높은 버전 사이에 현재 버전이 있을 시, 데이터를 불러오기.
       // 아닐 시, 업데이트 하라는 화면으로 이동.
       if (minVersion <= verion && verion <= latestAppVersion) {
-        return true;
-      } else {
-        return false;
+        isPossible = true;
       }
     }
+    return isPossible;
   }
 }

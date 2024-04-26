@@ -128,7 +128,8 @@ class _ProfileUpdateFormState extends State<ProfileUpdateForm> {
             child: MaterialButton(
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               onPressed: () async {
-                AppLoadingWidget.loadingClient(context, "회원 정보 업데이트중입니다.");
+                FocusScope.of(context).unfocus();
+                AppLoadingWidget.loadingClient(context);
                 final clientProvider = Provider.of<ClientProvider>(context, listen: false);
                 bool isSuccess = await clientProvider.update(
                     controllerName.text, controllerAddress.text, controllerDetailAddress.text);

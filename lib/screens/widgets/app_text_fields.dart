@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kpostal/kpostal.dart';
 
 import '../../provider/phone_verification_provider.dart';
@@ -14,6 +15,7 @@ class AppTextFields {
       enabled: !phoneVerification.isSend,
       keyboardType: TextInputType.phone,
       autofocus: false,
+      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
       validator: (value) {
         if (value.toString().isEmpty || value.toString().length != 11) {
           return '전화번호를 입력하여 주세요.';
@@ -23,7 +25,12 @@ class AppTextFields {
       },
       minLines: 1,
       maxLines: 1,
-      decoration: InputDecoration(hintText: '전화번호', hintStyle: AppTextStyles.b1Grey),
+      maxLength: 11,
+      decoration: InputDecoration(
+        hintText: '전화번호',
+        hintStyle: AppTextStyles.b1Grey,
+        counterText: '',
+      ),
       style: AppTextStyles.b1,
     );
   }
@@ -34,6 +41,7 @@ class AppTextFields {
       controller: controller,
       enabled: !phoneVerification.isVerification,
       keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
       autofocus: false,
       validator: (value) {
         if (value.toString().isEmpty || value.toString().length != 6) {
@@ -44,7 +52,12 @@ class AppTextFields {
       },
       minLines: 1,
       maxLines: 1,
-      decoration: InputDecoration(hintText: '인증번호 6자리', hintStyle: AppTextStyles.b1Grey),
+      maxLength: 6,
+      decoration: InputDecoration(
+        hintText: '인증번호 6자리',
+        hintStyle: AppTextStyles.b1Grey,
+        counterText: '',
+      ),
       style: AppTextStyles.b1,
     );
   }

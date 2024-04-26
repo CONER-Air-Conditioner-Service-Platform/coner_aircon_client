@@ -45,6 +45,11 @@ class ClientProvider with ChangeNotifier {
     }
   }
 
+  void setCId(String cid) {
+    client.clientId = cid;
+    notifyListeners();
+  }
+
   Future<bool> update(
     String clientName,
     String clientAddress,
@@ -84,8 +89,8 @@ class ClientProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> login(String phone) async {
-    client = await ClientFirebase.login(phone);
+  Future<bool> login(BuildContext context, String phone) async {
+    client = await ClientFirebase.login(context, phone);
     if (client.clientId != '') {
       notifyListeners();
       return true;

@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+import '../theme/app_assets.dart';
+
 String getToday() {
   DateTime now = DateTime.now();
   DateFormat format = DateFormat('yyyy-MM-dd');
@@ -79,3 +81,59 @@ final List<String> failureSymptoms = [
   "에어컨 온도 조절이 잘 안돼요.",
   "기타",
 ];
+
+(String, String, String) tagImageMapping(
+    String airconType, String serivceType, String state, String hopeDate) {
+  String serviceTag = '', airconTag = '', servicePrograss = '';
+  switch (airconType) {
+    case "벽걸이형":
+      airconTag = AppAssets.tagWall;
+      break;
+    case "천장형":
+      airconTag = AppAssets.tagCeiling;
+      break;
+    case "항온항습기":
+      airconTag = AppAssets.tagThermostat;
+      break;
+    case "창문형":
+      airconTag = AppAssets.tagWindow;
+      break;
+    case "스탠드형":
+      airconTag = AppAssets.tagStand;
+      break;
+  }
+  switch (serivceType) {
+    case "청소":
+      serviceTag = AppAssets.tagClean;
+      break;
+    case "설치":
+      serviceTag = AppAssets.tagInstallation;
+      break;
+    case "수리":
+      serviceTag = AppAssets.tagRepair;
+      break;
+    case "점검":
+      serviceTag = AppAssets.tagInspection;
+      break;
+    case "이전":
+      serviceTag = AppAssets.tagRelocation;
+      break;
+    case "철거":
+      serviceTag = AppAssets.tagRemoval;
+      break;
+  }
+
+  switch (state) {
+    case "서비스 대기중":
+      servicePrograss = AppAssets.serviceProgass1;
+      break;
+    case "서비스 진행중":
+      if (hopeDate == getToday()) {
+        servicePrograss = AppAssets.serviceProgass3;
+      } else {
+        servicePrograss = AppAssets.serviceProgass2;
+      }
+      break;
+  }
+  return (airconTag, serviceTag, servicePrograss);
+}

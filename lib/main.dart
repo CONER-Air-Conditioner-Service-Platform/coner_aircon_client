@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'configs/router/app_router.dart';
+import 'database/shared_preferences/my_shared_preferences.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -18,8 +19,25 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String cid = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCidFromSharedPreferences();
+  }
+
+  void getCidFromSharedPreferences() async {
+    cid = await MySharedPreferences.getData();
+  }
 
   // This widget is the root of your application.
   @override

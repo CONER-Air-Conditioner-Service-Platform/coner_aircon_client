@@ -2,9 +2,11 @@ import 'package:coner_client/theme/app_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../theme/app_decorations.dart';
 import '../../../../../theme/app_text_styles.dart';
+import '../../../../provider/phone_verification_provider.dart';
 
 class ProfileUpdatePhoneAppbar extends StatelessWidget {
   const ProfileUpdatePhoneAppbar({super.key});
@@ -20,7 +22,10 @@ class ProfileUpdatePhoneAppbar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 4),
             child: IconButton(
-              onPressed: () => context.pop(),
+              onPressed: () {
+                Provider.of<PhoneVerificationProvider>(context, listen: false).clear();
+                context.pop();
+              },
               icon: const Icon(CupertinoIcons.back, size: 24),
             ),
           ),

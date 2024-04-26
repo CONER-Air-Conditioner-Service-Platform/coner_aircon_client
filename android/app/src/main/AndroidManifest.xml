@@ -8,10 +8,11 @@
     <uses-permission android:name="android.permission.android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MEMORY" />
     <application
-        android:label="coner_client"
+        android:label="코너"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
         >
         <activity
             android:name=".MainActivity"

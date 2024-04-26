@@ -1,3 +1,4 @@
+import 'package:coner_client/utils/dialog_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
@@ -12,7 +13,7 @@ class PhoneVerificationProvider with ChangeNotifier {
 
   bool isSend = false;
   bool isVerification = false;
-  Future sendCode() async {
+  Future sendCode(BuildContext context) async {
     var resendingToken;
     firebaseAuth.setSettings(appVerificationDisabledForTesting: false);
 
@@ -25,30 +26,43 @@ class PhoneVerificationProvider with ChangeNotifier {
         this.verificationId = verificationId;
         this.resendingToken = resendingToken;
         isSend = true;
+        Navigator.pop(context);
         notifyListeners();
       },
-      verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {},
+      verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {
+        Logger().e(phoneAuthCredential.smsCode);
+      },
     );
   }
 
-  Future<bool> checkCode() async {
-    //전화 인증 코드 확인
-    PhoneAuthCredential phoneAuthCredential =
-        PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: verificationCode);
+  Future checkCode(BuildContext context) async {
+    bool isSuccess = false;
+    try {
+      //전화 인증 코드 확인
+      PhoneAuthCredential phoneAuthCredential =
+          PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: verificationCode);
+      final authCredential = await firebaseAuth.signInWithCredential(phoneAuthCredential);
+      if (authCredential.user == null) {
+        Navigator.pop(context);
+        DialogUtil.basicDialog(context, "인증에 실패하였습니다. 다시 시도해주세요.");
+        isSuccess = false;
+      }
 
-    final authCredential = await firebaseAuth.signInWithCredential(phoneAuthCredential);
-    if (authCredential.user == null) {
-      Logger().i("유저 오류");
-      return false;
+      //임시Auth 로그아웃 및 삭제
+      await firebaseAuth.currentUser?.delete();
+      firebaseAuth.signOut();
+
+      isVerification = true;
+      isSuccess = true;
+      notifyListeners();
+    } catch (e) {
+      Navigator.pop(context);
+      Logger().e(e);
+      isSuccess = false;
+
+      DialogUtil.basicDialog(context, "인증에 실패하였습니다. 다시 시도해주세요.");
     }
-
-    //임시Auth 로그아웃 및 삭제
-    await firebaseAuth.currentUser?.delete();
-    firebaseAuth.signOut();
-
-    isVerification = true;
-    notifyListeners();
-    return true;
+    return isSuccess;
   }
 
   void clear() {

@@ -24,9 +24,8 @@ class _BottomBarState extends State<BottomBar> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final clientProvider = Provider.of<ClientProvider>(context, listen: false);
       final requestProvider = Provider.of<RequestProvider>(context, listen: false);
-
       requestProvider.getData(clientProvider.clientId);
-      requestProvider.getDataStream(clientProvider.clientId);
+      //requestProvider.getDataStream(clientProvider.clientId);
     });
   }
 
