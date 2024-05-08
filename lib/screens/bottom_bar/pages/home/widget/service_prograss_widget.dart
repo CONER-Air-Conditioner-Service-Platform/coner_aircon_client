@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import '../../../../../configs/router/route_names.dart';
 import '../../../../../models/request.dart';
 import '../../../../../provider/client_provider.dart';
-import '../../../../../provider/request_provider.dart';
 import '../../../../../provider/tabbar_provider.dart';
 import '../../../../../theme/app_text_styles.dart';
 import '../../../../../utils/service_request_util.dart';
@@ -25,7 +24,31 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
   Widget build(BuildContext context) {
     final tabBarProvider = Provider.of<TabBarProvider>(context);
     final clientProvider = Provider.of<ClientProvider>(context);
-    final requestProvider = Provider.of<RequestProvider>(context);
+    if (clientProvider.clientId == '') {
+      return Container(
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: 230,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          border: Border.all(color: AppColors.coner2),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("서비스를 이용하시려면 로그인이 필요합니다.", style: AppTextStyles.b1),
+            TextButton(
+              onPressed: () => context.goNamed(RouteNames.signIn),
+              child: Text(
+                "로그인 하러가기",
+                style: AppTextStyles.b1BoldUnderline,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
     Stream<QuerySnapshot> requestStream = FirebaseFirestore.instance
         .collection("requests")
         .where("clientId", isEqualTo: clientProvider.clientId)
@@ -42,18 +65,46 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
           return const SizedBox();
         }
 
+        List<Request> requests = [];
         for (DocumentSnapshot docSnapshot in snapshot.data!.docs) {
           Map<String, dynamic> data = docSnapshot.data()! as Map<String, dynamic>;
           if (docSnapshot.data() != null) {
-            final request = Request.fromMap(data);
-            requestProvider.setRequest(request);
+            requests.add(Request.fromMap(data));
           }
         }
+        if (requests.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              alignment: Alignment.center,
+              width: double.infinity,
+              height: 230,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(color: AppColors.coner2),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("현재 진행중인 서비스가 없습니다.", style: AppTextStyles.b1),
+                  TextButton(
+                    onPressed: () => context.goNamed(RouteNames.addRequest),
+                    child: Text(
+                      "의뢰하러가기",
+                      style: AppTextStyles.b1BoldUnderline,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
         final tags = tagImageMapping(
-          requestProvider.aircon,
-          requestProvider.service,
-          requestProvider.state,
-          requestProvider.hopeDate,
+          requests[0].aircon,
+          requests[0].service,
+          requests[0].state,
+          requests[0].hopeDate,
         );
         return Padding(
           padding: const EdgeInsets.all(20),
@@ -62,126 +113,71 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
             children: [
               Text('내 의뢰 현황', style: AppTextStyles.h2Bold),
               const SizedBox(height: 12),
-              if (clientProvider.clientId == '') ...[
-                Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: 230,
-                  decoration: BoxDecoration(
+              Container(
+                decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: AppColors.coner2),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("서비스를 이용하시려면 로그인이 필요합니다.", style: AppTextStyles.b1),
-                      TextButton(
-                        onPressed: () => context.goNamed(RouteNames.signIn),
-                        child: Text(
-                          "로그인 하러가기",
-                          style: AppTextStyles.b1BoldUnderline,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ] else if (requestProvider.requestId == '') ...[
-                Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: 230,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: AppColors.coner2),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("현재 진행중인 서비스가 없습니다.", style: AppTextStyles.b1),
-                      TextButton(
-                        onPressed: () => context.goNamed(RouteNames.addRequest),
-                        child: Text(
-                          "의뢰하러가기",
-                          style: AppTextStyles.b1BoldUnderline,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ] else ...[
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(color: AppColors.coner2)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(tags.$1, height: 22, fit: BoxFit.contain),
-                                const SizedBox(width: 4),
-                                Image.asset(tags.$2, height: 22, fit: BoxFit.contain),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                      "${requestProvider.request.address} ${requestProvider.request.detailAddress}",
-                                      style: AppTextStyles.b2),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Container(
-                              decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: AppColors.grey3))),
-                            ),
-                            const SizedBox(height: 12),
-                            Text('서비스 진행도', style: AppTextStyles.b2Bold),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                              child: Image.asset(tags.$3),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColors.coner2,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
+                    border: Border.all(color: AppColors.coner2)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(tags.$1, height: 22, fit: BoxFit.contain),
+                              const SizedBox(width: 4),
+                              Image.asset(tags.$2, height: 22, fit: BoxFit.contain),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text("${requests[0].address} ${requests[0].detailAddress}",
+                                    style: AppTextStyles.b2),
+                              ),
+                            ],
                           ),
+                          const SizedBox(height: 12),
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide(color: AppColors.grey3))),
+                          ),
+                          const SizedBox(height: 12),
+                          Text('서비스 진행도', style: AppTextStyles.b2Bold),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                            child: Image.asset(tags.$3),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.coner2,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text("${requestProvider.hopeDate} 방문 예정",
-                                  style: AppTextStyles.b1BoldWhite),
-                            ),
-                            GestureDetector(
-                                onTap: () => tabBarProvider.setIndex(1),
-                                child: Text("의뢰서 보기", style: AppTextStyles.c1BoldWhite)),
-                            const Icon(
-                              Icons.navigate_next_rounded,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text("${requests[0].hopeDate} 방문 예정",
+                                style: AppTextStyles.b1BoldWhite),
+                          ),
+                          GestureDetector(
+                              onTap: () => tabBarProvider.setIndex(1),
+                              child: Text("의뢰서 보기", style: AppTextStyles.b2BoldWhite)),
+                          const Icon(Icons.navigate_next_rounded, size: 20, color: Colors.white),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-              ],
+              ),
             ],
           ),
         );

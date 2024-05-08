@@ -109,6 +109,25 @@ class RequestFirebase {
     return request;
   }
 
+  static Future<int> getRequestProgressCount(String cid) async {
+    int requestCount = 0;
+    try {
+      await collectionReference
+          .where("clientId", isEqualTo: cid)
+          .where("state", whereIn: ["서비스 진행중", "서비스 대기중"])
+          .get()
+          .then(
+            (querySnapshot) {
+              requestCount = querySnapshot.docs.length;
+            },
+            onError: (e) => Logger().e("Error completing: $e"),
+          );
+    } catch (e) {
+      Logger().e(e);
+    }
+    return requestCount;
+  }
+
   static Future<List<Request>> getRequestHistory(String cid) async {
     List<Request> requestList = [];
     try {
