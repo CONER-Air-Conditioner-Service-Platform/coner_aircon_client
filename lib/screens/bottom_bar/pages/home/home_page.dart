@@ -28,10 +28,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   const ServicePrograssWidget(),
                   const RequestWidget(),
-                  if (clientProvider.clientId != '' &&
-                      requestProvider.requestHistoryList.length > 0) ...[
-                    const MyRequestsWidget(),
-                  ],
+                  const MyRequestsWidget(),
                 ],
               ),
             ),

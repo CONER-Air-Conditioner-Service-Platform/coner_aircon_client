@@ -114,7 +114,7 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.coner2,
+          color: AppColors.coner1,
           borderRadius: BorderRadius.circular(10),
         ),
         width: 109,
@@ -123,7 +123,7 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(flex: 12, child: Image.asset(image, width: 62, fit: BoxFit.contain)),
-            Expanded(flex: 4, child: Text(value, style: AppTextStyles.b2BoldWhite))
+            Expanded(flex: 4, child: Text(value, style: AppTextStyles.s1BoldWhite))
           ],
         ),
       ),

@@ -9,6 +9,7 @@ import '../../../../../configs/router/route_names.dart';
 import '../../../../../models/request.dart';
 import '../../../../../provider/client_provider.dart';
 import '../../../../../provider/request_provider.dart';
+import '../../../../../provider/tabbar_provider.dart';
 import '../../../../../theme/app_text_styles.dart';
 import '../../../../../utils/service_request_util.dart';
 
@@ -22,6 +23,7 @@ class ServicePrograssWidget extends StatefulWidget {
 class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
   @override
   Widget build(BuildContext context) {
+    final tabBarProvider = Provider.of<TabBarProvider>(context);
     final clientProvider = Provider.of<ClientProvider>(context);
     final requestProvider = Provider.of<RequestProvider>(context);
     Stream<QuerySnapshot> requestStream = FirebaseFirestore.instance
@@ -166,9 +168,7 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
                                   style: AppTextStyles.b1BoldWhite),
                             ),
                             GestureDetector(
-                                onTap: () {
-                                  context.pushNamed(RouteNames.myRequestDetail);
-                                },
+                                onTap: () => tabBarProvider.setIndex(1),
                                 child: Text("의뢰서 보기", style: AppTextStyles.c1BoldWhite)),
                             const Icon(
                               Icons.navigate_next_rounded,

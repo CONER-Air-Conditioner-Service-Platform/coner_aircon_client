@@ -1,82 +1,82 @@
-import 'package:coner_client/provider/request_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../models/request.dart';
-import '../../../../../theme/app_assets.dart';
+import '../../../../../provider/client_provider.dart';
+import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_text_styles.dart';
+import '../../../../../utils/dialog_util.dart';
+import '../../../../../utils/service_request_util.dart';
 
 class CompleteRequestList extends StatelessWidget {
   const CompleteRequestList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final requestProvider = Provider.of<RequestProvider>(context);
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (requestProvider.requestHistoryList.length != 0) ...[
-              for (Request request in requestProvider.requestHistoryList) ...[
-                requestItem(request),
-                const SizedBox(height: 8),
-              ],
-            ] else ...[
-              Center(
-                child: Text(
-                  "아직 완료된 의뢰가 없어요!",
-                  style: AppTextStyles.s1,
-                ),
-              )
-            ]
-          ],
-        ),
+    final clientProvider = Provider.of<ClientProvider>(context);
+    Stream<QuerySnapshot> requestStream = FirebaseFirestore.instance
+        .collection("requests")
+        .where("clientId", isEqualTo: clientProvider.clientId)
+        .where("state", isEqualTo: "서비스 완료")
+        .orderBy("completeDate", descending: true)
+        .snapshots();
+    return StreamBuilder<QuerySnapshot>(
+        stream: requestStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            DialogUtil.basicDialog(context, "데이터를 가져오지 못했어요.\n앱을 껐다가 다시 켜주세요.");
+            return const SizedBox();
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox();
+          }
+          List<Request> requests = [];
+          for (DocumentSnapshot docSnapshot in snapshot.data!.docs) {
+            Map<String, dynamic> data = docSnapshot.data()! as Map<String, dynamic>;
+            if (docSnapshot.data() != null) {
+              requests.add(Request.fromMap(data));
+            }
+          }
+          if (requests.isEmpty) {
+            return _noProgress(context);
+          }
+          return Container(
+            color: AppColors.grey1,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 10),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      for (Request request in requests) ...[
+                        requestItem(request),
+                        const SizedBox(height: 8),
+                      ]
+                    ]),
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget _noProgress(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("아직 완료된 의뢰가 없습니다!", style: AppTextStyles.b2),
+        ],
       ),
     );
   }
 
   Widget requestItem(Request request) {
-    String serviceTag = '', airconTag = '';
-    switch (request.aircon) {
-      case "벽걸이형":
-        airconTag = AppAssets.tagWall;
-        break;
-      case "천장형":
-        airconTag = AppAssets.tagCeiling;
-        break;
-      case "항온항습기":
-        airconTag = AppAssets.tagThermostat;
-        break;
-      case "창문형":
-        airconTag = AppAssets.tagWindow;
-        break;
-      case "스탠드형":
-        airconTag = AppAssets.tagStand;
-        break;
-    }
-    switch (request.service) {
-      case "청소":
-        serviceTag = AppAssets.tagClean;
-        break;
-      case "설치":
-        serviceTag = AppAssets.tagInstallation;
-        break;
-      case "수리":
-        serviceTag = AppAssets.tagRepair;
-        break;
-      case "점검":
-        serviceTag = AppAssets.tagInspection;
-        break;
-      case "이전":
-        serviceTag = AppAssets.tagRelocation;
-        break;
-      case "철거":
-        serviceTag = AppAssets.tagRemoval;
-        break;
-    }
+    (String, String, String) images =
+        tagImageMapping(request.aircon, request.service, request.state, request.hopeDate);
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -98,9 +98,9 @@ class CompleteRequestList extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              Image.asset(airconTag, height: 22, fit: BoxFit.contain),
+              Image.asset(images.$1, height: 22, fit: BoxFit.contain),
               const SizedBox(width: 4),
-              Image.asset(serviceTag, height: 22, fit: BoxFit.contain),
+              Image.asset(images.$2, height: 22, fit: BoxFit.contain),
               const SizedBox(width: 12),
               Expanded(
                 child: Text('${request.address}', style: AppTextStyles.b2),

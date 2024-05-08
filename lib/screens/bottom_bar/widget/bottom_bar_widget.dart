@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../provider/tabbar_provider.dart';
 
 class BottomBarWidget extends StatelessWidget {
   const BottomBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final tabBarProvider = Provider.of<TabBarProvider>(context);
     return Container(
       padding: const EdgeInsets.only(top: 5),
       height: 88,
@@ -16,7 +20,8 @@ class BottomBarWidget extends StatelessWidget {
         ),
         boxShadow: [BoxShadow(blurRadius: 2, color: Colors.grey)],
       ),
-      child: const TabBar(
+      child: TabBar(
+        controller: tabBarProvider.tabController,
         tabs: [
           Padding(
             padding: EdgeInsets.only(bottom: 20.0),

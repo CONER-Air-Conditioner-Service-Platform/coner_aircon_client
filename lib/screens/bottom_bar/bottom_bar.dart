@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../provider/client_provider.dart';
 import '../../provider/request_provider.dart';
+import '../../provider/tabbar_provider.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -16,7 +17,19 @@ class BottomBar extends StatefulWidget {
   State<BottomBar> createState() => _BottomBarState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMixin {
+  late TabController tabController = TabController(
+    length: 3,
+    vsync: this,
+    animationDuration: const Duration(milliseconds: 100),
+  );
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,13 +44,16 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    final tabBarProvider = Provider.of<TabBarProvider>(context);
+    tabBarProvider.setController(tabController);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         backgroundColor: AppColors.grey1,
-        body: const TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [
+        body: TabBarView(
+          controller: tabController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: const [
             HomePage(),
             RequestPage(),
             MyPage(),

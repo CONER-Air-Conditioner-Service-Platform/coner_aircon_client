@@ -1,6 +1,7 @@
 import 'package:coner_client/provider/client_provider.dart';
 import 'package:coner_client/provider/phone_verification_provider.dart';
 import 'package:coner_client/provider/request_provider.dart';
+import 'package:coner_client/provider/tabbar_provider.dart';
 import 'package:coner_client/theme/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => ClientProvider()),
         ChangeNotifierProvider(create: (context) => PhoneVerificationProvider()),
         ChangeNotifierProvider(create: (context) => RequestProvider()),
+        ChangeNotifierProvider(create: (context) => TabBarProvider()),
       ],
       child: MaterialApp.router(
         theme: mainTheme(),

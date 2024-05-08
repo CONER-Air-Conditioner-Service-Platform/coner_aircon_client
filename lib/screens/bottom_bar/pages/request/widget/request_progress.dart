@@ -41,7 +41,6 @@ class RequestProgress extends StatelessWidget {
 
   Widget _requestHelper(BuildContext context) {
     final clientProvider = Provider.of<ClientProvider>(context);
-    final requestProvider = Provider.of<RequestProvider>(context);
     Stream<QuerySnapshot> requestStream = FirebaseFirestore.instance
         .collection("requests")
         .where("clientId", isEqualTo: clientProvider.clientId)
@@ -57,154 +56,171 @@ class RequestProgress extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SizedBox();
           }
-
+          List<Request> requests = [];
           for (DocumentSnapshot docSnapshot in snapshot.data!.docs) {
             Map<String, dynamic> data = docSnapshot.data()! as Map<String, dynamic>;
             if (docSnapshot.data() != null) {
-              final request = Request.fromMap(data);
-              requestProvider.setRequest(request);
+              requests.add(Request.fromMap(data));
             }
           }
-          String servicePrograss = '';
-          switch (requestProvider.request.state) {
-            case "서비스 대기중":
-              servicePrograss = AppAssets.serviceProgass1;
-              break;
-            case "서비스 진행중":
-              if (requestProvider.request.hopeDate == getToday()) {
-                servicePrograss = AppAssets.serviceProgass3;
-              } else {
-                servicePrograss = AppAssets.serviceProgass2;
-              }
-              break;
+
+          if (requests.isEmpty) {
+            return _noProgress(context);
           }
           return Container(
             color: AppColors.grey1,
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                      child: Image.asset(servicePrograss),
-                    ),
-                    if (requestProvider.request.state == '서비스 진행중') ...[
-                      _engineerInfoHelper(context, requestProvider.request),
-                      const SizedBox(height: 32),
-                    ],
-                    const SizedBox(height: 8),
-                    Text("방문 희망 예정일", style: AppTextStyles.s1Bold),
-                    const SizedBox(height: 8),
-                    _infoHelper(requestProvider.hopeDate),
-                    const SizedBox(height: 16),
-                    Text("서비스 받을 에어컨", style: AppTextStyles.s1Bold),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(child: _infoHelper(requestProvider.aircon)),
-                        const SizedBox(width: 12),
-                        Expanded(child: _infoHelper("${requestProvider.airconNum} 대")),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text("원하는 서비스", style: AppTextStyles.s1Bold),
-                    const SizedBox(height: 8),
-                    _infoHelper(requestProvider.service),
-                    const SizedBox(height: 16),
-                    Text("브랜드", style: AppTextStyles.s1Bold),
-                    const SizedBox(height: 8),
-                    _infoHelper(requestProvider.airconBrand),
-                    const SizedBox(height: 16),
-                    Text("주소", style: AppTextStyles.s1Bold),
-                    const SizedBox(height: 8),
-                    _infoHelper(requestProvider.request.address),
-                    const SizedBox(height: 8),
-                    _infoHelper(requestProvider.request.detailAddress),
-                    const SizedBox(height: 16),
-                    Text("연락처", style: AppTextStyles.s1Bold),
-                    const SizedBox(height: 8),
-                    _infoHelper(requestProvider.request.phone),
-                    const SizedBox(height: 16),
-                    Text("추가적인 정보와 요청사항", style: AppTextStyles.s1Bold),
-                    const SizedBox(height: 8),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      height: 160,
-                      padding: EdgeInsets.only(left: 20, top: 12),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Color(0xffA0A0A0)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(requestProvider.detailInfo, style: AppTextStyles.b1),
-                    ),
-                    const SizedBox(height: 16),
-                    if (requestProvider.request.requestImageList.length > 0) ...[
-                      Text("추가 관련 사진", style: AppTextStyles.s1Bold),
-                      const SizedBox(height: 8),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (String requestImage
-                                in requestProvider.request.requestImageList) ...[
-                              Image.network(requestImage, height: 120, fit: BoxFit.fitHeight),
-                              const SizedBox(width: 8),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 20),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text("의뢰서 수정은 기사님 배정 전까지만 가능합니다.", style: AppTextStyles.b2),
-                    ),
-                    const SizedBox(height: 20),
-                    if (requestProvider.request.state == '서비스 대기중') ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: AppDecorations.buttonDecoration(Colors.redAccent),
-                              child: MaterialButton(
-                                height: 52,
-                                minWidth: double.infinity,
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                onPressed: () => DialogUtil.requestDeleteDialog(context, false),
-                                child: Text('의뢰 삭제', style: AppTextStyles.b1BoldWhite),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            flex: 7,
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: AppDecorations.buttonDecoration(const Color(0xffD9D9D9)),
-                              child: MaterialButton(
-                                height: 52,
-                                minWidth: double.infinity,
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                onPressed: () => context.pushNamed(RouteNames.updateRequest),
-                                child: Text('수정하기', style: AppTextStyles.s1BoldWhite),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                    const SizedBox(height: 20),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  for (Request request in requests) ...[
+                    _requestInfoHelper(context, request),
+                    SizedBox(height: 10),
+                  ]
+                ],
               ),
             ),
           );
         });
+  }
+
+  Widget _requestInfoHelper(BuildContext context, Request request) {
+    final requestProvider = Provider.of<RequestProvider>(context);
+    String servicePrograss = '';
+    switch (request.state) {
+      case "서비스 대기중":
+        servicePrograss = AppAssets.serviceProgass1;
+        break;
+      case "서비스 진행중":
+        if (request.hopeDate == getToday()) {
+          servicePrograss = AppAssets.serviceProgass3;
+        } else {
+          servicePrograss = AppAssets.serviceProgass2;
+        }
+        break;
+    }
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+            child: Image.asset(servicePrograss),
+          ),
+          if (request.state == '서비스 진행중') ...[
+            _engineerInfoHelper(context, request),
+            const SizedBox(height: 32),
+          ],
+          const SizedBox(height: 8),
+          Text("방문 희망 예정일", style: AppTextStyles.s1Bold),
+          const SizedBox(height: 8),
+          _infoHelper(request.hopeDate),
+          const SizedBox(height: 16),
+          Text("서비스 받을 에어컨", style: AppTextStyles.s1Bold),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: _infoHelper(request.aircon)),
+              const SizedBox(width: 12),
+              Expanded(child: _infoHelper("${request.airconNum} 대")),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text("원하는 서비스", style: AppTextStyles.s1Bold),
+          const SizedBox(height: 8),
+          _infoHelper(request.service),
+          const SizedBox(height: 16),
+          Text("브랜드", style: AppTextStyles.s1Bold),
+          const SizedBox(height: 8),
+          _infoHelper(request.airconBrand),
+          const SizedBox(height: 16),
+          Text("주소", style: AppTextStyles.s1Bold),
+          const SizedBox(height: 8),
+          _infoHelper(request.address),
+          const SizedBox(height: 8),
+          _infoHelper(request.detailAddress),
+          const SizedBox(height: 16),
+          Text("연락처", style: AppTextStyles.s1Bold),
+          const SizedBox(height: 8),
+          _infoHelper(request.phone),
+          const SizedBox(height: 16),
+          Text("추가적인 정보와 요청사항", style: AppTextStyles.s1Bold),
+          const SizedBox(height: 8),
+          Container(
+            alignment: Alignment.topLeft,
+            height: 160,
+            padding: EdgeInsets.only(left: 20, top: 12),
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Color(0xffA0A0A0)),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(request.detailInfo, style: AppTextStyles.b1),
+          ),
+          const SizedBox(height: 16),
+          if (request.requestImageList.length > 0) ...[
+            Text("추가 관련 사진", style: AppTextStyles.s1Bold),
+            const SizedBox(height: 8),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (String requestImage in request.requestImageList) ...[
+                    Image.network(requestImage, height: 120, fit: BoxFit.fitHeight),
+                    const SizedBox(width: 8),
+                  ],
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 20),
+          Container(
+            alignment: Alignment.center,
+            child: Text("의뢰서 수정은 기사님 배정 전까지만 가능합니다.", style: AppTextStyles.b2),
+          ),
+          const SizedBox(height: 20),
+          if (request.state == '서비스 대기중') ...[
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: AppDecorations.buttonDecoration(Colors.redAccent),
+                    child: MaterialButton(
+                      height: 52,
+                      minWidth: double.infinity,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: () => DialogUtil.requestDeleteDialog(context, false),
+                      child: Text('의뢰 삭제', style: AppTextStyles.b1BoldWhite),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  flex: 7,
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: AppDecorations.buttonDecoration(const Color(0xffD9D9D9)),
+                    child: MaterialButton(
+                      height: 52,
+                      minWidth: double.infinity,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: () {
+                        requestProvider.setRequest(request);
+                        context.pushNamed(RouteNames.updateRequest);
+                      },
+                      child: Text('수정하기', style: AppTextStyles.s1BoldWhite),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
   }
 
   Widget _infoHelper(String info) {

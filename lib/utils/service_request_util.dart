@@ -36,7 +36,7 @@ List<String> airconImageList = [
   'assets/images/aircon_wall.png',
   'assets/images/aircon_stand.png',
   'assets/images/aircon_ceiling.png',
-  'assets/images/aircon_conditioner.png',
+  'assets/images/aircon_window.png',
   'assets/images/aircon_thermostat.png',
 ];
 final List<String> brandList = [
