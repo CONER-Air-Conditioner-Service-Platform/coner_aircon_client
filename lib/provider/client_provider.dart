@@ -4,6 +4,8 @@ import 'package:coner_client/models/client.dart';
 import 'package:coner_client/utils/service_request_util.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../utils/address_util.dart';
+
 class ClientProvider with ChangeNotifier {
   Client client = Client(
     clientId: '',
@@ -48,6 +50,10 @@ class ClientProvider with ChangeNotifier {
   void setCId(String cid) {
     client.clientId = cid;
     notifyListeners();
+  }
+
+  bool checkRegion() {
+    return checkRegionRestriction(clientAddress);
   }
 
   Future<bool> update(

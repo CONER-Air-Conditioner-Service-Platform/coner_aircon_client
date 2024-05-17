@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../theme/app_colors.dart';
-import '../../../theme/app_text_styles.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_text_styles.dart';
 
 class AddRequestImageListWidget extends StatelessWidget {
   const AddRequestImageListWidget({super.key});

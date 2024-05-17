@@ -63,18 +63,7 @@ List<String> busanItems = [
   '해운대구'
 ];
 List<String> daeguItems = ['남구', '달서구', '달성군', '동구', '북구', '서구', '수성구', '중구'];
-List<String> incheonItems = [
-  '강화군',
-  '계양구',
-  '남동구',
-  '동구',
-  '미추홀구',
-  '부평구',
-  '서구',
-  '연수구',
-  '옹진군',
-  '중구'
-];
+List<String> incheonItems = ['강화군', '계양구', '남동구', '동구', '미추홀구', '부평구', '서구', '연수구', '옹진군', '중구'];
 List<String> gwangjuItems = ['광산구', '남구', '동구', '북구', '서구'];
 List<String> daejeonItems = ['대덕구', '동구', '서구', '유성구', '중구'];
 List<String> ulsanItems = ['남구', '동구', '북구', '울주군', '중구'];
@@ -268,3 +257,28 @@ List<String> gyeongNamItems = [
   '합천군'
 ];
 List<String> jejuItems = ['서귀포시', '제주시'];
+
+bool checkRegionRestriction(String address) {
+  bool isAvailable = false;
+
+  List<String> scopeOfServiceLocation = [
+    '서울 도봉구',
+    '서울 동대문구',
+    '서울 은평구',
+    '서울 강북구',
+    '서울 관악구',
+    '서울 광진구',
+    '서울 종로구',
+    '서울 중랑구',
+    '서울 노원구',
+    '서울 성북구',
+  ];
+
+  for (String location in scopeOfServiceLocation) {
+    if (address.contains(location)) {
+      isAvailable = true;
+    }
+  }
+
+  return isAvailable;
+}

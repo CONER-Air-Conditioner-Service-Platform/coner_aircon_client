@@ -4,10 +4,10 @@ class Request {
   String requestId; // 프로젝트 식별자
   String service; // 서비스 유형
   String aircon; // 에어컨 유형
-  int airconNum; // 에어컨 대수
   String airconBrand; // 브랜드 이름
   String detailInfo; // 서비스 상세 내용
   String hopeDate; // 서비스 희망 날짜
+  String hopeTime; // 서비스 희망 시간
   String phone; // 고객의 전화번호
   String address; // 고객의 기본 주소
   String detailAddress; // 고객의 상세 주소
@@ -17,6 +17,7 @@ class Request {
   String? completeDate = ''; // 서비스를 완료한 날짜
   String? memo = ''; // 기사님이 적는 특이사항
   String? review = ''; // 기사님이 적는 특이사항
+  String? price = '';
   String clientId; // 사용자 식별자
   String? engineerId = '';
   String? engineerName = '';
@@ -31,10 +32,10 @@ class Request {
     required this.requestId,
     required this.service,
     required this.aircon,
-    required this.airconNum,
     required this.airconBrand,
     required this.detailInfo,
     required this.hopeDate,
+    required this.hopeTime,
     required this.phone,
     required this.address,
     required this.detailAddress,
@@ -43,6 +44,7 @@ class Request {
     this.acceptDate,
     this.completeDate,
     this.memo,
+    this.price,
     this.review,
     required this.clientId,
     this.engineerId,
@@ -62,10 +64,10 @@ class Request {
       "requestId": requestId,
       "service": service,
       "aircon": aircon,
-      "airconNum": airconNum,
       "airconBrand": airconBrand,
       "detailInfo": detailInfo,
       "hopeDate": hopeDate,
+      "hopeTime": hopeTime,
       "phone": phone,
       "address": address,
       "detailAddress": detailAddress,
@@ -74,6 +76,7 @@ class Request {
       "acceptDate": acceptDate,
       "completeDate": completeDate,
       "memo": memo,
+      "price": price,
       "review": review,
       "clientId": clientId,
       "engineerId": engineerId,
@@ -94,10 +97,10 @@ class Request {
       requestId: map['requestId'],
       service: map['service'],
       aircon: map['aircon'],
-      airconNum: map['airconNum'],
       airconBrand: map['airconBrand'],
       detailInfo: map['detailInfo'],
       hopeDate: map['hopeDate'],
+      hopeTime: map['hopeTime'],
       phone: map['phone'],
       address: map['address'],
       detailAddress: map['detailAddress'],
@@ -106,6 +109,7 @@ class Request {
       acceptDate: map['acceptDate'],
       completeDate: map['completeDate'],
       memo: map['memo'],
+      price: map['price'],
       review: map['review'],
       clientId: map['clientId'],
       engineerId: map['engineerId'],
@@ -126,10 +130,10 @@ class Request {
       requestId: documentSnapshot['requestId'],
       service: documentSnapshot['service'],
       aircon: documentSnapshot['aircon'],
-      airconNum: documentSnapshot['airconNum'],
       airconBrand: documentSnapshot['airconBrand'],
       detailInfo: documentSnapshot['detailInfo'],
       hopeDate: documentSnapshot['hopeDate'],
+      hopeTime: documentSnapshot['hopeTime'],
       phone: documentSnapshot['phone'],
       address: documentSnapshot['address'],
       detailAddress: documentSnapshot['detailAddress'],
@@ -138,6 +142,7 @@ class Request {
       acceptDate: documentSnapshot['acceptDate'],
       completeDate: documentSnapshot['completeDate'],
       memo: documentSnapshot['memo'],
+      price: documentSnapshot['price'],
       review: documentSnapshot['review'],
       clientId: documentSnapshot['clientId'],
       engineerId: documentSnapshot['engineerId'],

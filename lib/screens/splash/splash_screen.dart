@@ -43,7 +43,11 @@ class _SplashScreenState extends State<SplashScreen> {
       ClientProvider clientProvider = Provider.of<ClientProvider>(context, listen: false);
       await clientProvider.getData(cid);
     }
-    context.goNamed(RouteNames.main);
+    if (cid.isEmpty) {
+      context.goNamed(RouteNames.landing);
+    } else {
+      context.goNamed(RouteNames.main);
+    }
   }
 
   @override

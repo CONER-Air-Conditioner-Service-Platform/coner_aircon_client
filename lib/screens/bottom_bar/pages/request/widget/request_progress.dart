@@ -32,7 +32,14 @@ class RequestProgress extends StatelessWidget {
         children: [
           Text("아직 진행중인 의뢰가 없습니다!", style: AppTextStyles.b2),
           TextButton(
-              onPressed: () => context.pushNamed(RouteNames.addRequest),
+              onPressed: () {
+                final clientProvider = Provider.of<ClientProvider>(context, listen: false);
+                if (clientProvider.clientId.isEmpty) {
+                  DialogUtil.logInDialog(context);
+                } else {
+                  context.pushNamed(RouteNames.clientInfo);
+                }
+              },
               child: Text("의뢰 하러가기", style: AppTextStyles.b1BoldUnderline)),
         ],
       ),
@@ -115,17 +122,11 @@ class RequestProgress extends StatelessWidget {
           const SizedBox(height: 8),
           Text("방문 희망 예정일", style: AppTextStyles.s1Bold),
           const SizedBox(height: 8),
-          _infoHelper(request.hopeDate),
+          _infoHelper("${request.hopeDate} ${request.hopeTime}"),
           const SizedBox(height: 16),
           Text("서비스 받을 에어컨", style: AppTextStyles.s1Bold),
           const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(child: _infoHelper(request.aircon)),
-              const SizedBox(width: 12),
-              Expanded(child: _infoHelper("${request.airconNum} 대")),
-            ],
-          ),
+          _infoHelper(request.aircon),
           const SizedBox(height: 16),
           Text("원하는 서비스", style: AppTextStyles.s1Bold),
           const SizedBox(height: 8),

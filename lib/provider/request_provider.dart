@@ -10,28 +10,16 @@ import '../pakages/camera_package.dart';
 import '../screens/widgets/app_loading_widget.dart';
 
 class RequestProvider with ChangeNotifier {
-  List<String> scopeOfServiceLocation = [
-    '서울 도봉구',
-    '서울 동대문구',
-    '서울 은평구',
-    '서울 강북구',
-    '서울 관악구',
-    '서울 광진구',
-    '서울 종로구',
-    '서울 중랑구',
-    '서울 노원구',
-    '서울 성북구',
-  ];
   bool watchData = false;
   String repairMessage = '';
   Request request = Request(
     requestId: '',
-    service: '설치',
-    aircon: '벽걸이형',
-    airconNum: 0,
-    airconBrand: '삼성전자',
+    service: '',
+    aircon: '',
+    airconBrand: '',
     detailInfo: '',
     hopeDate: '',
+    hopeTime: '',
     phone: '',
     address: '',
     detailAddress: '',
@@ -57,7 +45,7 @@ class RequestProvider with ChangeNotifier {
   String get requestId => request.requestId;
   String get service => request.service;
   String get aircon => request.aircon;
-  int get airconNum => request.airconNum;
+  String get hopeTime => request.hopeTime;
   String get airconBrand => request.airconBrand;
   String get detailInfo => request.detailInfo;
   String get hopeDate => request.hopeDate;
@@ -75,8 +63,15 @@ class RequestProvider with ChangeNotifier {
   String get companyAddress => request.companyAddress ?? '';
   String get companyDetailAddress => request.companyDetailAddress ?? '';
   String get state => request.state ?? '';
+
   void setRequest(Request request) {
     this.request = request;
+    notifyListeners();
+  }
+
+  void setHopeTime(String hopeTime) {
+    this.request.hopeTime = hopeTime;
+    notifyListeners();
   }
 
   void setRepairMessage(String repairMessage) {
@@ -91,11 +86,6 @@ class RequestProvider with ChangeNotifier {
 
   void setAircon(String newValue) {
     request.aircon = newValue;
-    notifyListeners();
-  }
-
-  void setAirconNum(int newValue) {
-    request.airconNum = newValue;
     notifyListeners();
   }
 
@@ -145,20 +135,6 @@ class RequestProvider with ChangeNotifier {
       DialogUtil.basicDialog(context, "요청사항을 작성해주세요.");
       return false;
     }
-    if (request.airconNum == 0) {
-      DialogUtil.basicDialog(context, "에어컨 수를 선택해주세요..");
-      return false;
-    }
-    bool isAvailable = false;
-    for (String location in scopeOfServiceLocation) {
-      if (address.contains(location)) {
-        isAvailable = true;
-      }
-    }
-    if (!isAvailable) {
-      DialogUtil.basicDialog(context, "서비스 가능 지역이 아닙니다.");
-      return false;
-    }
 
     AppLoadingWidget.loadingRequest(context);
 
@@ -172,6 +148,34 @@ class RequestProvider with ChangeNotifier {
     bool isSuccess = await RequestFirebase.add(request, requestImageFileList);
     Navigator.pop(context);
     if (isSuccess) {
+      request = Request(
+        requestId: '',
+        service: '',
+        aircon: '',
+        airconBrand: '',
+        detailInfo: '',
+        hopeDate: '',
+        hopeTime: '',
+        phone: '',
+        address: '',
+        detailAddress: '',
+        state: '',
+        applicationDate: '',
+        acceptDate: '',
+        completeDate: '',
+        memo: '',
+        review: '',
+        clientId: '',
+        engineerId: '',
+        engineerName: '',
+        engineerPhone: '',
+        engineerProfileImage: '',
+        companyId: '',
+        companyName: '',
+        companyAddress: '',
+        companyDetailAddress: '',
+        requestImageList: [],
+      );
       getData(clientId);
       requestImageFileList = [];
       notifyListeners();
@@ -189,31 +193,6 @@ class RequestProvider with ChangeNotifier {
     String detailInfo,
     String clientId,
   ) async {
-    if (hopeDate == '') {
-      DialogUtil.basicDialog(context, "희망 날짜를 선택해주세요.");
-      return false;
-    }
-
-    if (detailInfo == '') {
-      DialogUtil.basicDialog(context, "요청사항을 작성해주세요.");
-      return false;
-    }
-
-    if (request.airconNum == 0) {
-      DialogUtil.basicDialog(context, "에어컨 수를 선택해주세요..");
-      return false;
-    }
-
-    bool isAvailable = false;
-    for (String location in scopeOfServiceLocation) {
-      if (address.contains(location)) {
-        isAvailable = true;
-      }
-    }
-    if (!isAvailable) {
-      DialogUtil.basicDialog(context, "서비스 가능 지역이 아닙니다.");
-      return false;
-    }
     request.phone = phone;
     request.state = "서비스 대기중";
     request.address = address;
@@ -258,12 +237,12 @@ class RequestProvider with ChangeNotifier {
     isDelete = await RequestFirebase.delete(request);
     request = Request(
       requestId: '',
-      service: '청소',
-      aircon: '벽걸이형',
-      airconNum: 1,
-      airconBrand: '삼성전자',
+      service: '',
+      aircon: '',
+      airconBrand: '',
       detailInfo: '',
       hopeDate: '',
+      hopeTime: '',
       phone: '',
       address: '',
       detailAddress: '',

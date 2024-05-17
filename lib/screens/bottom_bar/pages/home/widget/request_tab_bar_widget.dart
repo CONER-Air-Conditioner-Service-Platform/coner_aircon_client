@@ -112,7 +112,11 @@ class _RequestTabBarWidgetState extends State<RequestTabBarWidget> {
         } else {
           Provider.of<RequestProvider>(context, listen: false).setAircon(value);
         }
-        context.pushNamed(RouteNames.addRequest);
+        if (clientProvider.clientId.isEmpty) {
+          DialogUtil.logInDialog(context);
+        } else {
+          context.pushNamed(RouteNames.clientInfo);
+        }
       },
       child: Container(
         decoration: BoxDecoration(

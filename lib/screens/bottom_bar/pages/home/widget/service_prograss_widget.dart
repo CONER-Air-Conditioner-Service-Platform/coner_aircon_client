@@ -26,6 +26,7 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
     final clientProvider = Provider.of<ClientProvider>(context);
     if (clientProvider.clientId == '') {
       return Container(
+        margin: EdgeInsets.all(20),
         alignment: Alignment.center,
         width: double.infinity,
         height: 230,
@@ -89,7 +90,9 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
                 children: [
                   Text("현재 진행중인 서비스가 없습니다.", style: AppTextStyles.b1),
                   TextButton(
-                    onPressed: () => context.goNamed(RouteNames.addRequest),
+                    onPressed: () {
+                      context.pushNamed(RouteNames.clientInfo);
+                    },
                     child: Text(
                       "의뢰하러가기",
                       style: AppTextStyles.b1BoldUnderline,

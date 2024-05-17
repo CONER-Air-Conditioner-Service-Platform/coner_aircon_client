@@ -24,7 +24,7 @@ class SignInScreen extends StatelessWidget {
                     SizedBox(height: 60),
                     Image.asset(
                       AppAssets.logoColorBottom,
-                      width: AppSize.ratioOfHorizontal(context, 0.1),
+                      width: AppSize.ratioOfHorizontal(context, 0.2),
                       fit: BoxFit.contain,
                     ),
                     SizedBox(height: 28),

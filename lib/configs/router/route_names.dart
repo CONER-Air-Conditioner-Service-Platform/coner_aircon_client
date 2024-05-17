@@ -2,7 +2,6 @@ class RouteNames {
   /* public */
   static const splash = 'splash';
   static const main = 'main';
-  static const addRequest = 'addRequest';
   static const updateRequest = 'updateRequest';
   static const signIn = 'signIn';
   static const signUp = 'signUp';
@@ -13,4 +12,11 @@ class RouteNames {
   static const inquiry = "inquiry";
   static const notice = "notice";
   static const privacyPolicy = "privacyPolicy";
+  static const regionRestrictionNotice = "regionRestrictionNotice";
+  static const timePick = "timePick";
+  static const airconSelection = "airconSelection";
+  static const serviceSelection = "serviceSelection";
+  static const additionalInformation = "additionalInformation";
+  static const clientInfo = "clientInfo";
+  static const landing = "landing";
 }
