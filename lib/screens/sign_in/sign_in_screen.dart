@@ -16,19 +16,19 @@ class SignInScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SignInAppBar(),
+            const SignInAppBar(),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 60),
+                    const SizedBox(height: 60),
                     Image.asset(
                       AppAssets.logoColorBottom,
                       width: AppSize.ratioOfHorizontal(context, 0.2),
                       fit: BoxFit.contain,
                     ),
-                    SizedBox(height: 28),
-                    SignInForm(),
+                    const SizedBox(height: 28),
+                    const SignInForm(),
                     Text("계정 생성시 개인정보 처리방침 및", style: AppTextStyles.c1Grey),
                     Text("이용약관(마케팅 정보 수신 동의 포함)에 동의하게 됩니다.", style: AppTextStyles.c1Grey),
                   ],

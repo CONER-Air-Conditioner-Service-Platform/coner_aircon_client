@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../../../configs/router/route_names.dart';
 import '../../../../../models/request.dart';
 import '../../../../../provider/client_provider.dart';
+import '../../../../../provider/request_provider.dart';
 import '../../../../../provider/tabbar_provider.dart';
 import '../../../../../theme/app_text_styles.dart';
 import '../../../../../utils/service_request_util.dart';
@@ -26,7 +27,7 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
     final clientProvider = Provider.of<ClientProvider>(context);
     if (clientProvider.clientId == '') {
       return Container(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         alignment: Alignment.center,
         width: double.infinity,
         height: 230,
@@ -74,30 +75,60 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
           }
         }
         if (requests.isEmpty) {
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              height: 230,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: AppColors.coner2),
-                color: Colors.white,
-              ),
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            child: GestureDetector(
+              onTap: () {
+                context.pushNamed(RouteNames.profileUpdate);
+              },
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("현재 진행중인 서비스가 없습니다.", style: AppTextStyles.b1),
-                  TextButton(
-                    onPressed: () {
-                      context.pushNamed(RouteNames.clientInfo);
-                    },
-                    child: Text(
-                      "의뢰하러가기",
-                      style: AppTextStyles.b1BoldUnderline,
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    color: AppColors.grey4,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            child: Text(
+                              "${clientProvider.clientAddress} ${clientProvider.clientDetailAddress}",
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                        ),
+                        const Icon(
+                          Icons.navigate_next_rounded,
+                          size: 24,
+                          color: Colors.black,
+                        )
+                      ],
                     ),
                   ),
+                  const SizedBox(height: 12),
+                  Text("서비스 예약하기", style: AppTextStyles.h2Bold),
+                  const SizedBox(height: 16),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          for (int i = 0; i < serviceList.length; i++) ...[
+                            serviceMenuItem(
+                              serviceImageList[i],
+                              serviceList[i],
+                              () {
+                                Provider.of<RequestProvider>(context, listen: false)
+                                    .setService(serviceList[i]);
+                                context.goNamed(RouteNames.clientInfo);
+                              },
+                            ),
+                          ]
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
                 ],
               ),
             ),
@@ -185,6 +216,19 @@ class _ServicePrograssWidgetState extends State<ServicePrograssWidget> {
           ),
         );
       },
+    );
+  }
+
+  Widget serviceMenuItem(String image, String title, Function() onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Image.asset(image, width: 36, fit: BoxFit.contain),
+          const SizedBox(height: 8),
+          Text(title, style: AppTextStyles.b1),
+        ],
+      ),
     );
   }
 }

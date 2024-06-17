@@ -4,6 +4,7 @@ import 'package:coner_client/utils/dialog_util.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../../configs/router/route_names.dart';
@@ -38,15 +39,20 @@ class _SplashScreenState extends State<SplashScreen> {
       DialogUtil.versinDialog(context);
       return;
     }
-    String cid = await MySharedPreferences.getData();
-    if (cid != '') {
-      ClientProvider clientProvider = Provider.of<ClientProvider>(context, listen: false);
-      await clientProvider.getData(cid);
-    }
-    if (cid.isEmpty) {
-      context.goNamed(RouteNames.landing);
-    } else {
+
+    ClientProvider clientProvider = Provider.of<ClientProvider>(context, listen: false);
+    Logger().i(clientProvider.clientId);
+    if (clientProvider.clientId != '') {
+      await clientProvider.getData(clientProvider.clientId);
       context.goNamed(RouteNames.main);
+    } else {
+      String cid = await MySharedPreferences.getData();
+      if (cid != '') {
+        await clientProvider.getData(cid);
+        context.goNamed(RouteNames.main);
+      } else {
+        context.goNamed(RouteNames.landing);
+      }
     }
   }
 

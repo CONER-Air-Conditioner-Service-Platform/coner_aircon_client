@@ -1,6 +1,7 @@
+import 'package:coner_client/screens/bottom_bar/pages/home/widget/blog_widget.dart';
 import 'package:coner_client/screens/bottom_bar/pages/home/widget/home_app_bar_widget.dart';
 import 'package:coner_client/screens/bottom_bar/pages/home/widget/my_requests_widget.dart';
-import 'package:coner_client/screens/bottom_bar/pages/home/widget/request_widget.dart';
+import 'package:coner_client/screens/bottom_bar/pages/home/widget/service_info_widget.dart';
 import 'package:coner_client/screens/bottom_bar/pages/home/widget/service_prograss_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.grey1,
+      backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,7 +23,23 @@ class HomePage extends StatelessWidget {
               child: Column(
                 children: [
                   const ServicePrograssWidget(),
-                  const RequestWidget(),
+                  Container(
+                    width: double.infinity,
+                    height: 20,
+                    color: AppColors.grey1,
+                  ),
+                  ServiceInfoWidget(),
+                  Container(
+                    width: double.infinity,
+                    height: 20,
+                    color: AppColors.grey1,
+                  ),
+                  BlogWidget(),
+                  Container(
+                    width: double.infinity,
+                    height: 20,
+                    color: AppColors.grey1,
+                  ),
                   const MyRequestsWidget(),
                 ],
               ),

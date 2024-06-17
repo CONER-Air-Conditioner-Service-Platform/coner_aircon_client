@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'complete_request_list.dart';
 
 class RequestTabbar extends StatefulWidget {
-  RequestTabbar({super.key});
+  const RequestTabbar({super.key});
 
   @override
   State<RequestTabbar> createState() => _RequestTabbarState();
@@ -34,9 +34,9 @@ class _RequestTabbarState extends State<RequestTabbar> with SingleTickerProvider
           Expanded(
             child: TabBarView(
               controller: tabController,
-              children: [
+              children: const [
                 RequestProgress(),
-                const CompleteRequestList(),
+                CompleteRequestList(),
               ],
             ),
           ),
@@ -51,7 +51,7 @@ class _RequestTabbarState extends State<RequestTabbar> with SingleTickerProvider
       child: TabBar(
         controller: tabController,
         tabs: const [Tab(text: "진행중인"), Tab(text: "완료된")],
-        overlayColor: const MaterialStatePropertyAll(Colors.transparent),
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
         labelStyle: AppTextStyles.b1BoldMain,
         unselectedLabelStyle: AppTextStyles.b1,
         indicatorColor: const Color(0xFF00E5FD),

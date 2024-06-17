@@ -3,17 +3,17 @@ import 'package:coner_client/screens/update_request/widgets/update_request_form.
 import 'package:flutter/material.dart';
 
 class UpdateRequestScreen extends StatelessWidget {
-  UpdateRequestScreen({super.key});
+  const UpdateRequestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const UpdateRequestAppbarWidget(),
+            UpdateRequestAppbarWidget(),
             UpdateRequestForm(),
           ],
         ),

@@ -63,16 +63,16 @@ class _ProfileUpdateFormState extends State<ProfileUpdateForm> {
               children: [
                 Expanded(
                   child: Container(
-                      padding: EdgeInsets.only(left: 24),
+                      padding: const EdgeInsets.only(left: 24),
                       alignment: Alignment.centerLeft,
                       height: 48,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Color(0xffE3E3E4)),
+                        border: Border.all(color: const Color(0xffE3E3E4)),
                       ),
                       child: Text(clientProvider.clientPhoneNumber, style: AppTextStyles.b1)),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Container(
                   height: 48,
                   decoration: AppDecorations.gradientButtonDecoration,

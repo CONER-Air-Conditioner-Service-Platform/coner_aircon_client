@@ -136,7 +136,7 @@ class AddRequestImageListWidget extends StatelessWidget {
   Widget _imageHelper(File url) {
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
-      child: Image.file(File(url!.path), fit: BoxFit.fitHeight, height: 150),
+      child: Image.file(File(url.path), fit: BoxFit.fitHeight, height: 150),
     );
   }
 }

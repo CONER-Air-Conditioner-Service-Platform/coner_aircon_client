@@ -20,14 +20,14 @@ class HomeAppbarWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(AppAssets.logoColor, height: 28, fit: BoxFit.contain),
+          Image.asset(AppAssets.logoColor, height: 32, fit: BoxFit.contain),
           const SizedBox(height: 32),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('${clientProvider.clientName == '' ? "방문자" : clientProvider.clientName} ',
-                  style: AppTextStyles.b2Bold),
-              Text('님', style: AppTextStyles.b2),
+                  style: AppTextStyles.s1Bold),
+              Text('님', style: AppTextStyles.s1),
             ],
           ),
         ],

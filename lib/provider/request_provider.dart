@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:coner_client/database/firebase/request_firebase.dart';
-import 'package:coner_client/utils/dialog_util.dart';
 import 'package:coner_client/utils/service_request_util.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +69,7 @@ class RequestProvider with ChangeNotifier {
   }
 
   void setHopeTime(String hopeTime) {
-    this.request.hopeTime = hopeTime;
+    request.hopeTime = hopeTime;
     notifyListeners();
   }
 
@@ -127,22 +126,13 @@ class RequestProvider with ChangeNotifier {
     String detailInfo,
     String clientId,
   ) async {
-    if (hopeDate == '') {
-      DialogUtil.basicDialog(context, "희망 날짜를 선택해주세요.");
-      return false;
-    }
-    if (detailInfo == '') {
-      DialogUtil.basicDialog(context, "요청사항을 작성해주세요.");
-      return false;
-    }
-
     AppLoadingWidget.loadingRequest(context);
 
     request.phone = phone;
     request.state = "서비스 대기중";
     request.address = address;
     request.detailAddress = detailAddress;
-    request.detailInfo = service == '수리' ? repairMessage + detailInfo : detailInfo;
+    request.detailInfo = repairMessage + detailInfo;
     request.applicationDate = getToday();
     request.clientId = clientId;
     bool isSuccess = await RequestFirebase.add(request, requestImageFileList);
@@ -219,8 +209,8 @@ class RequestProvider with ChangeNotifier {
   Future getData(String clientId) async {
     Request? newRequest = await RequestFirebase.getCurrentRequest(clientId);
     if (newRequest != null) {
-      if (newRequest!.state != '') {
-        request = newRequest!;
+      if (newRequest.state != '') {
+        request = newRequest;
       }
     }
 

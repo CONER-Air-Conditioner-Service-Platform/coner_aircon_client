@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class LandingContent extends StatefulWidget {
   const LandingContent({
-    Key? key,
+    super.key,
     this.title,
     this.text,
     this.image,
-  }) : super(key: key);
+  });
   final String? title, text, image;
 
   @override

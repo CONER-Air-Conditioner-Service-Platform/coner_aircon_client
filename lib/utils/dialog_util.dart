@@ -218,10 +218,10 @@ class DialogUtil {
                               context.goNamed(RouteNames.splash);
                             },
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.redAccent,
                                 borderRadius:
-                                    const BorderRadius.only(bottomRight: Radius.circular(10)),
+                                    BorderRadius.only(bottomRight: Radius.circular(10)),
                               ),
                               alignment: Alignment.center,
                               child: Text('회원탈퇴', style: AppTextStyles.b2BoldWhite),
@@ -298,10 +298,10 @@ class DialogUtil {
                               }
                             },
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.redAccent,
                                 borderRadius:
-                                    const BorderRadius.only(bottomRight: Radius.circular(10)),
+                                    BorderRadius.only(bottomRight: Radius.circular(10)),
                               ),
                               alignment: Alignment.center,
                               child: Text('의뢰서 삭제', style: AppTextStyles.b2BoldWhite),

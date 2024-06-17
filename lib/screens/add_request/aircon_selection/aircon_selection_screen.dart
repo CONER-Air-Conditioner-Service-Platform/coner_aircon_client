@@ -1,5 +1,6 @@
 import 'package:coner_client/screens/add_request/aircon_selection/widgets/aircon_selection_widget.dart';
 import 'package:coner_client/screens/add_request/aircon_selection/widgets/brand_selection_widget.dart';
+import 'package:coner_client/screens/add_request/aircon_selection/widgets/service_selection_widget.dart';
 import 'package:coner_client/screens/widgets/my_app_bar.dart';
 import 'package:coner_client/utils/dialog_util.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,9 @@ class _AirconSelectionScreenState extends State<AirconSelectionScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 40),
-                  Text("에어컨 종류 선택", style: AppTextStyles.h2Bold),
-                  Text("에어컨의 종류가 어떻게 되나요?", style: AppTextStyles.b1),
+                  Text("의뢰서 기본 정보", style: AppTextStyles.h2Bold),
+                  Text("희망 서비스와 에어컨 종류를 선택해주세요.", style: AppTextStyles.b1),
+                  const AddRequestServiceSelectionWidget(),
                   const AirconSelectionWidget(),
                   const BrandSelectionWidget(),
                   const SizedBox(height: 120),
@@ -45,7 +47,7 @@ class _AirconSelectionScreenState extends State<AirconSelectionScreen> {
           ),
           Container(
             height: 52,
-            width: AppSize.ratioOfHorizontal(context, 1) - 40,
+            width: AppSize.ratioOfHorizontal(context, 1) - 24,
             margin: EdgeInsets.only(bottom: AppSize.getStatusBarHeight(context) + 20, top: 12),
             decoration: AppDecorations.gradientButtonDecoration,
             child: MaterialButton(

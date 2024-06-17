@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget profileImageWidget(double size, url) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(100),
-    child: Container(
+    child: SizedBox(
       width: size,
       height: size,
       child: Container(
@@ -17,7 +17,7 @@ Widget profileImageWidget(double size, url) {
         height: size,
         child: Center(
           child: url == null || url == ''
-              ? SizedBox()
+              ? const SizedBox()
               : Image.network(
                   url,
                   loadingBuilder:

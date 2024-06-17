@@ -1,6 +1,5 @@
 import 'package:coner_client/utils/service_request_util.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../provider/request_provider.dart';
@@ -20,7 +19,7 @@ class _BrandSelectionWidgetState extends State<BrandSelectionWidget> {
   Widget build(BuildContext context) {
     final requestProvider = Provider.of<RequestProvider>(context);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.grey1, width: 2),
@@ -37,7 +36,7 @@ class _BrandSelectionWidgetState extends State<BrandSelectionWidget> {
                   },
                   child: Row(
                     children: [
-                      const Icon(Icons.business_center_outlined),
+                      const Icon(Icons.local_offer_outlined),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
@@ -88,7 +87,7 @@ class _BrandSelectionWidgetState extends State<BrandSelectionWidget> {
               },
               child: Row(
                 children: [
-                  const Icon(Icons.business_center_outlined),
+                  const Icon(Icons.local_offer_outlined),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
@@ -101,14 +100,5 @@ class _BrandSelectionWidgetState extends State<BrandSelectionWidget> {
               ),
             ),
     );
-  }
-
-  // 캘린더에서 선택한 날짜를 포맷팅하고 컨트롤러에 넣어주는 메소드
-  void _convertDateTimeDisplay(String date, BuildContext context) {
-    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-    final DateFormat serverFormater = DateFormat('yyyy-MM-dd');
-    final DateTime displayDate = displayFormater.parse(date);
-    Provider.of<RequestProvider>(context, listen: false)
-        .setHopeDate(serverFormater.format(displayDate));
   }
 }

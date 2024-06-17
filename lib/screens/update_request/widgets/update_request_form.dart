@@ -18,7 +18,7 @@ import '../../add_request/client_info/widgets/my_info_widget.dart';
 import '../../add_request/time_pick/widgets/calendar_widget.dart';
 
 class UpdateRequestForm extends StatefulWidget {
-  UpdateRequestForm({super.key});
+  const UpdateRequestForm({super.key});
 
   @override
   State<UpdateRequestForm> createState() => _UpdateRequestFormState();
@@ -56,18 +56,18 @@ class _UpdateRequestFormState extends State<UpdateRequestForm> {
           children: [
             const CalendarWidget(),
             const TimeWidget(),
-            ServiceSelectionWidget(),
-            AirconSelectionWidget(),
-            BrandSelectionWidget(),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: const MyInfoWidget(),
+            const ServiceSelectionWidget(),
+            const AirconSelectionWidget(),
+            const BrandSelectionWidget(),
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: MyInfoWidget(),
             ),
             if (requestProvider.service == "수리") ...[
               const DetailInfoWidget(),
             ],
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

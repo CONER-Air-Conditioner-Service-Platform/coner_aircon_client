@@ -3,6 +3,7 @@ import 'package:coner_client/database/shared_preferences/my_shared_preferences.d
 import 'package:coner_client/models/client.dart';
 import 'package:coner_client/utils/service_request_util.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:logger/logger.dart';
 
 import '../utils/address_util.dart';
 
@@ -97,6 +98,7 @@ class ClientProvider with ChangeNotifier {
 
   Future<bool> login(BuildContext context, String phone) async {
     client = await ClientFirebase.login(context, phone);
+    Logger().i(client.clientId);
     if (client.clientId != '') {
       notifyListeners();
       return true;

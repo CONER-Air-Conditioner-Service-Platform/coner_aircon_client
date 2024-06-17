@@ -17,7 +17,7 @@ import '../../../../../utils/dialog_util.dart';
 import '../../../../../utils/service_request_util.dart';
 
 class RequestProgress extends StatelessWidget {
-  RequestProgress({super.key});
+  const RequestProgress({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class RequestProgress extends StatelessWidget {
                 children: [
                   for (Request request in requests) ...[
                     _requestInfoHelper(context, request),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ]
                 ],
               ),
@@ -151,15 +151,15 @@ class RequestProgress extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             height: 160,
-            padding: EdgeInsets.only(left: 20, top: 12),
+            padding: const EdgeInsets.only(left: 20, top: 12),
             decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Color(0xffA0A0A0)),
+              border: Border.all(width: 1, color: const Color(0xffA0A0A0)),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(request.detailInfo, style: AppTextStyles.b1),
           ),
           const SizedBox(height: 16),
-          if (request.requestImageList.length > 0) ...[
+          if (request.requestImageList.isNotEmpty) ...[
             Text("추가 관련 사진", style: AppTextStyles.s1Bold),
             const SizedBox(height: 8),
             SingleChildScrollView(
@@ -197,7 +197,7 @@ class RequestProgress extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Expanded(
                   flex: 7,
                   child: Container(
@@ -295,7 +295,7 @@ class RequestProgress extends StatelessWidget {
               children: [
                 Icon(Icons.phone_android_rounded, color: AppColors.grey2),
                 const SizedBox(width: 8),
-                Container(
+                SizedBox(
                     width: 120,
                     child: Text("${request.engineerPhone}", style: AppTextStyles.b2Bold)),
                 GestureDetector(

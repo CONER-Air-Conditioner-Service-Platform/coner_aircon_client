@@ -103,7 +103,7 @@ class CompleteRequestList extends StatelessWidget {
               Image.asset(images.$2, height: 22, fit: BoxFit.contain),
               const SizedBox(width: 12),
               Expanded(
-                child: Text('${request.address}', style: AppTextStyles.b2),
+                child: Text(request.address, style: AppTextStyles.b2),
               ),
             ],
           ),

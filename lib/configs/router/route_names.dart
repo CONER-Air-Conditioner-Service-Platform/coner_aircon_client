@@ -15,7 +15,6 @@ class RouteNames {
   static const regionRestrictionNotice = "regionRestrictionNotice";
   static const timePick = "timePick";
   static const airconSelection = "airconSelection";
-  static const serviceSelection = "serviceSelection";
   static const additionalInformation = "additionalInformation";
   static const clientInfo = "clientInfo";
   static const landing = "landing";

@@ -74,10 +74,10 @@ class PhoneVerificationProvider with ChangeNotifier {
   }
 
   String _changePhoneCode(String mobile) {
-    return '+82' + mobile.substring(1);
+    return '+82${mobile.substring(1)}';
   }
 
   String _changePhoneNumber(String mobile) {
-    return '0' + mobile.substring(3);
+    return '0${mobile.substring(3)}';
   }
 }

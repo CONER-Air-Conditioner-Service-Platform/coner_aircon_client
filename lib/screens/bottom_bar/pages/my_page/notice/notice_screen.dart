@@ -6,7 +6,7 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import '../../../../../theme/app_text_styles.dart';
 
 class NoticeScreen extends StatefulWidget {
-  const NoticeScreen({Key? key}) : super(key: key);
+  const NoticeScreen({super.key});
 
   @override
   State<NoticeScreen> createState() => _NoticeScreenState();

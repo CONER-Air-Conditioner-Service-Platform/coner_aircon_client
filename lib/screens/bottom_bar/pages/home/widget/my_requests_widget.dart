@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coner_client/models/request.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../provider/client_provider.dart';
-import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_text_styles.dart';
 import '../../../../../utils/dialog_util.dart';
 import '../../../../../utils/service_request_util.dart';
@@ -40,15 +38,19 @@ class MyRequestsWidget extends StatelessWidget {
               requests.add(Request.fromMap(data));
             }
           }
+          if (requests.isEmpty) {
+            return SizedBox(height: 40);
+          }
           return Container(
-            color: AppColors.grey1,
+            color: Colors.white,
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 10),
+                padding: const EdgeInsets.only(left: 12, right: 12, bottom: 20, top: 10),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      SizedBox(height: 12),
                       if (requests.isNotEmpty) ...[
                         Padding(
                           padding: const EdgeInsets.only(bottom: 15, top: 4),

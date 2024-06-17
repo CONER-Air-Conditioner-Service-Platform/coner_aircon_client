@@ -20,7 +20,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   Widget build(BuildContext context) {
     final requestProvider = Provider.of<RequestProvider>(context);
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.grey1, width: 2),
@@ -49,7 +49,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 SfDateRangePicker(
                   monthFormat: 'MMM',
                   headerStyle: DateRangePickerHeaderStyle(
@@ -67,9 +67,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   showNavigationArrow: true,
                   allowViewNavigation: false,
                   backgroundColor: Colors.white,
-                  initialSelectedDate: DateTime.now().add(const Duration(days: 7)),
-                  minDate: DateTime.now().add(const Duration(days: 7)), //오늘 날짜 +1부터 시작일로 선택 가능
-                  maxDate: DateTime.now().add(const Duration(days: 37)),
+                  minDate: DateTime.now().add(const Duration(days: 2)), //오늘 날짜 +1부터 시작일로 선택 가능
+                  maxDate: DateTime.now().add(const Duration(days: 32)),
                   selectionMode: DateRangePickerSelectionMode.single,
                   selectionColor: AppColors.coner2,
                   selectionTextStyle: AppTextStyles.s1BoldWhite,

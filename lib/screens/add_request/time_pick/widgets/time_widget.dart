@@ -26,7 +26,7 @@ class _TimeWidgetState extends State<TimeWidget> {
   Widget build(BuildContext context) {
     final requestProvider = Provider.of<RequestProvider>(context);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.grey1, width: 2),

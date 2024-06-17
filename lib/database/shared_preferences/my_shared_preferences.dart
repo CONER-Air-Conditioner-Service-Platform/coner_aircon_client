@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-/** SharedPreferences를 관리하는 클래스
- *
- * 마지막 수정 : 2023-8-24 */
+/// SharedPreferences를 관리하는 클래스
+///
+/// 마지막 수정 : 2023-8-24
 class MySharedPreferences {
   /// 저장소 가져오기
   static Future getData() async {

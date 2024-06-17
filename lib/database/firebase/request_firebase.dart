@@ -139,9 +139,6 @@ class RequestFirebase {
           .then(
         (querySnapshot) {
           for (var docSnapshot in querySnapshot.docs) {
-            if (docSnapshot.data() == null) {
-              return requestList;
-            }
             final data = docSnapshot.data();
             requestList.add(Request.fromMap(data));
           }

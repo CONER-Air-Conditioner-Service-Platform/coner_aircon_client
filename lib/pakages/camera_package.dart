@@ -12,6 +12,7 @@ class CameraPackage {
     if (img != null) {
       return img;
     }
+    return null;
   }
 
   static Future<List<File>> getImages(List<File?> images) async {
@@ -36,7 +37,7 @@ class CameraPackage {
   static Future cropImage(File imageFile) async {
     CroppedFile? croppedImage = await ImageCropper().cropImage(
       sourcePath: imageFile.path,
-      aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 3),
+      aspectRatio: const CropAspectRatio(ratioX: 4, ratioY: 3),
     );
     if (croppedImage == null) return null;
     return File(croppedImage.path);
@@ -47,16 +48,15 @@ class CameraPackage {
     for (File? image in images) {
       CroppedFile? croppedImage = await ImageCropper().cropImage(
         sourcePath: image!.path,
-        aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 3),
+        aspectRatio: const CropAspectRatio(ratioX: 4, ratioY: 3),
       );
       croppedImages.add(File(croppedImage!.path));
     }
-    if (croppedImages == null) return null;
     return croppedImages;
   }
 
   static Widget imageHelper(url) {
-    return Container(
+    return SizedBox(
       height: 150,
       width: 200,
       child: Image.file(File(url!.path), fit: BoxFit.fill),

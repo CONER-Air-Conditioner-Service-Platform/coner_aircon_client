@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
 import 'package:package_info/package_info.dart';
 
 class AppVersionCheckPackage {
@@ -6,19 +7,21 @@ class AppVersionCheckPackage {
     bool isPossible = false;
     DocumentReference docRef =
         FirebaseFirestore.instance.collection("version").doc("release_version");
-    String str_minAppVersion = "", str_latestAppVersion = "";
-    await docRef.get().then((DocumentSnapshot snapshot) => {
-          str_minAppVersion = snapshot['minVersion'] ?? '',
-          str_latestAppVersion = snapshot['latestVersion'] ?? '',
-        });
 
+    String strMinappversion = "", strLatestappversion = "";
+    await docRef.get().then((DocumentSnapshot snapshot) => {
+          strMinappversion = snapshot['minVersion'] ?? '',
+          strLatestappversion = snapshot['latestVersion'] ?? '',
+        });
+    Logger().i(strMinappversion + "  " + strLatestappversion);
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
+    Logger().i(version);
     //String buildNumber = packageInfo.buildNumber;
 
     var arrVersion = version.split(".");
-    var arrMinVersion = str_minAppVersion.split(".");
-    var arrLatestVersion = str_latestAppVersion.split(".");
+    var arrMinVersion = strMinappversion.split(".");
+    var arrLatestVersion = strLatestappversion.split(".");
 
     int verion = int.parse(arrVersion[0] + arrVersion[1] + arrVersion[2]);
     int minVersion = int.parse(arrMinVersion[0] + arrMinVersion[1] + arrMinVersion[2]);

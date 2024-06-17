@@ -36,7 +36,7 @@ class _TimePickScreenState extends State<TimePickScreen> {
                   const SizedBox(height: 40),
                   Text("서비스 희망 날짜 선택", style: AppTextStyles.h2Bold),
                   Text("원하시는 서비스 날짜를 선택해주세요.", style: AppTextStyles.b1),
-                  Text("오늘 날짜로부터 7일 이후부터 예약이 가능합니다. ", style: AppTextStyles.b2Grey),
+                  Text("오늘 날짜로부터 2일 이후부터 예약이 가능합니다. ", style: AppTextStyles.b2Grey),
                   const CalendarWidget(),
                   const TimeWidget(),
                   const SizedBox(height: 120),
@@ -46,7 +46,7 @@ class _TimePickScreenState extends State<TimePickScreen> {
           ),
           Container(
             height: 52,
-            width: AppSize.ratioOfHorizontal(context, 1) - 40,
+            width: AppSize.ratioOfHorizontal(context, 1) - 24,
             margin: EdgeInsets.only(bottom: AppSize.getStatusBarHeight(context) + 20, top: 12),
             decoration: AppDecorations.gradientButtonDecoration,
             child: MaterialButton(
@@ -60,7 +60,7 @@ class _TimePickScreenState extends State<TimePickScreen> {
                   DialogUtil.basicDialog(context, "희망 시간대를 선택해주세요.");
                   return;
                 }
-                context.pushNamed(RouteNames.serviceSelection);
+                context.pushNamed(RouteNames.airconSelection);
               },
               child: Text('다음으로', style: AppTextStyles.s1BoldWhite),
             ),

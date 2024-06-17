@@ -5,14 +5,16 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import '../../../../../theme/app_text_styles.dart';
 
-class PrivacyPolicyScreen extends StatefulWidget {
-  const PrivacyPolicyScreen({super.key});
+class WebviewScreen extends StatefulWidget {
+  String title;
+  String url;
+  WebviewScreen({required this.title, required this.url, super.key});
 
   @override
-  State<PrivacyPolicyScreen> createState() => _PrivacyPolicyScreenState();
+  State<WebviewScreen> createState() => _WebviewScreenState();
 }
 
-class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
+class _WebviewScreenState extends State<WebviewScreen> {
   late final WebViewController _controller;
   @override
   void initState() {
@@ -51,8 +53,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           );
         },
       )
-      ..loadRequest(
-          Uri.parse('https://coner-aircon.notion.site/51d934f99d534565b618d7832e7cf3a0?pvs=4'));
+      ..loadRequest(Uri.parse(widget.url));
 
     if (controller.platform is AndroidWebViewController) {
       AndroidWebViewController.enableDebugging(true);
@@ -68,7 +69,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '개인정보 처리방침',
+          widget.title,
           style: AppTextStyles.s1Bold,
         ),
         leading: IconButton(

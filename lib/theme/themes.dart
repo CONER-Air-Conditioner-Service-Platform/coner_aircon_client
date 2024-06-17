@@ -7,14 +7,14 @@ ThemeData mainTheme() {
     fontFamily: "mainFont",
     appBarTheme: appBarTheme(),
     inputDecorationTheme: inputDecorationTheme(),
-    textTheme: TextTheme(),
+    textTheme: const TextTheme(),
     textButtonTheme:
         TextButtonThemeData(style: TextButton.styleFrom(foregroundColor: Colors.white)),
   );
 }
 
 AppBarTheme appBarTheme() {
-  return AppBarTheme(
+  return const AppBarTheme(
     color: Colors.white,
     elevation: 0,
     iconTheme: IconThemeData(color: Colors.black),

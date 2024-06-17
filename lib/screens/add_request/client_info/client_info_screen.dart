@@ -34,7 +34,9 @@ class _ClientInfoScreenState extends State<ClientInfoScreen> {
                   const SizedBox(height: 40),
                   Text("다시 한번 확인해주세요!", style: AppTextStyles.h2Bold),
                   Text("기사님께 제공할 주소와 연락처가 맞나요?", style: AppTextStyles.b1),
-                  const Padding(padding: EdgeInsets.all(20), child: MyInfoWidget()),
+                  const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+                      child: MyInfoWidget()),
                   const SizedBox(height: 120),
                 ],
               ),
@@ -42,7 +44,7 @@ class _ClientInfoScreenState extends State<ClientInfoScreen> {
           ),
           Container(
             height: 52,
-            width: AppSize.ratioOfHorizontal(context, 1) - 40,
+            width: AppSize.ratioOfHorizontal(context, 1) - 24,
             margin: EdgeInsets.only(bottom: AppSize.getStatusBarHeight(context) + 20, top: 12),
             decoration: AppDecorations.gradientButtonDecoration,
             child: MaterialButton(

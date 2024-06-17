@@ -6,7 +6,7 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import '../../../../../theme/app_text_styles.dart';
 
 class InquiryScreen extends StatefulWidget {
-  const InquiryScreen({Key? key}) : super(key: key);
+  const InquiryScreen({super.key});
 
   @override
   State<InquiryScreen> createState() => _InquiryScreenState();

@@ -49,7 +49,7 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: AppColors.grey1,
+        backgroundColor: Colors.white,
         body: TabBarView(
           controller: tabController,
           physics: const NeverScrollableScrollPhysics(),

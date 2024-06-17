@@ -3,7 +3,6 @@ import 'package:coner_client/configs/router/route_names.dart';
 import 'package:coner_client/screens/add_request/additional_information/additional_information_screen.dart';
 import 'package:coner_client/screens/add_request/aircon_selection/aircon_selection_screen.dart';
 import 'package:coner_client/screens/add_request/client_info/client_info_screen.dart';
-import 'package:coner_client/screens/add_request/service_selection/service_selection_screen.dart';
 import 'package:coner_client/screens/add_request/time_pick/time_pick_screen.dart';
 import 'package:coner_client/screens/bottom_bar/bottom_bar.dart';
 import 'package:coner_client/screens/bottom_bar/pages/my_page/inquiry/inquiry_screen.dart';
@@ -15,12 +14,12 @@ import 'package:coner_client/screens/splash/splash_screen.dart';
 import 'package:coner_client/screens/update_request/update_request_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../screens/ region_restriction_notice/region_restriction_notice_screen.dart';
 import '../../screens/add_request/request_image_example/request_example_image_screen.dart';
 import '../../screens/bottom_bar/pages/my_page/privacy_policy/privacy_policy_screen.dart';
 import '../../screens/landing/landing_screen.dart';
 import '../../screens/profile_update/profile_update_phone/profile_update_phone_screen.dart';
 import '../../screens/profile_update/profile_update_screen.dart';
+import '../../screens/region_restriction_notice/region_restriction_notice_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -61,29 +60,21 @@ class AppRouter {
                     PageTrainsition.fadeTransition(state, const TimePickScreen()),
                 routes: [
                   GoRoute(
-                    name: RouteNames.serviceSelection,
-                    path: RouteNames.serviceSelection,
+                    name: RouteNames.airconSelection,
+                    path: RouteNames.airconSelection,
                     pageBuilder: (context, state) =>
-                        PageTrainsition.fadeTransition(state, const ServiceSelectionScreen()),
+                        PageTrainsition.fadeTransition(state, const AirconSelectionScreen()),
                     routes: [
                       GoRoute(
-                        name: RouteNames.airconSelection,
-                        path: RouteNames.airconSelection,
-                        pageBuilder: (context, state) =>
-                            PageTrainsition.fadeTransition(state, const AirconSelectionScreen()),
+                        name: RouteNames.additionalInformation,
+                        path: RouteNames.additionalInformation,
+                        pageBuilder: (context, state) => PageTrainsition.fadeTransition(
+                            state, const AdditionalInformationScreen()),
                         routes: [
                           GoRoute(
-                            name: RouteNames.additionalInformation,
-                            path: RouteNames.additionalInformation,
-                            pageBuilder: (context, state) => PageTrainsition.fadeTransition(
-                                state, const AdditionalInformationScreen()),
-                            routes: [
-                              GoRoute(
-                                name: RouteNames.requestExampleImage,
-                                path: RouteNames.requestExampleImage,
-                                builder: (context, state) => const RequestExampleImageScreen(),
-                              ),
-                            ],
+                            name: RouteNames.requestExampleImage,
+                            path: RouteNames.requestExampleImage,
+                            builder: (context, state) => const RequestExampleImageScreen(),
                           ),
                         ],
                       ),
@@ -96,7 +87,7 @@ class AppRouter {
           GoRoute(
             name: RouteNames.updateRequest,
             path: RouteNames.updateRequest,
-            builder: (context, state) => UpdateRequestScreen(),
+            builder: (context, state) => const UpdateRequestScreen(),
           ),
           GoRoute(
             name: RouteNames.profileUpdate,

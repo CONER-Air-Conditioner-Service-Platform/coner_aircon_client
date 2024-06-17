@@ -19,7 +19,7 @@ class _DetailInfoWidgetState extends State<DetailInfoWidget> {
   Widget build(BuildContext context) {
     final requestProvider = Provider.of<RequestProvider>(context);
     return Container(
-      margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+      margin: const EdgeInsets.only(top: 12, left: 12, right: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.grey1, width: 2),
